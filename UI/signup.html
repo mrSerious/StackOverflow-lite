@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Log In</title>
+  <title>Sign Up</title>
 
   <!-- Fonts  -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,900" rel="stylesheet">
@@ -16,7 +16,7 @@
   <link type="text/css" rel="stylesheet" href="./css/main.css">
 </head>
 
-<body id="login-body">
+<body id="signup-body">
   <div id="content">
     <section class="navigation">
       <div class="nav-container">
@@ -63,24 +63,36 @@
     </section>
 
     <div class="container">
-      <div class="signin-area">
-        <div class="signin-form">
+      <div class="signup-area">
+        <div class="signup-form">
           <div class="heading-text center-text">
-            <h2 class="">Sign In To Your Account</h2>
+            <h2 class="">Create your account. It's free and only takes a minute.</h2>
             <small> Or
-              <a href="signup.html">register</a> if you do not have an account.</small>
+              <a href="login.html">login</a> if you already have an account.</small>
           </div>
           <form action="" method="post">
-            <div class="form-group">
-              <label for="male">Username</label>
-              <input type="text" name="username">
-            </div>
-            <div class="form-group">
-              <label for="male">Password</label>
-              <input type="password" name="password">
-            </div>
-            <div class="form-group">
-              <button type="submit">Submit</button>
+            <div class="row">
+              <div class="form-group">
+                <div class="half column">
+                  <label for="male">First Name</label>
+                  <input type="text" name="firstname">
+                </div>
+                <div class="half column">
+                  <label for="male">Last Name</label>
+                  <input type="text" name="lastname">
+                </div>
+                <div class="half column">
+                  <label for="male">Username</label>
+                  <input type="text" name="username">
+                </div>
+                <div class="half column">
+                  <label for="male">Password</label>
+                  <input type="password" name="password">
+                </div>
+                <div class="one column">
+                  <button type="submit">Submit</button>
+                </div>
+              </div>
             </div>
 
           </form>

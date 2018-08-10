@@ -104,6 +104,10 @@ button:not(:disabled):not(.disabled) {
   font-size: 1rem;
 }
 
+.clear {
+  clear: both;
+}
+
 /*
 * Navbar Styling
  */
@@ -483,6 +487,65 @@ button:not(:disabled):not(.disabled) {
 .user-question {
   float: right;
   font-size: 12px;
+}
+
+/* 
+* Questions Page
+*/
+
+.question-header {
+  margin-bottom: 2rem;
+}
+
+.meta-section.tags {
+  font-size: 13px;
+}
+
+.info-bar {
+  clear: left;
+}
+
+.info-bar>span {
+  margin-right: 1rem;
+  color: #999;
+  font-size: .6rem;
+}
+
+.answers-list {
+  margin-bottom: 2.1rem;
+}
+
+.content-body {
+  margin-bottom: 2rem;
+}
+
+.new-answer {
+  margin-bottom: 2.5rem;
+}
+
+.answer-body-container {
+  padding: 21px 0 13px;
+  overflow: hidden;
+  border-bottom: solid 1px #cfcfcfa1;
+}
+
+.upvote-button {
+  background-color: transparent;
+  border: 0;
+  color: inherit;
+  float: left;
+  font-size: 2rem;
+  margin: 21px 16px 0 0;
+  width: 60px;
+  color: #919191 !important;
+}
+
+.upvote-button>* {
+  display: block;
+}
+
+.editor-wrap {
+  margin-bottom: 2rem;
 }
 
 /* 

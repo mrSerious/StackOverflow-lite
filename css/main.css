@@ -120,6 +120,21 @@ button:not(:disabled):not(.disabled) {
 * Navbar Styling
  */
 
+#logo {
+  background-color: #f5f5f5;
+  border: 1px solid #a1a1a1;
+  color: #73afc5;
+  text-shadow: 0 1px 0 #00000066;
+  font-family: Orbitron;
+  font-size: 26px;
+  height: 60px;
+  margin: 5px 0;
+  width: 60px;
+  line-height: 60px;
+  border-radius: 50%;
+  text-align: center;
+}
+
 .navigation {
   height: 70px;
   background-color: #eaf0f1;
@@ -656,6 +671,7 @@ button:not(:disabled):not(.disabled) {
 /* 
 *New Question Page
 */
+
 .new-question-container {
   text-align: center;
 }

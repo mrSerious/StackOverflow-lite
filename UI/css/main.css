@@ -654,6 +654,13 @@ button:not(:disabled):not(.disabled) {
 }
 
 /* 
+*New Question Page
+*/
+.new-question-container {
+  text-align: center;
+}
+
+/* 
 * footer
  */
 

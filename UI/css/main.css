@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 0;
   color: #0a0a0a;
-  background: #eaf0f1;
+  background: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
@@ -36,7 +36,7 @@ h6,
 .h6 {
   margin-bottom: 0.5rem;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 100;
   line-height: 1.2;
   color: inherit;
 }
@@ -118,10 +118,9 @@ button:not(:disabled):not(.disabled) {
  */
 
 #logo {
-  background-color: #f5f5f5;
-  border: 1px solid #a1a1a1;
-  color: #73afc5;
-  text-shadow: 0 1px 0 #00000066;
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
   font-family: Orbitron;
   font-size: 26px;
   height: 60px;
@@ -134,7 +133,7 @@ button:not(:disabled):not(.disabled) {
 
 .navigation {
   height: 70px;
-  background-color: #eaf0f1;
+  background-color: #fff;
 }
 
 .brand {
@@ -159,7 +158,7 @@ button:not(:disabled):not(.disabled) {
 
 .site-navigation-links {
   float: right;
-  background-color: #eaf0f1;
+  background-color: #fff;
 }
 
 .site-navigation-links ul {
@@ -171,6 +170,7 @@ button:not(:disabled):not(.disabled) {
 .site-navigation-links ul li {
   float: left;
   position: relative;
+  transition: all ease-in;
 }
 
 .site-navigation-links ul li a,
@@ -185,8 +185,7 @@ button:not(:disabled):not(.disabled) {
 
 .site-navigation-links ul li a:hover,
 .site-navigation-links ul li a:visited:hover {
-  background: #2581DC;
-  color: #ffffff;
+  color: #07C;
 }
 
 .site-navigation-links ul li a:not(:only-child):after,
@@ -539,12 +538,21 @@ button:not(:disabled):not(.disabled) {
   margin-bottom: 2rem;
 }
 
+.answer-body-meta {
+  float: left;
+}
+
+.selected-answer-check {
+  float: right;
+  margin-right: 1rem;
+}
+
 .new-answer {
   margin-bottom: 2.5rem;
 }
 
 .answer-body-container {
-  padding: 21px 0 13px;
+  padding: 21px 0 13px 21px;
   overflow: hidden;
   border-bottom: solid 1px #cfcfcfa1;
 }

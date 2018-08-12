@@ -2,20 +2,7 @@
   "questions": [{
       "id": 1,
       "title": "Qui aggredior inveniant desumptas aliquibus sic medicinam nam?",
-      "body": "Ipsius cupere vulgus tes hos. Eidem motus vos lucis ibi res mundo. Sit scribere quicquam ibi imponere. Ab generis re de se essendi nunquam. Generis vigilia futurus quodque co calebat spatium id.",
-      "tags": [{
-          "id": 1,
-          "title": "mysql",
-          "questionId": 1
-        },
-        {
-          "id": 2,
-          "title": "sql",
-          "questionId": 1
-        }
-      ],
-      "votes": 0,
-      "views": 1,
+      "questionBody": "Ipsius cupere vulgus tes hos. Eidem motus vos lucis ibi res mundo. Sit scribere quicquam ibi imponere. Ab generis re de se essendi nunquam. Generis vigilia futurus quodque co calebat spatium id.",
       "answers": [{
           "id": 1,
           "content": "Ab generis re de se essendi nunquam.",
@@ -26,27 +13,12 @@
           "content": "Obstat mox stupor per pla captum uti.",
           "questionId": 1
         }
-      ],
-      "asked_time": "2018-08-12",
-      "userId": 1
+      ]
     },
     {
       "id": 2,
       "title": "Et recensui aetheris vi impressa in putantur acceptis? Superest ii dedissem ab ad callidus nequidem.",
-      "body": "Eidem motus vos lucis ibi res mundo. Ab generis re de se essendi nunquam id.",
-      "tags": [{
-          "id": 3,
-          "title": "html",
-          "questionId": 2
-        },
-        {
-          "id": 4,
-          "title": "flexbox",
-          "questionId": 2
-        }
-      ],
-      "votes": 1,
-      "views": 5,
+      "questionBody": "Eidem motus vos lucis ibi res mundo. Ab generis re de se essendi nunquam id.",
       "answers": [{
         "id": 3,
         "content": "Mea sed qualitates hoc affirmabam concipitur.",
@@ -62,9 +34,8 @@
         "content": "Ab generis re de se essendi nunquam.",
         "questionId": 2
       }
-    ],
-    "asked_time": "2018-08-12",
-    "userId": 2
+    ]
+    
     }
   ]
 }

@@ -2,15 +2,14 @@ import { Router } from 'express';
 import { validationResult } from '../node_modules/express-validator/check';
 
 import data from './data.json';
-import inputValidation from '../middleware/validations';
+import questionValidations from '../middleware/validation/questionValidations';
+import answerValidations from '../middleware/validation/answerValidations';
 
 const router = Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'Connected!'
-  });
+  res.status(200).json({ message: 'Connected!' });
 });
 
 /* GET all questions */
@@ -29,7 +28,7 @@ router.get('/questions/:questionId', (req, res) => {
 });
 
 /* POST question */
-router.post('/questions', inputValidation, (req, res) => {
+router.post('/questions', questionValidations, (req, res) => {
   const errors = validationResult(req);
 
   const nextId = data.questions.length + 1;
@@ -45,12 +44,37 @@ router.post('/questions', inputValidation, (req, res) => {
     answers
   };
 
-  questions.push(newQuestion);
+  if (!errors.isEmpty()) {
+    res.status(400).json(errors.array());
+  } else {
+    questions.push(newQuestion);
+    res.status(200).send(newQuestion);
+  }
+});
+
+/* POST answer */
+router.post('/questions/:questionId/answers', answerValidations, (req, res) => {
+  const { questions } = data;
+  const id = parseInt(req.params.questionId, 10);
+  const question = questions.find(m => m.id === id);
+  const { answers } = question;
+
+  const nextId = answers.length + 1;
+  const { content } = req.body;
+
+  const newAnswer = {
+    id: nextId,
+    content,
+    questionId: id
+  };
+
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     res.status(400).json(errors.array());
   } else {
-    res.status(200).send(newQuestion);
+    answers.push(newAnswer);
+    res.status(200).send(question);
   }
 });
 

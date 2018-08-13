@@ -5,6 +5,7 @@ dist: trusty
 addons:
   chrome: stable
 env:
+  CC_TEST_REPORTER_ID: 9be6d10a869826c526f2fd01eaaf884a4da46edcc8cc769a002d37a121833e97
 global:
  - export NODE_ENV=test
 # before_install: cd server

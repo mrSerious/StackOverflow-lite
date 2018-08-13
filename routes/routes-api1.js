@@ -1,6 +1,5 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import { Router } from 'express';
-import { validationResult } from '../node_modules/express-validator/check';
 
 import data from './data.json';
 import validateQuestions from '../middleware/validation/questionValidations';
@@ -34,7 +33,7 @@ router.get('/questions/:questionId', (req, res) => {
 
 /* POST question */
 router.post('/questions', validateQuestions, (req, res, next) => {
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
 
   const nextId = data.questions.length + 1;
   const { title } = req.body;
@@ -48,12 +47,8 @@ router.post('/questions', validateQuestions, (req, res, next) => {
     questionBody
   };
 
-  if (!errors.isEmpty()) {
-    res.status(400).json(errors.array());
-  } else {
-    questions.push(newQuestion);
-    res.status(201).json({ status: 'success', data: newQuestion });
-  }
+  questions.push(newQuestion);
+  res.status(201).json({ status: 'success', data: newQuestion });
 });
 
 /* POST answer */
@@ -72,14 +67,8 @@ router.post('/questions/:questionId/answers', validateAnswer, (req, res, next) =
     questionId: id
   };
 
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    res.status(400).json(errors.array());
-  } else {
-    answers.push(newAnswer);
-    res.status(201).json({ status: 'success', data: question });
-  }
+  answers.push(newAnswer);
+  res.status(201).json({ status: 'success', data: question });
 });
 
 /* DELETE answer */

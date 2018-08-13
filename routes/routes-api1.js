@@ -1,9 +1,10 @@
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import { Router } from 'express';
 import { validationResult } from '../node_modules/express-validator/check';
 
 import data from './data.json';
-import questionValidations from '../middleware/validation/questionValidations';
-import answerValidations from '../middleware/validation/answerValidations';
+import validateQuestions from '../middleware/validation/questionValidations';
+import validateAnswer from '../middleware/validation/answerValidations';
 
 const router = Router();
 
@@ -24,11 +25,15 @@ router.get('/questions/:questionId', (req, res) => {
   const questionId = req.params.questionId * 1; // converts Id from string into an integer
   const question = data.questions.find(m => m.id === questionId);
 
-  res.status(200).json({ question });
+  if (!question) {
+    res.status(404).json({ Message: 'Item not found!' });
+  } else {
+    res.status(200).json({ question });
+  }
 });
 
 /* POST question */
-router.post('/questions', questionValidations, (req, res) => {
+router.post('/questions', validateQuestions, (req, res, next) => {
   const errors = validationResult(req);
 
   const nextId = data.questions.length + 1;
@@ -53,7 +58,7 @@ router.post('/questions', questionValidations, (req, res) => {
 });
 
 /* POST answer */
-router.post('/questions/:questionId/answers', answerValidations, (req, res) => {
+router.post('/questions/:questionId/answers', validateAnswer, (req, res, next) => {
   const { questions } = data;
   const id = parseInt(req.params.questionId, 10);
   const question = questions.find(m => m.id === id);
@@ -78,4 +83,21 @@ router.post('/questions/:questionId/answers', answerValidations, (req, res) => {
   }
 });
 
+/* DELETE answer */
+router.delete('/questions/:questionId', (req, res) => {
+  const id = req.params.questionId * 1;
+
+  const { questions } = data;
+  const question = questions.find(q => q.id === id);
+  const index = questions.indexOf(question);
+
+  if (!question) {
+    res.status(404).json({ Message: 'Item not found!' });
+  } else {
+    if (index !== -1) {
+      questions.splice(index, 1);
+    }
+    res.status(200).send(questions);
+  }
+});
 export default router;

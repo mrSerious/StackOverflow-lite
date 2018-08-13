@@ -1,9 +1,22 @@
-import { check } from 'express-validator/check';
+/**
+ * validates question fields
+ * @param  {req} req
+ * @param  {res} res
+ * @param  {next} next
+ * @returns {next} next
+ */
+const questionChecks = (req, res, next) => {
+  req.checkBody('title', 'Title cannot be empty').notEmpty();
+  req.checkBody('questionBody', 'Question body cannot be empty').notEmpty();
 
-const quesionChecks = [
-  check('title').isLength({ min: 1 }).withMessage('Title is a required field.'),
-  check('questionBody').isLength({ min: 1 }).withMessage('Question body is a required field.'),
-  check('content').isLength({ min: 1 }).withMessage('Content is a required field.'),
-];
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).json({
+      message: 'Validation failed',
+      failures: errors
+    });
+  }
+  return next();
+};
 
-export default quesionChecks;
+export default questionChecks;

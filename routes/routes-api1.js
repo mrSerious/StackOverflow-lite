@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('/questions', (req, res) => {
   const { questions } = data;
   const count = questions.length;
-  res.status(200).json({ count, questions });
+  res.status(200).json({ status: 'success', count, data: questions });
 });
 
 /* GET single question */
@@ -26,9 +26,9 @@ router.get('/questions/:questionId', (req, res) => {
   const question = data.questions.find(m => m.id === questionId);
 
   if (!question) {
-    res.status(404).json({ Message: 'Item not found!' });
+    res.status(404).json({ status: 'Question not found!' });
   } else {
-    res.status(200).json({ question });
+    res.status(200).json({ status: 'success', data: question });
   }
 });
 
@@ -39,21 +39,20 @@ router.post('/questions', validateQuestions, (req, res, next) => {
   const nextId = data.questions.length + 1;
   const { title } = req.body;
   const { questionBody } = req.body;
-  const { answers } = req.body;
+
   const { questions } = data;
 
   const newQuestion = {
     id: nextId,
     title,
-    questionBody,
-    answers
+    questionBody
   };
 
   if (!errors.isEmpty()) {
     res.status(400).json(errors.array());
   } else {
     questions.push(newQuestion);
-    res.status(200).send(newQuestion);
+    res.status(201).json({ status: 'success', data: newQuestion });
   }
 });
 
@@ -79,7 +78,7 @@ router.post('/questions/:questionId/answers', validateAnswer, (req, res, next) =
     res.status(400).json(errors.array());
   } else {
     answers.push(newAnswer);
-    res.status(200).send(question);
+    res.status(201).json({ status: 'success', data: question });
   }
 });
 
@@ -92,12 +91,12 @@ router.delete('/questions/:questionId', (req, res) => {
   const index = questions.indexOf(question);
 
   if (!question) {
-    res.status(404).json({ Message: 'Item not found!' });
+    res.status(404).json({ status: 'Question not found!' });
   } else {
     if (index !== -1) {
       questions.splice(index, 1);
     }
-    res.status(200).send(questions);
+    res.status(200).send({ status: 'success' });
   }
 });
 export default router;

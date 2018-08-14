@@ -2,3 +2,22 @@
 
 # StackOverflow-lite
 An app where people can ask questions and provide answers.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+- Node
+- npm
+  
+### Installation
+
+```bash
+git clone https://github.com/mrSerious/StackOverflow-lite.git
+cd StackOverflow-lite
+npm install
+npm start
+```
+## Authors
+* **Tersoo Atsen** - *Initial work* - [mrSerious](https://github.com/mrSerious)

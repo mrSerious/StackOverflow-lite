@@ -167,16 +167,5 @@ describe('routes : question', () => {
           done();
         });
     });
-
-    it('should respond with a not found message', (done) => {
-      chai.request(server)
-        .delete('/api/v1/questions/50')
-        .end((err, res) => {
-          res.status.should.equal(404);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Question not found!');
-          done();
-        });
-    });
   });
 });

@@ -8,7 +8,7 @@ env:
   CC_TEST_REPORTER_ID: 9be6d10a869826c526f2fd01eaaf884a4da46edcc8cc769a002d37a121833e97
 global:
  - export NODE_ENV=test
-# before_install: cd server
+before_install: cd src
 install:
   - npm install
 before_script:
@@ -17,9 +17,9 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - npm test
-  - npm run coverage
+  # - npm test
   - nyc --reporter=lcov yarn run test
+  - npm run coverage
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:

@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import question from '../controllers/question';
 
-import validate from '../middleware/validation/validation';
+import validate from '../middleware/validation';
 
 const router = Router();
 
@@ -23,7 +23,7 @@ router.post('/questions', validate.question, question.newQues);
 /* POST answer */
 router.post('/questions/:questionId/answers', validate.answer, question.newAns);
 
-/* DELETE answer */
+/* DELETE question */
 router.delete('/questions/:questionId', question.destroy);
 
 export default router;

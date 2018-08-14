@@ -92,9 +92,7 @@ class Questions {
     if (!result) {
       res.status(404).json({ status: 'Question not found!' });
     } else {
-      if (index !== -1) {
-        questions.splice(index, 1);
-      }
+      questions.splice(index, 1);
       res.status(200).send({ status: 'success' });
     }
   }

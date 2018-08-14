@@ -9,7 +9,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('routes : Home Page', () => {
+describe('routes : index', () => {
   describe('GET /api/v1', () => {
     it('should display "Connected!" message', (done) => {
       chai.request(server)
@@ -23,9 +23,23 @@ describe('routes : Home Page', () => {
         });
     });
   });
+
+  describe('GET /404', () => {
+    it('should throw an error', (done) => {
+      chai.request(server)
+        .get('/')
+        .end((err, res) => {
+          res.redirects.length.should.equal(0);
+          res.status.should.equal(404);
+          res.type.should.equal('text/html');
+          res.text.should.eql('Sorry can\'t find that!');
+          done();
+        });
+    });
+  });
 });
 
-describe('routes : Questions', () => {
+describe('routes : question', () => {
   describe('GET /api/v1/questions', () => {
     it('should respond a success message along with all questions', (done) => {
       chai.request(server)
@@ -38,9 +52,7 @@ describe('routes : Questions', () => {
         });
     });
   });
-});
 
-describe('routes : Single Question', () => {
   describe('GET /api/v1/questions/:questionId', () => {
     it('should respond with a success message along with a single question', (done) => {
       chai.request(server)
@@ -67,9 +79,7 @@ describe('routes : Single Question', () => {
         });
     });
   });
-});
 
-describe('routes : Post Question', () => {
   describe('POST /api/v1/questions', () => {
     it('should respond with a success message along with a single question that was added', (done) => {
       chai.request(server)
@@ -102,9 +112,7 @@ describe('routes : Post Question', () => {
         });
     });
   });
-});
 
-describe('routes : Post Answer', () => {
   describe('POST /api/v1/questions/:questionId/answers', () => {
     it('should respond with a success message along with a the question and the answer that was added', (done) => {
       chai.request(server)
@@ -136,9 +144,7 @@ describe('routes : Post Answer', () => {
         });
     });
   });
-});
 
-describe('routes : Delete Question', () => {
   describe('DELETE /api/v1/questions/:questionId', () => {
     it('should respond with a success message', (done) => {
       chai.request(server)
@@ -161,19 +167,14 @@ describe('routes : Delete Question', () => {
           done();
         });
     });
-  });
-});
 
-describe('routes : Unreachable routes', () => {
-  describe('GET unreachable route', () => {
-    it('should display "Connected!" message', (done) => {
+    it('should respond with a not found message', (done) => {
       chai.request(server)
-        .get('/')
+        .delete('/api/v1/questions/50')
         .end((err, res) => {
-          res.redirects.length.should.equal(0);
           res.status.should.equal(404);
-          res.type.should.equal('text/html');
-          res.text.should.eql('Sorry can\'t find that!');
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('Question not found!');
           done();
         });
     });

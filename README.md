@@ -7,23 +7,21 @@ An app where people can ask questions and provide answers.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
-- Node
-- npm
-  
 ### Installation
 
-```bash
-git clone https://github.com/mrSerious/StackOverflow-lite.git
-cd StackOverflow-lite
-npm install
-npm start
+Clone this repo to your local machine using https://github.com/mrSerious/StackOverflow-lite.git
+
+### Setup
+
+```bash 
+$ npm install
 ```
 
 ### Testing
 
-```bash
-npm test
+```bash 
+$ npm test 
 ```
+
 ## Authors
 * **Tersoo Atsen** - *Initial work* - [mrSerious](https://github.com/mrSerious)

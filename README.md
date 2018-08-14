@@ -19,5 +19,11 @@ cd StackOverflow-lite
 npm install
 npm start
 ```
+
+### Testing
+
+```bash
+npm test
+```
 ## Authors
 * **Tersoo Atsen** - *Initial work* - [mrSerious](https://github.com/mrSerious)

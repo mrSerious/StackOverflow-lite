@@ -72,13 +72,14 @@ textarea {
   outline: 0;
   color: #495057;
   background-color: #fff;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
+  -moz-transition: border-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
+  -webkit-transition: border-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
 }
 
 input:focus,
 textarea:focus {
   border: 1px solid #45d298;
-  /* outline-color: transparent; */
 }
 
 button,
@@ -232,10 +233,13 @@ button:not(:disabled):not(.disabled) {
   margin: 4px 0;
   background-color: inherit;
   border-color: transparent;
+  transition: all .35s ease-in;
+  -moz-transition: all .35s ease-in;
+  -webkit-transition: all .35s ease-in;
 }
 
-.site-navigation-search input:focus {
-  border-bottom: solid 1px #cfcfcfa1;
+.site-navigation-search input:focus {  
+  border-bottom: solid 1px #45d298;
 }
 
 .nav-dropdown {

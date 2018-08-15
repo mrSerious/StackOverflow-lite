@@ -13,14 +13,15 @@ Clone this repo to your local machine using https://github.com/mrSerious/StackOv
 
 ### Setup
 
-```bash 
+```bash
+$ cd StackOverflow-lite
 $ npm install
 ```
 
 ### Testing
 
 ```bash 
-$ npm test 
+$ npm test
 ```
 
 ## Authors

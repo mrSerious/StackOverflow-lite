@@ -31,8 +31,9 @@ describe('routes : index', () => {
         .end((err, res) => {
           res.redirects.length.should.equal(0);
           res.status.should.equal(404);
-          res.type.should.equal('text/html');
-          res.text.should.eql('Sorry can\'t find that!');
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('error');
+          res.body.message.should.eql('Sorry can\'t find that!');
           done();
         });
     });

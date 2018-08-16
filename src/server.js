@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
 app.use((req, res, next) => {
-  res.status(404).json({ status: 'error', messsage: "Sorry can't find that!" });
+  res.status(404).json({ status: 'error', message: 'Sorry can\'t find that!' });
 });
 
 app.listen(port);

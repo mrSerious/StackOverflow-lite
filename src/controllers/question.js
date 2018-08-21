@@ -11,7 +11,11 @@ class Questions {
   static all(req, res) {
     const { questions } = data;
     const count = questions.length;
-    res.status(200).json({ status: 'success', count, data: questions });
+    res.status(200).json({
+      status: 'Success',
+      message: 'Returning list of questions',
+      data: { count, questions }
+    });
   }
 
   /**
@@ -20,13 +24,21 @@ class Questions {
    * @return {response} single question or not found
    */
   static single(req, res) {
-    const questionId = req.params.questionId * 1; // converts Id from string into an integer
+    // converts Id to an integer
+    const questionId = parseInt(req.params.questionId, 10);
     const question = data.questions.find(m => m.id === questionId);
 
     if (!question) {
-      res.status(404).json({ status: 'Question not found!' });
+      res.status(404).json({
+        status: 'Failure',
+        message: 'Question not found'
+      });
     } else {
-      res.status(200).json({ status: 'success', data: question });
+      res.status(200).json({
+        status: 'Success',
+        message: 'Returning question',
+        data: question
+      });
     }
   }
 
@@ -36,7 +48,7 @@ class Questions {
    * @param {next} next
    * @return {response} status message with new question
    */
-  static newQues(req, res, next) {
+  static createQuestion(req, res, next) {
     const nextId = data.questions.length + 1;
     const { title } = req.body;
     const { questionBody } = req.body;
@@ -45,36 +57,16 @@ class Questions {
     const newQuestion = {
       id: nextId,
       title,
-      questionBody
+      questionBody,
+      answers: []
     };
 
     questions.push(newQuestion);
-    res.status(201).json({ status: 'success', data: newQuestion });
-  }
-
-  /**
-   * @param {request} req
-   * @param {response} res
-   * @param {next} next
-   * @return {response} single question or not found
-   */
-  static newAns(req, res, next) {
-    const { questions } = data;
-    const id = parseInt(req.params.questionId, 10);
-    const result = questions.find(m => m.id === id);
-    const { answers } = result;
-
-    const nextId = answers.length + 1;
-    const { content } = req.body;
-
-    const newAnswer = {
-      id: nextId,
-      content,
-      questionId: id
-    };
-
-    answers.push(newAnswer);
-    res.status(201).json({ status: 'success', data: result });
+    res.status(201).json({
+      status: 'Success',
+      message: 'Question created',
+      data: newQuestion
+    });
   }
 
   /**
@@ -90,10 +82,16 @@ class Questions {
     const index = questions.indexOf(result);
 
     if (!result) {
-      res.status(404).json({ status: 'Question not found!' });
+      res.status(404).json({
+        status: 'Failure',
+        message: 'Question not found'
+      });
     } else {
       questions.splice(index, 1);
-      res.status(200).send({ status: 'success' });
+      res.status(200).send({
+        status: 'Success',
+        message: 'Question deleted'
+      });
     }
   }
 }

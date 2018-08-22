@@ -26,7 +26,7 @@
         <!-- navbrand -->
         <div class="brand">
           <a href="index.html">
-            <p id="logo"> SO </p>
+            <b><p id="logo"> SO </p></b>
           </a>
         </div>
         <form class="site-navigation-search">
@@ -49,6 +49,9 @@
             <li>
               <a href="login.html">Sign In</a>
             </li>
+            <li>
+              <a href="signup.html">Sign Up</a>
+            </li>
           </ul>
         </nav>
         <!-- /.nav -->
@@ -68,6 +71,7 @@
             <a class="post-tag" href="">System Tools</a>
             <a class="post-tag" href="">Ubuntu</a>
           </div>
+          <div class="clear"></div>
           <div class="info-bar">
             <span class="date-info">
               <span class>posted 2 hours ago</span>
@@ -79,6 +83,7 @@
               <span>4 views</span>
             </span>
           </div>
+          <div class="clear"></div>
         </div>
         <div class="content-body">
           <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
@@ -96,21 +101,25 @@
             <div class="answer-body">
               <div class="answer-vote-container">
                 <button name="button" type="button" class="upvote-button">
-                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
                   <span class="new-upvote-count">1</span>
+                </button>
+                <button name="button" type="button" class="downvote-button">
+                  <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                  <span class="new-upvote-count">0</span>
                 </button>
               </div>
               <div class="answer-body-container">
                 <div class="answer-body-meta">
                   <span class="user">
-                    <a class="username" href="">laarland</a>
+                    <a class="username" href="profile.html">laarland</a>
                   </span>
                   <span class="answer-label-separator"></span>
                   <span class="answer-response-time">about 9 hours ago</span>
                 </div>
                 <div class="selected-answer-check">
                   <p class="no-margin">
-                    <i class="fa fa-check-circle-o" aria-hidden="true"></i> selected answer</p>
+                      <i class="fa fa-check" aria-hidden="true"></i> <span class="hidden-on-small-screens">selected answer</span></p>
                 </div>
                 <div class="clear"></div>
                 <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
@@ -125,14 +134,18 @@
             <div class="answer-body">
               <div class="answer-vote-container">
                 <button name="button" type="button" class="upvote-button">
-                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
                   <span class="new-upvote-count">0</span>
+                </button>
+                <button name="button" type="button" class="downvote-button">
+                  <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                  <span class="new-upvote-count">1</span>
                 </button>
               </div>
               <div class="answer-body-container">
                 <div class="answer-body-meta">
                   <span class="user">
-                    <a class="username" href="">jigSaw</a>
+                    <a class="username" href="profile.html">jigSaw</a>
                   </span>
                   <span class="answer-label-separator"></span>
                   <span class="answer-response-time">about 30 minutes ago</span>

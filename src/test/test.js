@@ -33,7 +33,7 @@ describe('routes : index', () => {
           res.status.should.equal(404);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Failure');
-          res.body.message.should.eql('Sorry can\'t find that!');
+          res.body.message.should.eql('Sorry can\'t find that page!');
           done();
         });
     });
@@ -60,22 +60,29 @@ describe('routes : question', () => {
   });
 
   describe('GET /api/v1/questions/:questionId', () => {
-    it('should respond with a success message and a single question', (done) => {
-      chai.request(server)
-        .get('/api/v1/questions/1')
-        .end((err, res) => {
-          res.status.should.equal(200);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('Returning question');
-          res.body.data.should.include.keys(
-            'id', 'title', 'questionBody', 'answers'
-          );
-          res.body.data.title.should.equal('Qui aggredior inveniant desumptas aliquibus sic medicinam nam?');
-          res.body.data.questionBody.should.equal('Ipsius cupere vulgus tes hos. Eidem motus vos lucis ibi res mundo. Sit scribere quicquam ibi imponere. Ab generis re de se essendi nunquam. Generis vigilia futurus quodque co calebat spatium id.');
-          done();
-        });
-    });
+    it('should respond with a success message and a single question',
+      (done) => {
+        chai.request(server)
+          .get('/api/v1/questions/1')
+          .end((err, res) => {
+            res.status.should.equal(200);
+            res.type.should.equal('application/json');
+            res.body.status.should.eql('Success');
+            res.body.message.should.eql('Returning question');
+            res.body.data.should.include.keys(
+              'id', 'title', 'questionBody', 'answers'
+            );
+            res.body.data.title.should
+              .equal('Qui aggredior inveniant desumptas aliquibus sic'
+                + ' medicinam nam?');
+            res.body.data.questionBody.should
+              .equal('Ipsius cupere vulgus tes hos. Eidem motus vos '
+                + 'lucis ibi res mundo. Sit scribere quicquam ibi imponere. '
+                + 'Ab generis re de se essendi nunquam. Generis '
+                + 'vigilia futurus quodque co calebat spatium id.');
+            done();
+          });
+      });
 
     it('should respond with a failure message', (done) => {
       chai.request(server)
@@ -103,12 +110,18 @@ describe('routes : question', () => {
   });
 
   describe('POST /api/v1/questions', () => {
-    it('should respond with a success message and a single question that was added', (done) => {
+    it('should respond with a success message and a'
+      + 'single question that was added', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
         .send({
-          title: 'Qui aggredior inveniant desumptas aliquibus sic medicinam nam?',
-          questionBody: 'Ipsius cupere vulgus tes hos. Eidem motus vos lucis ibi res mundo. Sit scribere quicquam ibi imponere. Ab generis re de se essendi nunquam. Generis vigilia futurus quodque co calebat spatium id.',
+          title: 'Qui aggredior inveniant desumptas'
+            + 'aliquibus sic medicinam nam?',
+          questionBody: 'Ipsius cupere vulgus tes hos.'
+            + 'Eidem motus vos lucis ibi res mundo. Sit'
+            + 'scribere quicquam ibi imponere. Ab generis'
+            + 're de se essendi nunquam. Generis vigilia'
+            + 'futurus quodque co calebat spatium id.',
         })
         .end((err, res) => {
           res.status.should.equal(201);
@@ -138,7 +151,8 @@ describe('routes : question', () => {
   });
 
   describe('POST /api/v1/questions/:questionId/answers', () => {
-    it('should respond with a success message, the question and the answer that was added', (done) => {
+    it('should respond with a success message, the question and'
+      + 'the answer that was added', (done) => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
         .send({

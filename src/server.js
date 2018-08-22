@@ -15,7 +15,7 @@ app.use('/api/v1', apiVersion1);
 app.use((req, res, next) => {
   res.status(404).json({
     status: 'Failure',
-    message: 'Sorry can\'t find that!'
+    message: 'Sorry can\'t find that page!'
   });
 });
 

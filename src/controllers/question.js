@@ -2,11 +2,11 @@
 import data from '../data.json';
 
 /** Class representing a question. */
-class Questions {
+class Question {
   /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} array of questions
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static all(req, res) {
     const { questions } = data;
@@ -19,16 +19,16 @@ class Questions {
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} single question or not found
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static single(req, res) {
     // converts Id to an integer
     const questionId = parseInt(req.params.questionId, 10);
-    const question = data.questions.find(m => m.id === questionId);
+    const result = data.questions.find(question => question.id === questionId);
 
-    if (!question) {
+    if (!result) {
       res.status(404).json({
         status: 'Failure',
         message: 'Question not found'
@@ -37,16 +37,16 @@ class Questions {
       res.status(200).json({
         status: 'Success',
         message: 'Returning question',
-        data: question
+        data: result
       });
     }
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @param {next} next
-   * @return {response} status message with new question
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @param {Function} next - call back to be run
+   * @return {Object} res - response object
    */
   static createQuestion(req, res, next) {
     const nextId = data.questions.length + 1;
@@ -70,9 +70,9 @@ class Questions {
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} operation status message or not found
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static destroy(req, res) {
     const id = req.params.questionId * 1;
@@ -96,4 +96,4 @@ class Questions {
   }
 }
 
-export default Questions;
+export default Question;

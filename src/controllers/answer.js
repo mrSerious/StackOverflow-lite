@@ -2,17 +2,17 @@
 import data from '../data.json';
 
 /** Class representing a question. */
-class Answers {
+class Answer {
   /**
-   * @param {request} req
-   * @param {response} res
-   * @param {next} next
-   * @return {response} single question or not found
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @param {Function} next - go to the next
+   * @returns {Object} res - response object
    */
   static createAnswer(req, res, next) {
     const { questions } = data;
     const id = parseInt(req.params.questionId, 10);
-    const result = questions.find(m => m.id === id);
+    const result = questions.find(question => question.id === id);
     const { answers } = result;
 
     const nextId = answers.length + 1;
@@ -33,4 +33,4 @@ class Answers {
   }
 }
 
-export default Answers;
+export default Answer;

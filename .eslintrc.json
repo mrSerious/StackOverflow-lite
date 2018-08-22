@@ -32,6 +32,7 @@
         "MethodDefinition": true,
         "ClassDeclaration": true
       }
-    }]
+    }],
+    "max-len": ["error", { "code": 80 }]
   }
 }

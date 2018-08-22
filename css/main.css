@@ -698,6 +698,10 @@ button:not(:disabled):not(.disabled) {
   /* align-items: center; */
 }
 
+.user-content-container>p>a {
+  text-decoration: underline;
+}
+
 .user-content-container>* {
   margin-right: .5rem;
 }

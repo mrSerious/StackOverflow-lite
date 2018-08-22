@@ -17,7 +17,7 @@ body {
 }
 
 a {
-  color: #45d298;
+  color: #00c070;
   text-decoration: none;
   cursor: pointer;
 }
@@ -79,14 +79,14 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border: 1px solid #45d298;
+  border: 1px solid #00c070;
 }
 
 button,
 .button {
   color: #fff;
-  background-color: #45d298;
-  border: 1px solid #45d298;
+  background-color: #00c070;
+  border: 1px solid #00c070;
   border-radius: 50px;
   display: inline-block;
   font-weight: 400;
@@ -131,27 +131,13 @@ button:not(:disabled):not(.disabled) {
 * Navbar Styling
  */
 
-#logo {
-  background-color: #000;
-  border: 1px solid #000;
-  color: #fff;
-  font-family: Orbitron;
-  font-size: 26px;
-  height: 60px;
-  margin: 5px 0;
-  width: 60px;
-  line-height: 60px;
-  border-radius: 50%;
-  text-align: center;
-}
-
 .navigation {
   z-index: 1;
   position: fixed;
   width: 100%;
   height: 70px;
   background-color: #fff;
-  box-shadow: 0 0 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+  box-shadow: 0 0 0 #0c0d0e1a, 0 1px 6px #3b40451a;
 }
 
 .brand {
@@ -167,6 +153,21 @@ button:not(:disabled):not(.disabled) {
 .brand a:visited {
   color: inherit;
   text-decoration: none;
+}
+
+#logo {
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+  font-family: Orbitron;
+  font-size: 16px;
+  height: 40px;
+  margin: 15px 0;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 0 5px #999;
 }
 
 .nav-container {
@@ -203,7 +204,7 @@ button:not(:disabled):not(.disabled) {
 
 .site-navigation-links ul li a:hover,
 .site-navigation-links ul li a:visited:hover {
-  color: #45d298;
+  color: #00c070;
   border-width: 80%
 }
 
@@ -238,8 +239,8 @@ button:not(:disabled):not(.disabled) {
   -webkit-transition: all .35s ease-in;
 }
 
-.site-navigation-search input:focus {  
-  border-bottom: solid 1px #45d298;
+.site-navigation-search input:focus {
+  border-bottom: solid 1px #00c070;
 }
 
 .nav-dropdown {
@@ -311,7 +312,7 @@ button:not(:disabled):not(.disabled) {
   border-radius: 50px;
   height: 5px;
   width: 35px;
-  background: #45d298;
+  background: #00c070;
   position: absolute;
   display: block;
   content: '';
@@ -392,11 +393,13 @@ button:not(:disabled):not(.disabled) {
   margin-bottom: 1rem;
 }
 
-.heading-text h2,
-.heading-text p {
+.heading-text h2 {
   margin: 0;
 }
 
+.heading-text>p {
+  font-size: 0.8rem;
+}
 /* 
 * Signup form styling
 */
@@ -529,7 +532,10 @@ button:not(:disabled):not(.disabled) {
 
 .user-question {
   margin-bottom: 1rem;
-  font-size: 12px;
+  font-size: .8rem;
+}
+.user-question a {
+  font-weight: bold;
 }
 
 /* 
@@ -545,13 +551,14 @@ button:not(:disabled):not(.disabled) {
 }
 
 .info-bar {
+  margin-top: 5px;
   clear: left;
 }
 
 .info-bar>span {
   margin-right: 1rem;
   color: #999;
-  font-size: .6rem;
+  font-size: .8rem;
 }
 
 .answers-list {
@@ -563,10 +570,16 @@ button:not(:disabled):not(.disabled) {
 }
 
 .answer-body-meta {
+  font-size: 0.65rem;
   float: left;
 }
 
+.answer-body-meta .user a {
+  font-weight: bold;
+}
+
 .selected-answer-check {
+  font-size: 0.65rem;
   float: right;
   margin-right: 1rem;
 }
@@ -581,18 +594,20 @@ button:not(:disabled):not(.disabled) {
   border-bottom: solid 1px #cfcfcfa1;
 }
 
-.upvote-button {
+.upvote-button,
+.downvote-button {
   background-color: transparent;
   border: 0;
   color: inherit;
   float: left;
-  font-size: 2rem;
-  margin: 21px 16px 0 0;
-  width: 60px;
+  font-size: 1.5rem;
+  margin: 21px 5px 0 0;
+  padding: 0.376rem;
   color: #919191 !important;
 }
 
-.upvote-button>* {
+.upvote-button>*,
+.downvote-button>* {
   display: block;
 }
 
@@ -683,6 +698,10 @@ button:not(:disabled):not(.disabled) {
   /* align-items: center; */
 }
 
+.user-content-container>p>a {
+  text-decoration: underline;
+}
+
 .user-content-container>* {
   margin-right: .5rem;
 }
@@ -767,7 +786,22 @@ button:not(:disabled):not(.disabled) {
   }
   .site-navigation-links ul li a:hover,
   .site-navigation-links ul li a:visited:hover {
-    border-bottom: 1px solid #45d298;
+    border-bottom: 1px solid #00c070;
+  }
+  .upvote-button,
+  .downvote-button {
+    background-color: transparent;
+    border: 0;
+    color: inherit;
+    float: left;
+    font-size: 1.8rem;
+    margin: 21px 16px 0 0;
+    width: 60px;
+    color: #919191 !important;
+  }
+  .answer-body-meta,
+  .selected-answer-check {
+    font-size: 0.8rem !important;
   }
 }
 

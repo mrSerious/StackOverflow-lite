@@ -1,42 +1,57 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import data from '../data.json';
 
-/** Class representing a question. */
-class Questions {
+/**
+ * @class Question
+ * @classdesc class representing Question
+ */
+class Question {
   /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} array of questions
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static all(req, res) {
     const { questions } = data;
     const count = questions.length;
-    res.status(200).json({ status: 'success', count, data: questions });
+    res.status(200).json({
+      status: 'Success',
+      message: 'Returning list of questions',
+      data: { count, questions }
+    });
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} single question or not found
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static single(req, res) {
-    const questionId = req.params.questionId * 1; // converts Id from string into an integer
-    const question = data.questions.find(m => m.id === questionId);
+    // converts Id to an integer
+    const questionId = parseInt(req.params.questionId, 10);
+    const result = data.questions.find(question => question.id === questionId);
 
-    if (!question) {
-      res.status(404).json({ status: 'Question not found!' });
+    if (!result) {
+      res.status(404).json({
+        status: 'Failure',
+        message: 'Question not found'
+      });
     } else {
-      res.status(200).json({ status: 'success', data: question });
+      res.status(200).json({
+        status: 'Success',
+        message: 'Returning question',
+        data: result
+      });
     }
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @param {next} next
-   * @return {response} status message with new question
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @param {Function} next - call back to be run
+   * @return {Object} res - response object
    */
-  static newQues(req, res, next) {
+  static createQuestion(req, res, next) {
     const nextId = data.questions.length + 1;
     const { title } = req.body;
     const { questionBody } = req.body;
@@ -45,42 +60,22 @@ class Questions {
     const newQuestion = {
       id: nextId,
       title,
-      questionBody
+      questionBody,
+      answers: []
     };
 
     questions.push(newQuestion);
-    res.status(201).json({ status: 'success', data: newQuestion });
+    res.status(201).json({
+      status: 'Success',
+      message: 'Question created',
+      data: newQuestion
+    });
   }
 
   /**
-   * @param {request} req
-   * @param {response} res
-   * @param {next} next
-   * @return {response} single question or not found
-   */
-  static newAns(req, res, next) {
-    const { questions } = data;
-    const id = parseInt(req.params.questionId, 10);
-    const result = questions.find(m => m.id === id);
-    const { answers } = result;
-
-    const nextId = answers.length + 1;
-    const { content } = req.body;
-
-    const newAnswer = {
-      id: nextId,
-      content,
-      questionId: id
-    };
-
-    answers.push(newAnswer);
-    res.status(201).json({ status: 'success', data: result });
-  }
-
-  /**
-   * @param {request} req
-   * @param {response} res
-   * @return {response} operation status message or not found
+   * @param {Object} req - request object
+   * @param {Object} res - response object
+   * @return {Object} res - response object
    */
   static destroy(req, res) {
     const id = req.params.questionId * 1;
@@ -90,12 +85,18 @@ class Questions {
     const index = questions.indexOf(result);
 
     if (!result) {
-      res.status(404).json({ status: 'Question not found!' });
+      res.status(404).json({
+        status: 'Failure',
+        message: 'Question not found'
+      });
     } else {
       questions.splice(index, 1);
-      res.status(200).send({ status: 'success' });
+      res.status(200).send({
+        status: 'Success',
+        message: 'Question deleted'
+      });
     }
   }
 }
 
-export default Questions;
+export default Question;

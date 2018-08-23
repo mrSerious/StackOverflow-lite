@@ -1,7 +1,10 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import data from '../data.json';
 
-/** Class representing a question. */
+/**
+ * @class Question
+ * @classdesc class representing Question
+ */
 class Question {
   /**
    * @param {Object} req - request object

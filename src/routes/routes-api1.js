@@ -25,7 +25,8 @@ router.get('/questions/:questionId', validate.getQuestion, question.single);
 router.post('/questions', validate.postQuestion, question.createQuestion);
 
 /* POST answer */
-router.post('/questions/:questionId/answers', validate.postAnswer, answer.createAnswer);
+router.post('/questions/:questionId/answers',
+  validate.postAnswer, answer.createAnswer);
 
 /* DELETE question */
 router.delete('/questions/:questionId', question.destroy);

@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import question from '../controllers/question';
 import answer from '../controllers/answer';
+import user from '../controllers/user';
 
 import validate from '../middleware/validation';
 
@@ -31,4 +32,5 @@ router.post('/questions/:questionId/answers',
 /* DELETE question */
 router.delete('/questions/:questionId', question.destroy);
 
+router.post('/auth/signup', validate.signUp, user.signUp);
 export default router;

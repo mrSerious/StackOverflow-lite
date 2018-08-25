@@ -3,11 +3,10 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../server';
 
-process.env.NODE_ENV = 'test';
+chai.use(chaiHttp);
 
 const should = chai.should();
 
-chai.use(chaiHttp);
 
 describe('routes : index', () => {
   describe('GET /api/v1', () => {

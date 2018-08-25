@@ -8,11 +8,11 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "migrate": "psql -U postgres -d so-lite-dev -f src/models/index.sql",
-    "migrate:test": "psql -U postgres -d so-lite-test -f src/models/index.sql",
+    "migrate:test": "psql -U postgres -d \"so-lite-test\" -f src/models/index.sql",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon ./src/server.js --exec babel-node",
     "serve": "node dist/server.js",
-    "test": "npm run migrate:test && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
+    "test": "set NODE_ENV=test&&npm run migrate:test && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.1.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",

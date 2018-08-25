@@ -8,10 +8,11 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "migrate": "psql -U postgres -d so-lite-dev -f src/models/index.sql",
+    "migrate:test": "psql -U postgres -d so-lite-test -f src/models/index.sql",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon ./src/server.js --exec babel-node",
     "serve": "node dist/server.js",
-    "test": "nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit"
+    "test": "npm run migrate:test && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
   },
   "repository": {
     "type": "git",

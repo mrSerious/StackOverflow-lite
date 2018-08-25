@@ -1,10 +1,11 @@
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^pool" }] */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../server';
 
 process.env.NODE_ENV = 'test';
 
-chai.should();
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -104,6 +105,7 @@ describe('routes : question', () => {
           res.type.should.equal('application/json');
           res.body.status.should.eql('Failure');
           res.body.message.should.eql('Validation failed');
+          res.body.data[0].msg.should.eql('Invalid url parameter');
           done();
         });
     });
@@ -206,6 +208,97 @@ describe('routes : question', () => {
           res.type.should.equal('application/json');
           res.body.status.should.eql('Failure');
           res.body.message.should.eql('Question not found');
+          done();
+        });
+    });
+    it('should respond with validation error', (done) => {
+      chai.request(server)
+        .delete('/api/v1/questions/r')
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('Failure');
+          res.body.message.should.eql('Validation failed');
+          res.body.data[0].msg.should.eql('Invalid url parameter');
+          done();
+        });
+    });
+  });
+});
+
+describe('routes : user', () => {
+  describe('POST /auth/signup', () => {
+    it('should register a new user', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'test',
+          lastname: 'test',
+          email: 'm_doe@example.com',
+          password: 'herman1'
+        })
+        .end((err, res) => {
+          should.not.exist(err);
+          res.redirects.length.should.eql(0);
+          res.status.should.eql(201);
+          res.type.should.eql('application/json');
+          res.body.should.include.keys('status', 'message', 'token', 'data');
+          res.body.status.should.eql('success');
+          done();
+        });
+    });
+    it('should not register duplicate user', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'test',
+          lastname: 'test',
+          email: 'm_doe@example.com',
+          password: 'herman1'
+        })
+        .end((err, res) => {
+          res.status.should.eql(409);
+          res.type.should.eql('application/json');
+          res.body.should.include.keys('status', 'message');
+          res.body.status.should.eql('failure');
+          done();
+        });
+    });
+    it('should return error', (done) => {
+      pool => Promise.reject();
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'test',
+          lastname: 'test',
+          email: 'm_doe@example.com',
+          password: 'herman1'
+        })
+        .end((err, res) => {
+          res.status.should.eql(409);
+          done();
+        });
+    });
+
+    it('should respond with validation error message', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send()
+        .end((err, res) => {
+          res.status.should.equal(400);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('failure');
+          res.body.message.should.eql('Validation failed');
+          res.body.data[0].msg.should.eql('First Name is required');
+          res.body.data[1].msg.should.eql('You have not entered a string');
+          res.body.data[2].msg.should.eql('Last Name is required');
+          res.body.data[3].msg.should.eql('You have not entered a string');
+          res.body.data[4].msg.should.eql('Email is required');
+          res.body.data[5].msg.should.eql('You must provide an email address');
+          res.body.data[6].msg.should.eql('Password is required');
+          res.body.data[7].msg.should
+            .eql('Password must be at least 5 chars long');
+          res.body.data[8].msg.should.eql('Password must contain a number');
           done();
         });
     });

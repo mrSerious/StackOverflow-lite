@@ -240,7 +240,7 @@ describe('routes : user', () => {
           res.redirects.length.should.eql(0);
           res.status.should.eql(201);
           res.type.should.eql('application/json');
-          res.body.should.include.keys('status', 'message', 'token', 'data');
+          res.body.should.include.keys('status', 'message', 'data');
           res.body.status.should.eql('success');
           done();
         });

@@ -44,12 +44,12 @@ class User {
             res.status(201).send({
               status: 'success',
               message: 'user created',
-              token,
               data: {
                 id: newUser.rows[0].id,
                 firstname: newUser.rows[0].firstname,
                 lastname: newUser.rows[0].lastname,
-                email: newUser.rows[0].email
+                email: newUser.rows[0].email,
+                token
               },
             });
           })

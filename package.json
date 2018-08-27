@@ -7,12 +7,13 @@
     "build": "babel src -d dist --copy-files",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "migrate": "psql -U tersoo -d so-lite-dev -f src/models/index.sql",
-    "migrate:test": "psql -U tersoo -d \"so-lite-test\" -f src/models/index.sql",
+    "migrate": "psql -U postgres -d \"so-lite-dev\" -f src/models/index.sql",
+    "migrate:test": "psql -U postgres -d \"so-lite-test\" -f src/models/index.sql",
+    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\"",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon ./src/server.js --exec babel-node",
     "serve": "node dist/server.js",
-    "test": "set NODE_ENV=test&&npm run migrate:test && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
+    "test": "npm run migrate && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
   },
   "repository": {
     "type": "git",

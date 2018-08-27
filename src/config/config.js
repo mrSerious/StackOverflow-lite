@@ -1,11 +1,13 @@
-require('dotenv').config();
+import Dotenv from 'dotenv';
 
-export default {
+Dotenv.config();
+
+const config = {
   development: {
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: 'so-lite-dev',
-    host: '127.0.0.1',
+    host: process.env.DB_HOST,
     port: 5432,
     dialect: 'postgres'
   },
@@ -13,7 +15,7 @@ export default {
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: 'so-lite-test',
-    host: '127.0.0.1',
+    host: process.env.DB_HOST,
     port: 5432,
     dialect: 'postgres'
   },
@@ -21,3 +23,5 @@ export default {
     environment: 'production'
   }
 };
+
+export default config;

@@ -7,7 +7,6 @@ chai.use(chaiHttp);
 
 const should = chai.should();
 
-
 describe('routes : index', () => {
   describe('GET /api/v1', () => {
     it('should display "Connected!" message', (done) => {

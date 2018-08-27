@@ -7,10 +7,13 @@
     "build": "babel src -d dist --copy-files",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
+    "migrate": "psql -U postgres -d \"so-lite-dev\" -f src/models/index.sql",
+    "migrate:test": "psql -U postgres -d \"so-lite-test\" -f src/models/index.sql",
+    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\"",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon ./src/server.js --exec babel-node",
     "serve": "node dist/server.js",
-    "test": "nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit"
+    "test": "npm run migrate && nyc --reporter=html --reporter=text mocha ./src/test --require  babel-core/register --recursive --exit --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -24,12 +27,14 @@
   "homepage": "https://github.com/mrSerious/StackOverflow-lite#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-validator": "^5.3.0",
+    "jsonwebtoken": "^8.3.0",
     "mocha": "^5.2.0",
     "pg": "^7.4.3"
   },
@@ -39,6 +44,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.1.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",

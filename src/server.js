@@ -2,12 +2,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
-
+import Dotenv from 'dotenv';
 import apiVersion1 from './routes/routes-api1';
+
+Dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());

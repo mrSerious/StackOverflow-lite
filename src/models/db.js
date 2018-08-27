@@ -1,17 +1,14 @@
 import pg from 'pg';
 import Dotenv from 'dotenv';
+import config from '../config/config';
 
 Dotenv.config();
 
-const config = {
-  user: process.env.DB_USER,
-  database: process.env.DB_URL,
-  password: process.env.DB_PASS,
-  port: process.env.DB_PORT,
-  max: 10,
-  idleTimeoutMillis: 3000,
-};
+// const env = process.env.NODE_ENV || 'development';
+// const configObj = config[env];
 
-const pool = new pg.Pool(config);
+// console.log(env);
+// console.log(configObj);
+const pool = new pg.Pool(config.development);
 
 export default pool;

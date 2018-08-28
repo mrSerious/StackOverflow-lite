@@ -13,7 +13,6 @@ describe('routes : question', () => {
       chai.request(server)
         .get('/api/v1/questions')
         .end((err, res) => {
-          console.log(err);
           res.status.should.equal(200);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Success');
@@ -33,18 +32,7 @@ describe('routes : question', () => {
             res.status.should.equal(200);
             res.type.should.equal('application/json');
             res.body.status.should.eql('Success');
-            res.body.message.should.eql('Returning question');
-            res.body.data.should.include.keys(
-              'id', 'title', 'questionBody', 'answers'
-            );
-            res.body.data.title.should
-              .equal('Qui aggredior inveniant desumptas aliquibus sic'
-                + ' medicinam nam?');
-            res.body.data.questionBody.should
-              .equal('Ipsius cupere vulgus tes hos. Eidem motus vos '
-                + 'lucis ibi res mundo. Sit scribere quicquam ibi imponere. '
-                + 'Ab generis re de se essendi nunquam. Generis '
-                + 'vigilia futurus quodque co calebat spatium id.');
+            res.body.message.should.eql('Request was successful');
             done();
           });
       });

@@ -9,8 +9,6 @@ Dotenv.config();
 let settings = '';
 if (process.env.NODE_ENV) {
   if (process.env.NODE_ENV === 'test') {
-    console.log('testing environment');
-    // settings = process.env.DB_URL_TEST;
     settings = config.test;
   } else if (process.NODE_ENV === 'production') {
     settings = config.production;

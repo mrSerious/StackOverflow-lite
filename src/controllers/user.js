@@ -63,6 +63,40 @@ class User {
         mesage: 'internal server error',
       }));
   }
+
+  // login route
+  /**
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ * @return {Object} res - response object
+ * @param {Function} next - call back to be run
+ */
+  static logIn(req, res, next) {
+    const email = req.body.email.trim();
+    db.query('SELECT * FROM users where email = $1', [email])
+      .then((user) => {
+        console.log(user);
+        if (user.rowCount === 0) return res.status(404).send('No user found.');
+        const passwordIsValid = bcrypt.compareSync(req.body.password, user.rows[0].password);
+        if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+        const token = jwt.sign({ id: user.rows[0].id }, process.env.SECRET_KEY, {
+          expiresIn: 86400 // expires in 24 hours
+        });
+        return res.status(200).send({
+          status: 'success',
+          message: 'login sucessful',
+          data: {
+            auth: true,
+            token
+          }
+        });
+      })
+      .catch(err => res.status(500).send({
+        status: 'failure',
+        mesage: 'internal server error',
+        error: err
+      }));
+  }
 }
 
 export default User;

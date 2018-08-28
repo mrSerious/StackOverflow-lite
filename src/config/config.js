@@ -8,7 +8,6 @@ const config = {
     password: process.env.DB_PASS,
     database: 'so-lite-dev',
     host: process.env.DB_HOST,
-    port: 5432,
     dialect: 'postgres'
   },
   test: {
@@ -16,7 +15,6 @@ const config = {
     password: process.env.DB_PASS,
     database: 'so-lite-test',
     host: process.env.DB_HOST,
-    port: 5432,
     dialect: 'postgres'
   },
   production: {

@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import data from '../data.json';
+import db from '../models/db';
 
 /**
  * @class Question
@@ -12,13 +13,18 @@ class Question {
    * @return {Object} res - response object
    */
   static all(req, res) {
-    const { questions } = data;
-    const count = questions.length;
-    res.status(200).json({
-      status: 'Success',
-      message: 'Returning list of questions',
-      data: { count, questions }
-    });
+    db.query('SELECT * FROM questions ORDER BY id ASC;')
+      .then((result) => {
+        return res.json({
+          status: 'success',
+          message: 'data retreival successful',
+          data: result.rows
+        });
+      })
+      .catch(err => res.status(500).send({
+        status: 'failure',
+        mesage: 'internal server error',
+      }));
   }
 
   /**

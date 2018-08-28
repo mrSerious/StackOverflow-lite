@@ -34,21 +34,31 @@ class Question {
    */
   static single(req, res) {
     // converts Id to an integer
-    const questionId = parseInt(req.params.questionId, 10);
-    const result = data.questions.find(question => question.id === questionId);
-
-    if (!result) {
-      res.status(404).json({
+    const id = parseInt(req.params.questionId, 10);
+  
+    db.query(`
+    SELECT *
+    FROM questions
+    FULL JOIN answers
+    ON questions.id = answers.question_id
+    WHERE questions.id = ${[id]} ORDER BY questions.id`)
+      .then((result) => {
+        if (result.rowCount < 1) {
+          return res.status(404).json({
+            status: 'Failure',
+            message: 'Question not found',
+          });
+        }
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Request was successful',
+          data: result.rows
+        });
+      })
+      .catch(err => res.status(500).send({
         status: 'Failure',
-        message: 'Question not found'
-      });
-    } else {
-      res.status(200).json({
-        status: 'Success',
-        message: 'Returning question',
-        data: result
-      });
-    }
+        mesage: 'Internal server error',
+      }));
   }
 
   /**

@@ -262,23 +262,8 @@ describe('routes : user', () => {
           done();
         });
     });
-    it('should return error', (done) => {
-      pool => Promise.reject();
-      chai.request(server)
-        .post('/api/v1/auth/signup')
-        .send({
-          firstname: 'test',
-          lastname: 'test',
-          email: 'm_doe@example.com',
-          password: 'herman1'
-        })
-        .end((err, res) => {
-          res.status.should.eql(409);
-          done();
-        });
-    });
 
-    it('should respond with validation error message', (done) => {
+    it('should respond with validation error', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send()
@@ -297,6 +282,53 @@ describe('routes : user', () => {
           res.body.data[7].msg.should
             .eql('Password must be at least 5 chars long');
           res.body.data[8].msg.should.eql('Password must contain a number');
+          done();
+        });
+    });
+  });
+
+  describe('POST /auth/login', () => {
+    it('should login a user', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'm_doe@example.com',
+          password: 'herman1'
+        })
+        .end((err, res) => {
+          should.not.exist(err);
+          res.redirects.length.should.eql(0);
+          res.status.should.eql(200);
+          res.type.should.eql('application/json');
+          res.body.should.include.keys('status', 'message', 'data');
+          res.body.status.should.eql('success');
+          should.exist(res.body.data.token);
+          done();
+        });
+    });
+    it('should respond with validation error', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: '',
+          password: ''
+        })
+        .end((err, res) => {
+          res.status.should.eql(400);
+          done();
+        });
+    });
+    it('should not login an unregistered user', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'michael@example.com',
+          password: 'johnson123'
+        })
+        .end((err, res) => {
+          res.status.should.eql(404);
+          res.type.should.eql('application/json');
+          res.body.status.should.eql('failure');
           done();
         });
     });

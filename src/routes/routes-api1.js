@@ -37,6 +37,6 @@ router.delete('/questions/:questionId',
 router.post('/auth/signup', validate.signUp, user.signUp);
 
 /* User login */
-router.post('/auth/login', user.logIn);
+router.post('/auth/login', validate.logIn, user.logIn);
 
 export default router;

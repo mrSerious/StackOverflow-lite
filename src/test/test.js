@@ -45,6 +45,7 @@ describe('routes : question', () => {
       chai.request(server)
         .get('/api/v1/questions')
         .end((err, res) => {
+          console.log(err);
           res.status.should.equal(200);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Success');
@@ -233,6 +234,7 @@ describe('routes : user', () => {
           password: 'herman1'
         })
         .end((err, res) => {
+          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(201);
@@ -293,6 +295,7 @@ describe('routes : user', () => {
           password: 'herman1'
         })
         .end((err, res) => {
+          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);

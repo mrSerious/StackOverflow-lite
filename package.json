@@ -9,7 +9,7 @@
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "migrate": "psql -U postgres -d \"so-lite-dev\" -f src/models/index.sql",
     "migrate:test": "psql -U postgres -d \"so-lite-test\" -f src/models/index.sql",
-    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\"",
+
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon ./src/server.js --exec babel-node",
     "serve": "node dist/server.js",

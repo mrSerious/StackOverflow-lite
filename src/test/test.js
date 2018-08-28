@@ -48,11 +48,8 @@ describe('routes : question', () => {
           res.status.should.equal(200);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Success');
-          res.body.message.should.eql('Returning list of questions');
-          res.body.data.should.include.keys(
-            'count', 'questions'
-          );
-          res.body.data.count.should.eql(2);
+          res.body.message.should.eql('Data retreival successful');
+          res.body.data.should.include.keys('questions');
           done();
         });
     });

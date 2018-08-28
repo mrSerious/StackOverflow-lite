@@ -16,14 +16,14 @@ class Question {
     db.query('SELECT * FROM questions ORDER BY id ASC;')
       .then((result) => {
         return res.json({
-          status: 'success',
-          message: 'data retreival successful',
-          data: result.rows
+          status: 'Success',
+          message: 'Data retreival successful',
+          data: { questions: result.rows }
         });
       })
       .catch(err => res.status(500).send({
-        status: 'failure',
-        mesage: 'internal server error',
+        status: 'Failure',
+        mesage: 'Internal server error',
       }));
   }
 

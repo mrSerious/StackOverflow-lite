@@ -14,13 +14,11 @@ class Question {
    */
   static all(req, res) {
     db.query('SELECT * FROM questions ORDER BY id ASC;')
-      .then((result) => {
-        return res.json({
-          status: 'Success',
-          message: 'Data retreival successful',
-          data: { questions: result.rows }
-        });
-      })
+      .then(result => res.json({
+        status: 'Success',
+        message: 'Data retreival successful',
+        data: { questions: result.rows }
+      }))
       .catch(err => res.status(500).send({
         status: 'Failure',
         mesage: 'Internal server error',
@@ -35,7 +33,7 @@ class Question {
   static single(req, res) {
     // converts Id to an integer
     const id = parseInt(req.params.questionId, 10);
-  
+
     db.query(`
     SELECT *
     FROM questions
@@ -68,24 +66,20 @@ class Question {
    * @return {Object} res - response object
    */
   static createQuestion(req, res, next) {
-    const nextId = data.questions.length + 1;
-    const { title } = req.body;
-    const { questionBody } = req.body;
-    const { questions } = data;
-
-    const newQuestion = {
-      id: nextId,
-      title,
-      questionBody,
-      answers: []
-    };
-
-    questions.push(newQuestion);
-    res.status(201).json({
-      status: 'Success',
-      message: 'Question created',
-      data: newQuestion
-    });
+    const { body, title } = req.body;
+    db.query('INSERT INTO questions(title, body)'
+      + ' values($1, $2) RETURNING *', [title, body])
+      .then(newQuestion => res.status(201).json({
+        status: 'Success',
+        message: 'Question created successfully',
+        data: newQuestion.rows
+      }))
+      .catch((err) => {
+        res.status(500).send({
+          status: 'Failure',
+          message: 'Internal server error',
+        });
+      });
   }
 
   /**

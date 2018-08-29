@@ -65,26 +65,18 @@ describe('routes : question', () => {
 
   describe('POST /api/v1/questions', () => {
     it('should respond with a success message and a'
-      + 'single question that was added', (done) => {
+      + ' single question that was added', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
         .send({
-          title: 'Qui aggredior inveniant desumptas'
-            + 'aliquibus sic medicinam nam?',
-          questionBody: 'Ipsius cupere vulgus tes hos.'
-            + 'Eidem motus vos lucis ibi res mundo. Sit'
-            + 'scribere quicquam ibi imponere. Ab generis'
-            + 're de se essendi nunquam. Generis vigilia'
-            + 'futurus quodque co calebat spatium id.',
+          title: 'Qui aggredior inveniant desumptas',
+          body: 'Ipsius cupere vulgus tes hos.',
         })
         .end((err, res) => {
           res.status.should.equal(201);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Success');
-          res.body.message.should.eql('Question created');
-          res.body.data.should.include.keys(
-            'id', 'title', 'questionBody', 'answers'
-          );
+          res.body.message.should.eql('Question created successfully');
           done();
         });
     });

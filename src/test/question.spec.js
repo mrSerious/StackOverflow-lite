@@ -12,12 +12,12 @@ describe('routes : question', () => {
     it('should respond a success message and all questions', (done) => {
       chai.request(server)
         .get('/api/v1/questions')
-        .end((err, res) => {
-          res.status.should.equal(200);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('Data retreival successful');
-          res.body.data.should.include.keys('questions');
+        .end((error, response) => {
+          response.status.should.equal(200);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Data retreival successful');
+          response.body.data.should.include.keys('questions');
           done();
         });
     });
@@ -28,11 +28,11 @@ describe('routes : question', () => {
       (done) => {
         chai.request(server)
           .get('/api/v1/questions/1')
-          .end((err, res) => {
-            res.status.should.equal(200);
-            res.type.should.equal('application/json');
-            res.body.status.should.eql('Success');
-            res.body.message.should.eql('Request was successful');
+          .end((error, response) => {
+            response.status.should.equal(200);
+            response.type.should.equal('application/json');
+            response.body.status.should.eql('Success');
+            response.body.message.should.eql('Request was successful');
             done();
           });
       });
@@ -40,11 +40,11 @@ describe('routes : question', () => {
     it('should respond with a failure message', (done) => {
       chai.request(server)
         .get('/api/v1/questions/15')
-        .end((err, res) => {
-          res.status.should.equal(404);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Failure');
-          res.body.message.should.eql('Question not found');
+        .end((error, response) => {
+          response.status.should.equal(404);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Question not found');
           done();
         });
     });
@@ -52,12 +52,12 @@ describe('routes : question', () => {
     it('should respond with a validation error message', (done) => {
       chai.request(server)
         .get('/api/v1/questions/w')
-        .end((err, res) => {
-          res.status.should.equal(400);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Failure');
-          res.body.message.should.eql('Validation failed');
-          res.body.data[0].msg.should.eql('Invalid url parameter');
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Validation failed');
+          response.body.data[0].msg.should.eql('Invalid url parameter');
           done();
         });
     });
@@ -72,11 +72,11 @@ describe('routes : question', () => {
           title: 'Qui aggredior inveniant desumptas',
           body: 'Ipsius cupere vulgus tes hos.',
         })
-        .end((err, res) => {
-          res.status.should.equal(201);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('Question created successfully');
+        .end((error, response) => {
+          response.status.should.equal(201);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Question created successfully');
           done();
         });
     });
@@ -85,12 +85,12 @@ describe('routes : question', () => {
       chai.request(server)
         .post('/api/v1/questions')
         .send()
-        .end((err, res) => {
-          res.type.should.equal('application/json');
-          res.status.should.equal(400);
-          res.body.message.should.eql('Validation failed');
-          res.body.data[0].msg.should.eql('Title cannot be empty');
-          res.body.data[1].msg.should.eql('Question body cannot be empty');
+        .end((error, response) => {
+          response.type.should.equal('application/json');
+          response.status.should.equal(400);
+          response.body.message.should.eql('Validation failed');
+          response.body.data[0].msg.should.eql('Title cannot be empty');
+          response.body.data[1].msg.should.eql('Question body cannot be empty');
           done();
         });
     });
@@ -100,12 +100,12 @@ describe('routes : question', () => {
     it('should respond with a success message', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/1')
-        .end((err, res) => {
-          res.status.should.equal(200);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Success');
-          res.body.message.should.eql('Question deleted successfully');
-          res.body.should.include.keys('status', 'message');
+        .end((error, response) => {
+          response.status.should.equal(200);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Question deleted successfully');
+          response.body.should.include.keys('status', 'message');
           done();
         });
     });
@@ -113,23 +113,23 @@ describe('routes : question', () => {
     it('should respond with a not found message', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/50')
-        .end((err, res) => {
-          res.status.should.equal(404);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Failure');
-          res.body.message.should.eql('Question not found');
+        .end((error, response) => {
+          response.status.should.equal(404);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Question not found');
           done();
         });
     });
     it('should respond with validation error', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/r')
-        .end((err, res) => {
-          res.status.should.equal(400);
-          res.type.should.equal('application/json');
-          res.body.status.should.eql('Failure');
-          res.body.message.should.eql('Validation failed');
-          res.body.data[0].msg.should.eql('Invalid url parameter');
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Validation failed');
+          response.body.data[0].msg.should.eql('Invalid url parameter');
           done();
         });
     });

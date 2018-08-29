@@ -13,8 +13,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
-app.use((req, res, next) => {
-  res.status(404).json({
+app.use((request, response, next) => {
+  response.status(404).json({
     status: 'Failure',
     message: 'Sorry can\'t find that page!'
   });

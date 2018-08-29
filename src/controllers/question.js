@@ -7,31 +7,31 @@ import db from '../models/db';
  */
 class Question {
   /**
-   * @param {Object} req - request object
-   * @param {Object} res - response object
-   * @return {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @return {Object} response - response object
    */
-  static all(req, res) {
+  static all(request, response) {
     db.query('SELECT * FROM questions ORDER BY id ASC;')
-      .then(result => res.json({
+      .then(result => response.json({
         status: 'Success',
         message: 'Data retreival successful',
         data: { questions: result.rows }
       }))
-      .catch(err => res.status(500).send({
+      .catch(error => response.status(500).send({
         status: 'Failure',
         mesage: 'Internal server error',
       }));
   }
 
   /**
-   * @param {Object} req - request object
-   * @param {Object} res - response object
-   * @return {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @return {Object} response - response object
    */
-  static single(req, res) {
+  static single(request, response) {
     // converts Id to an integer
-    const id = parseInt(req.params.questionId, 10);
+    const id = parseInt(request.params.questionId, 10);
 
     db.query(`
     SELECT *
@@ -41,40 +41,40 @@ class Question {
     WHERE questions.id = ${[id]} ORDER BY questions.id`)
       .then((result) => {
         if (result.rowCount < 1) {
-          return res.status(404).json({
+          return response.status(404).json({
             status: 'Failure',
             message: 'Question not found',
           });
         }
-        return res.status(200).json({
+        return response.status(200).json({
           status: 'Success',
           message: 'Request was successful',
           data: result.rows
         });
       })
-      .catch(err => res.status(500).send({
+      .catch(error => response.status(500).send({
         status: 'Failure',
         mesage: 'Internal server error',
       }));
   }
 
   /**
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - call back to be run
-   * @return {Object} res - response object
+   * @return {Object} response - response object
    */
-  static createQuestion(req, res, next) {
-    const { body, title } = req.body;
+  static createQuestion(request, response, next) {
+    const { body, title } = request.body;
     db.query('INSERT INTO questions(title, body)'
       + ' values($1, $2) RETURNING *', [title, body])
-      .then(newQuestion => res.status(201).json({
+      .then(newQuestion => response.status(201).json({
         status: 'Success',
         message: 'Question created successfully',
         data: newQuestion.rows
       }))
-      .catch((err) => {
-        res.status(500).send({
+      .catch((error) => {
+        response.status(500).send({
           status: 'Failure',
           message: 'Internal server error',
         });
@@ -82,40 +82,40 @@ class Question {
   }
 
   /**
-   * @param {Object} req - request object
-   * @param {Object} res - response object
-   * @return {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @return {Object} response - response object
    */
-  static destroy(req, res) {
-    const id = req.params.questionId * 1;
+  static destroy(request, response) {
+    const id = request.params.questionId * 1;
     db.query('SELECT * FROM questions WHERE id = $1', [id])
       .then((selectQueryResult) => {
         if (selectQueryResult.rowCount !== 0) {
           db.query('DELETE FROM questions where id = $1', [id])
             .then((deleteQueryResult) => {
               if (deleteQueryResult.rowCount === 1) {
-                return res.status(200).json({
+                return response.status(200).json({
                   status: 'Success',
                   message: 'Question deleted successfully'
                 });
               }
-              return res.status(500).json({
+              return response.status(500).json({
                 status: 'Failure',
                 message: 'Something went wrong. Contact your administrator'
               });
             })
-            .catch(err => res.status(500).send({
+            .catch(error => response.status(500).send({
               status: 'Failure',
               mesage: 'Internal server error',
             }));
         } else {
-          return res.status(404).json({
+          return response.status(404).json({
             status: 'Failure',
             message: 'Question not found'
           });
         }
       })
-      .catch(err => res.status(500).send({
+      .catch(error => response.status(500).send({
         status: 'Failure',
         mesage: 'Internal server error'
       }));

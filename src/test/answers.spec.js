@@ -7,36 +7,53 @@ chai.use(chaiHttp);
 
 chai.should();
 
+let userToken;
 describe('POST /api/v1/questions/:questionId/answers', () => {
-  it('should respond with a success message, the question and'
-    + 'the answer that was added', (done) => {
+  before((done) => {
     chai.request(server)
-      .post('/api/v1/questions/1/answers')
+      .post('/api/v1/auth/signup')
       .send({
-        content: 'Obstat mox stupor per pla captum uti.'
+        lastname: 'Michael',
+        firstname: 'Doe',
+        email: 'michael_doe@example.com',
+        password: 'herman1'
       })
-      .end((err, res) => {
-        res.status.should.equal(201);
-        res.type.should.equal('application/json');
-        res.body.status.should.eql('Success');
-        res.body.message.should.eql('Answer created');
-        res.body.data.should.include.keys(
-          'id', 'title', 'questionBody', 'answers'
-        );
+      .end((error, response) => {
+        if (error) throw error;
+        userToken = response.body.data.token;
         done();
       });
   });
+  // it('should respond with a success message', (done) => {
+  //   chai.request(server)
+  //     .post('/api/v1/questions/1/answers')
+  //     .set('x-access-token', userToken)
+  //     .send({
+  //       content: 'Obstat mox stupor per pla captum uti.'
+  //     })
+  //     .end((error, response) => {
+  //       response.status.should.equal(201);
+  //       response.type.should.equal('application/json');
+  //       response.body.status.should.eql('Success');
+  //       response.body.message.should.eql('Answer created');
+  //       response.body.data.should.include.keys(
+  //         'id', 'title', 'questionBody', 'answers'
+  //       );
+  //       done();
+  //     });
+  // });
 
   it('should respond with validation error message', (done) => {
     chai.request(server)
       .post('/api/v1/questions/1/answers')
+      .set('x-access-token', userToken)
       .send()
-      .end((err, res) => {
-        res.status.should.equal(400);
-        res.type.should.equal('application/json');
-        res.body.status.should.eql('Failure');
-        res.body.message.should.eql('Validation failed');
-        res.body.data[0].msg.should.eql('Content cannot be empty');
+      .end((error, response) => {
+        response.status.should.equal(400);
+        response.type.should.equal('application/json');
+        response.body.status.should.eql('Failure');
+        response.body.message.should.eql('Validation failed');
+        response.body.data[0].msg.should.eql('Content cannot be empty');
         done();
       });
   });

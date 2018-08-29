@@ -5,12 +5,13 @@ import answer from '../controllers/answer';
 import user from '../controllers/user';
 
 import validate from '../middleware/validation';
+import verify from '../middleware/verifyToken';
 
 const router = Router();
 
 /* GET home page. */
-router.get('/', (req, res) => {
-  res.status(200).json({
+router.get('/', (request, response) => {
+  response.status(200).json({
     status: 'Success',
     message: 'Connected!'
   });
@@ -27,7 +28,7 @@ router.post('/questions', validate.postQuestion, question.createQuestion);
 
 /* POST answer */
 router.post('/questions/:questionId/answers',
-  validate.postAnswer, answer.createAnswer);
+  [verify.check, validate.postAnswer], answer.createAnswer);
 
 /* DELETE question */
 router.delete('/questions/:questionId',

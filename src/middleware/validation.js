@@ -57,7 +57,7 @@ class validation {
    */
   static postQuestion(req, res, next) {
     req.checkBody('title', 'Title cannot be empty').notEmpty();
-    req.checkBody('questionBody', 'Question body cannot be empty').notEmpty();
+    req.checkBody('body', 'Question body cannot be empty').notEmpty();
 
     const errors = req.validationErrors();
 

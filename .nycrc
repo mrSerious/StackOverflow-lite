@@ -1,3 +1,3 @@
 {
-  "exclude": ["src/test/test.js", "src/models/db.js", "src/config/config.js"]
+  "exclude": ["src/test/", "src/models/db.js", "src/config/config.js"]
 }

@@ -33,6 +33,10 @@
         "ClassDeclaration": true
       }
     }],
-    "max-len": ["error", { "code": 80 }]
+    "max-len": ["error", { "code": 80 }],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ]
   }
 }

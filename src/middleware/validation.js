@@ -1,21 +1,26 @@
 
-/** Class representing a validation. */
-class validation {
+/**
+ * @class Validation
+ * @classdesc class representing Validation
+ */
+class Validation {
   /**
    * validates answer fields
-  * @param {Object} req - request object
-  * @param {Object} res - response object
+  * @param {Object} request - request object
+  * @param {Object} response - response object
   * @param {Function} next - next middleware function
   * @return {undefined}
   */
-  static postAnswer(req, res, next) {
-    req.checkBody('content', 'Content cannot be empty').notEmpty();
-    req.checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
+  static postAnswer(request, response, next) {
+    request
+      .checkBody('content', 'Content cannot be empty').notEmpty();
+    request
+      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
 
     if (errors) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'Failure',
         message: 'Validation failed',
         data: errors
@@ -26,19 +31,19 @@ class validation {
 
   /**
    * validates question fields
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - next middleware function
    * @return {undefined}
    */
-  static getQuestion(req, res, next) {
-    req.checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
+  static getQuestion(request, response, next) {
+    request
+      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
 
     if (errors) {
-      return res
-        .status(400)
+      return response.status(400)
         .json({
           status: 'Failure',
           message: 'Validation failed',
@@ -50,19 +55,19 @@ class validation {
 
   /**
    * validates question fields
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - next middleware function
    * @return {undefined}
    */
-  static postQuestion(req, res, next) {
-    req.checkBody('title', 'Title cannot be empty').notEmpty();
-    req.checkBody('body', 'Question body cannot be empty').notEmpty();
+  static postQuestion(request, response, next) {
+    request.checkBody('title', 'Title cannot be empty').notEmpty();
+    request.checkBody('body', 'Question body cannot be empty').notEmpty();
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
 
     if (errors) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'failure',
         message: 'Validation failed',
         data: errors
@@ -73,37 +78,37 @@ class validation {
 
   /**
    * validates question fields
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - next middleware function
    * @return {undefined}
    */
-  static signUp(req, res, next) {
-    req.check('firstname')
+  static signUp(request, response, next) {
+    request.check('firstname')
       .notEmpty().withMessage('First Name is required')
       .isString()
       .withMessage('You have not entered a string');
 
-    req.check('lastname')
+    request.check('lastname')
       .notEmpty().withMessage('Last Name is required')
       .isString()
       .withMessage('You have not entered a string');
 
-    req.check('email')
+    request.check('email')
       .notEmpty().withMessage('Email is required')
       .isEmail()
       .withMessage('You must provide an email address');
 
-    req.check('password')
+    request.check('password')
       .notEmpty().withMessage('Password is required')
       .isLength({ min: 5 })
       .withMessage('Password must be at least 5 chars long')
       .matches(/\d/)
       .withMessage('Password must contain a number');
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
     if (errors) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'failure',
         message: 'Validation failed',
         data: errors
@@ -114,27 +119,27 @@ class validation {
 
   /**
    * validates question fields
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - next middleware function
    * @return {undefined}
    */
-  static logIn(req, res, next) {
-    req.check('email')
+  static logIn(request, response, next) {
+    request.check('email')
       .notEmpty().withMessage('Email is required')
       .isEmail()
       .withMessage('You must provide an email address');
 
-    req.check('password')
+    request.check('password')
       .notEmpty().withMessage('Password is required')
       .isLength({ min: 5 })
       .withMessage('Password must be at least 5 chars long')
       .matches(/\d/)
       .withMessage('Password must contain a number');
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
     if (errors) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'failure',
         message: 'Validation failed',
         data: errors
@@ -145,18 +150,19 @@ class validation {
 
   /**
    * validates answer fields
-  * @param {Object} req - request object
-  * @param {Object} res - response object
+  * @param {Object} request - request object
+  * @param {Object} response - response object
   * @param {Function} next - next middleware function
   * @return {undefined}
   */
-  static deleteQuestion(req, res, next) {
-    req.checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
+  static deleteQuestion(request, response, next) {
+    request
+      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
 
-    const errors = req.validationErrors();
+    const errors = request.validationErrors();
 
     if (errors) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'Failure',
         message: 'Validation failed',
         data: errors
@@ -166,4 +172,4 @@ class validation {
   }
 }
 
-export default validation;
+export default Validation;

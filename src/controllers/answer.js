@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
-import data from '../data.json';
+import db from '../models/db';
 
 /**
  * @class Answer
@@ -7,32 +7,50 @@ import data from '../data.json';
  */
 class Answer {
   /**
-   * @param {Object} req - request object
-   * @param {Object} res - response object
+   * @param {Object} request - request object
+   * @param {Object} response - response object
    * @param {Function} next - go to the next
-   * @returns {Object} res - response object
+   * @returns {Object} response - response object
    */
-  static createAnswer(req, res, next) {
-    const { questions } = data;
-    const id = parseInt(req.params.questionId, 10);
-    const result = questions.find(question => question.id === id);
-    const { answers } = result;
+  static createAnswer(request, response, next) {
+    const id = parseInt(request.params.questionId, 10);
+    const userId = parseInt(request.userId, 10);
+    const { content } = request.body;
 
-    const nextId = answers.length + 1;
-    const { content } = req.body;
+    db.query('INSERT INTO answers(answer_body, question_id, user_id)'
+    + ' values($1, $2, $3)', [content, id, userId])
+      .then(() => response.status(201).json({
+        status: 'Success',
+        message: 'Answer created successfully',
+      }))
+      .catch((error) => {
+        response.status(500).send({
+          status: 'Failure',
+          message: 'Internal server error',
+        });
+      });
+  }
 
-    const newAnswer = {
-      id: nextId,
-      content,
-      questionId: id
-    };
+  /**
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @param {Function} next - go to the next
+   * @returns {Object} response - response object
+   */
+  static updateAnswer(request, response, next) {
+    const id = parseInt(request.params.id, 10);
 
-    answers.push(newAnswer);
-    res.status(201).json({
-      status: 'Success',
-      message: 'Answer created',
-      data: result
-    });
+    db.query('SELECT * FROM answers WHERE id = $1', [id])
+      .then(result => response.status(201).json({
+        status: 'Success',
+        message: 'Answer created successfully',
+      }))
+      .catch((error) => {
+        response.status(500).send({
+          status: 'Failure',
+          message: 'Internal server error',
+        });
+      });
   }
 }
 

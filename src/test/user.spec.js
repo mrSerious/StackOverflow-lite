@@ -50,7 +50,6 @@ describe('routes : user', () => {
           password: 'herman1'
         })
         .end((err, res) => {
-          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(201);
@@ -111,7 +110,6 @@ describe('routes : user', () => {
           password: 'herman1'
         })
         .end((err, res) => {
-          console.log(err);
           should.not.exist(err);
           res.redirects.length.should.eql(0);
           res.status.should.eql(200);

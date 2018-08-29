@@ -5,7 +5,7 @@ CREATE TABLE tags(
   id SERIAL PRIMARY KEY,
 	tag_name VARCHAR(40) NOT NULL,
 	description VARCHAR(40) NOT NULL,
-	question_id INTEGER REFERENCES questions
+	question_id INTEGER REFERENCES questions ON DELETE CASCADE
 );
 
 INSERT INTO tags(tag_name, description, question_id) VALUES

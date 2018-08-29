@@ -1,5 +1,4 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
-import data from '../data.json';
 import db from '../models/db';
 
 /**
@@ -89,23 +88,37 @@ class Question {
    */
   static destroy(req, res) {
     const id = req.params.questionId * 1;
-
-    const { questions } = data;
-    const result = questions.find(q => q.id === id);
-    const index = questions.indexOf(result);
-
-    if (!result) {
-      res.status(404).json({
+    db.query('SELECT * FROM questions WHERE id = $1', [id])
+      .then((selectQueryResult) => {
+        if (selectQueryResult.rowCount !== 0) {
+          db.query('DELETE FROM questions where id = $1', [id])
+            .then((deleteQueryResult) => {
+              if (deleteQueryResult.rowCount === 1) {
+                return res.status(200).json({
+                  status: 'Success',
+                  message: 'Question deleted successfully'
+                });
+              }
+              return res.status(500).json({
+                status: 'Failure',
+                message: 'Something went wrong. Contact your administrator'
+              });
+            })
+            .catch(err => res.status(500).send({
+              status: 'Failure',
+              mesage: 'Internal server error',
+            }));
+        } else {
+          return res.status(404).json({
+            status: 'Failure',
+            message: 'Question not found'
+          });
+        }
+      })
+      .catch(err => res.status(500).send({
         status: 'Failure',
-        message: 'Question not found'
-      });
-    } else {
-      questions.splice(index, 1);
-      res.status(200).send({
-        status: 'Success',
-        message: 'Question deleted'
-      });
-    }
+        mesage: 'Internal server error'
+      }));
   }
 }
 

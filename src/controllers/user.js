@@ -76,7 +76,6 @@ class User {
     const { password } = req.body;
     db.query('SELECT * FROM users where email = $1', [email])
       .then((user) => {
-        // console.log(user);
         if (user.rowCount < 1) {
           return res.status(404).send({
             status: 'failure',

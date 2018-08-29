@@ -104,7 +104,8 @@ describe('routes : question', () => {
           res.status.should.equal(200);
           res.type.should.equal('application/json');
           res.body.status.should.eql('Success');
-          res.body.message.should.eql('Question deleted');
+          res.body.message.should.eql('Question deleted successfully');
+          res.body.should.include.keys('status', 'message');
           done();
         });
     });

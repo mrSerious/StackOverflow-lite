@@ -17,6 +17,6 @@ if (process.env.NODE_ENV === 'test') {
   console.log(settings);
 }
 
-const pool = new pg.Pool({ settings });
+const pool = new pg.Pool({ string: process.env.DATABASE_URL });
 
 export default pool;

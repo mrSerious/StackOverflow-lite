@@ -20,7 +20,6 @@ const config = {
     dialect: 'postgres'
   },
   production: {
-    ssl: 'true',
     username: process.env.DB_USER_PROD,
     password: process.env.DB_PASS_PROD,
     database: process.env.DB_NAME_PROD,

@@ -1,17 +1,17 @@
 import pg from 'pg';
 import Dotenv from 'dotenv';
 import config from '../config/config';
+const parseDbUrl = require('parse-database-url');
 
 Dotenv.config();
 
-// const env = process.env.NODE_ENV || 'development';
-// const configObj = config[env];
 let settings = '';
+const dbConfig = parseDbUrl(process.env.DATABASE_URL);
 if (process.env.NODE_ENV) {
   if (process.env.NODE_ENV === 'test') {
     settings = config.test;
   } else if (process.NODE_ENV === 'production') {
-    settings = process.env.DATABASE_URL;
+    settings = dbConfig;
   }
 }
 

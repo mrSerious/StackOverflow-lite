@@ -14,7 +14,7 @@ if (process.env.NODE_ENV) {
     settings = dbConfig;
   }
 }
-
+console.log(dbConfig);
 const pool = new pg.Pool(settings || config.development);
 
 export default pool;

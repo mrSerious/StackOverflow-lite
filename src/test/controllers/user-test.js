@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^pool" }] */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server';
+import server from '../../server';
 
 chai.use(chaiHttp);
 
@@ -47,7 +47,7 @@ describe('routes : user', () => {
           firstname: 'test',
           lastname: 'test',
           email: 'm_doe@example.com',
-          password: 'herman1'
+          password: process.env.TEST_USER_PASS // get this from .env file
         })
         .end((error, response) => {
           should.not.exist(error);
@@ -66,7 +66,7 @@ describe('routes : user', () => {
           firstname: 'test',
           lastname: 'test',
           email: 'm_doe@example.com',
-          password: 'herman1'
+          password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           response.status.should.eql(409);
@@ -109,7 +109,7 @@ describe('routes : user', () => {
         .post('/api/v1/auth/login')
         .send({
           email: 'm_doe@example.com',
-          password: 'herman1'
+          password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           should.not.exist(error);
@@ -139,7 +139,7 @@ describe('routes : user', () => {
         .post('/api/v1/auth/login')
         .send({
           email: 'michael@example.com',
-          password: 'johnson123'
+          password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           response.status.should.eql(404);

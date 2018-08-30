@@ -5,6 +5,7 @@ CREATE TABLE answers(
 	answer_body VARCHAR(255) NOT NULL,
   question_id INTEGER REFERENCES questions ON DELETE CASCADE,
   user_id INTEGER REFERENCES users ON DELETE CASCADE,
+  isSelected BOOLEAN,
 	createdAt timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updatedAt timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

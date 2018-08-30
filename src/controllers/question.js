@@ -19,8 +19,8 @@ class Question {
         data: { questions: result.rows }
       }))
       .catch(error => response.status(500).send({
-        status: 'Failure',
-        mesage: 'Internal server error',
+        status: 'failure',
+        mesage: 'Internal server error'
       }));
   }
 
@@ -33,18 +33,18 @@ class Question {
     // converts Id to an integer
     const id = parseInt(request.params.questionId, 10);
 
-    db.query(`
-    SELECT *
-    FROM questions
-    FULL JOIN answers
-    ON questions.id = answers.question_id
-    WHERE questions.id = ${[id]} ORDER BY questions.id`)
+    db.query(`SELECT * FROM questions FULL JOIN answers ON questions.id 
+    = answers.question_id WHERE questions.id = ${[id]} ORDER BY questions.id`)
       .then((result) => {
         if (result.rowCount < 1) {
           return response.status(404).json({
-            status: 'Failure',
-            message: 'Question not found',
+            status: 'failure',
+            message: 'Question not found'
           });
+        }
+        const answers = [];
+        for (let i = 0; i < result.rows.length; i += 1) {
+          answers.push(result.rows[i]);
         }
         return response.status(200).json({
           status: 'Success',
@@ -53,8 +53,8 @@ class Question {
         });
       })
       .catch(error => response.status(500).send({
-        status: 'Failure',
-        mesage: 'Internal server error',
+        status: 'failure',
+        mesage: 'Internal server error'
       }));
   }
 
@@ -66,8 +66,9 @@ class Question {
    */
   static createQuestion(request, response, next) {
     const { body, title } = request.body;
-    db.query('INSERT INTO questions(title, body)'
-      + ' values($1, $2) RETURNING *', [title, body])
+    db.query(`
+    INSERT INTO questions(title, body) 
+    values($1, $2) RETURNING *`, [title, body])
       .then(newQuestion => response.status(201).json({
         status: 'Success',
         message: 'Question created successfully',
@@ -75,8 +76,8 @@ class Question {
       }))
       .catch((error) => {
         response.status(500).send({
-          status: 'Failure',
-          message: 'Internal server error',
+          status: 'failure',
+          message: 'Internal server error'
         });
       });
   }
@@ -88,7 +89,10 @@ class Question {
    */
   static destroy(request, response) {
     const id = request.params.questionId * 1;
-    db.query('SELECT * FROM questions WHERE id = $1', [id])
+    db.query(`
+    SELECT * 
+    FROM questions 
+    WHERE id = $1`, [id])
       .then((selectQueryResult) => {
         if (selectQueryResult.rowCount !== 0) {
           db.query('DELETE FROM questions where id = $1', [id])
@@ -100,23 +104,23 @@ class Question {
                 });
               }
               return response.status(500).json({
-                status: 'Failure',
+                status: 'failure',
                 message: 'Something went wrong. Contact your administrator'
               });
             })
             .catch(error => response.status(500).send({
-              status: 'Failure',
+              status: 'failure',
               mesage: 'Internal server error',
             }));
         } else {
           return response.status(404).json({
-            status: 'Failure',
+            status: 'failure',
             message: 'Question not found'
           });
         }
       })
       .catch(error => response.status(500).send({
-        status: 'Failure',
+        status: 'failure',
         mesage: 'Internal server error'
       }));
   }

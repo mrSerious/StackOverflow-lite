@@ -40,9 +40,9 @@ class User {
             // create a token
             const token = jwt.sign(
               {
-                id: newUser.id,
-                firstname: newUser.firstname,
-                email: newUser.email
+                id: newUser.rows[0].id,
+                firstname: newUser.rows[0].firstname,
+                email: newUser.rows[0].email
               },
               process.env.SECRET_KEY, {
                 expiresIn: 86400 // expires in 24 hours

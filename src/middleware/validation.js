@@ -21,7 +21,7 @@ class Validation {
 
     if (errors) {
       return response.status(400).json({
-        status: 'Failure',
+        status: 'failure',
         message: 'Validation failed',
         data: errors
       });
@@ -45,7 +45,7 @@ class Validation {
     if (errors) {
       return response.status(400)
         .json({
-          status: 'Failure',
+          status: 'failure',
           message: 'Validation failed',
           data: errors
         });
@@ -163,7 +163,7 @@ class Validation {
 
     if (errors) {
       return response.status(400).json({
-        status: 'Failure',
+        status: 'failure',
         message: 'Validation failed',
         data: errors
       });

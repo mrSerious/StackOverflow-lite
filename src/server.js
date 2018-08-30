@@ -15,7 +15,7 @@ app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
 app.use((request, response, next) => {
   response.status(404).json({
-    status: 'Failure',
+    status: 'failure',
     message: 'Sorry can\'t find that page!'
   });
 });

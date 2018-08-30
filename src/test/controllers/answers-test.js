@@ -1,14 +1,14 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^pool" }] */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server';
+import server from '../../server';
 
 chai.use(chaiHttp);
 
 chai.should();
 
 let userToken;
-describe('POST /api/v1/questions/:questionId/answers', () => {
+describe('ANSWERS CONTROLLER', () => {
   before((done) => {
     chai.request(server)
       .post('/api/v1/auth/signup')
@@ -16,7 +16,7 @@ describe('POST /api/v1/questions/:questionId/answers', () => {
         lastname: 'Michael',
         firstname: 'Doe',
         email: 'michael_doe@example.com',
-        password: 'herman1'
+        password: process.env.TEST_USER_PASS
       })
       .end((error, response) => {
         if (error) throw error;
@@ -24,26 +24,25 @@ describe('POST /api/v1/questions/:questionId/answers', () => {
         done();
       });
   });
-  // it('should respond with a success message', (done) => {
-  //   chai.request(server)
-  //     .post('/api/v1/questions/1/answers')
-  //     .set('x-access-token', userToken)
-  //     .send({
-  //       content: 'Obstat mox stupor per pla captum uti.'
-  //     })
-  //     .end((error, response) => {
-  //       response.status.should.equal(201);
-  //       response.type.should.equal('application/json');
-  //       response.body.status.should.eql('Success');
-  //       response.body.message.should.eql('Answer created');
-  //       response.body.data.should.include.keys(
-  //         'id', 'title', 'questionBody', 'answers'
-  //       );
-  //       done();
-  //     });
-  // });
 
-  it('should respond with validation error message', (done) => {
+  it('should respond with a success message', (done) => {
+    chai.request(server)
+      .post('/api/v1/questions/1/answers')
+      .set('x-access-token', userToken)
+      .send({
+        content: 'Obstat mox stupor per pla captum uti.'
+      })
+      .end((error, response) => {
+        response.status.should.equal(201);
+        response.type.should.equal('application/json');
+        response.body.status.should.eql('Success');
+        response.body.message.should.eql('Answer created successfully');
+        done();
+      });
+  });
+
+  it('should respond with validation error '
+  + 'message for empty or wrong input', (done) => {
     chai.request(server)
       .post('/api/v1/questions/1/answers')
       .set('x-access-token', userToken)

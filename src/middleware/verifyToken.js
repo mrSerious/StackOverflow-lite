@@ -38,8 +38,6 @@ class VerifyToken {
             message: 'Failed to authenticate token.'
           });
       }
-      // console.log(decoded);
-
       request.userId = decoded.id;
       request.email = decoded.email;
       request.firstname = decoded.firstname;

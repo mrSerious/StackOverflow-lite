@@ -11,7 +11,7 @@ if (process.env.NODE_ENV) {
   if (process.env.NODE_ENV === 'test') {
     settings = config.test;
   } else if (process.NODE_ENV === 'production') {
-    settings = config.production;
+    settings = process.env.DB_PROD_URI;
   }
 }
 

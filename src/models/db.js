@@ -14,7 +14,9 @@ if (process.env.NODE_ENV === 'test') {
   settings = config.development;
 } else if (process.env.NODE_ENV === 'production') {
   settings = process.env.DATABASE_URL;
+  console.log(settings);
 }
+
 const pool = new pg.Pool(settings);
 
 export default pool;

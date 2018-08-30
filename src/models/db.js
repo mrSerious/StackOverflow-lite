@@ -6,15 +6,15 @@ const parseDbUrl = require('parse-database-url');
 Dotenv.config();
 
 let settings = '';
-const dbConfig = parseDbUrl(process.env.DATABASE_URL);
-if (process.env.NODE_ENV) {
-  if (process.env.NODE_ENV === 'test') {
-    settings = config.test;
-  } else if (process.NODE_ENV === 'production') {
-    settings = dbConfig;
-  }
+
+
+if (process.env.NODE_ENV === 'test') {
+  settings = config.test;
+} else if (process.env.NODE_ENV === 'development') {
+  settings = config.development;
+} else if (process.env.NODE_ENV === 'production') {
+  settings = process.env.DATABASE_URL;
 }
-console.log(dbConfig);
-const pool = new pg.Pool(settings || config.development);
+const pool = new pg.Pool(settings);
 
 export default pool;

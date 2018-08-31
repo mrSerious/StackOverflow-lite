@@ -3,12 +3,15 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import Dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
 import apiVersion1 from './routes/routes-api1';
 
 Dotenv.config();
 
+const swaggerDocument = require('../swagger.json');
 const app = express();
 const port = process.env.PORT || 3000;
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());

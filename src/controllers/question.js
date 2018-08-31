@@ -20,8 +20,7 @@ class Question {
       }))
       .catch(error => response.status(500).send({
         status: 'Failure',
-        mesage: 'Internal server error',
-        error
+        mesage: 'Internal server error'
       }));
   }
 
@@ -100,9 +99,9 @@ class Question {
                   message: 'Question deleted successfully'
                 });
               }
-              return response.status(500).json({
+              return response.status(404).json({
                 status: 'Failure',
-                message: 'Something went wrong. Contact your administrator'
+                message: 'Question not found'
               });
             })
             .catch(error => response.status(500).send({

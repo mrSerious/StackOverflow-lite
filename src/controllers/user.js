@@ -86,14 +86,14 @@ class User {
         if (user.rowCount < 1) {
           return response.status(404).send({
             status: 'failure',
-            message: 'user not found.',
+            message: 'user not found',
           });
         }
         const passwordIsValid = bcrypt
           .compareSync(password, user.rows[0].password);
         if (!passwordIsValid) {
           return response
-            .status(401).send({ auth: false, token: null });
+            .status(401).send({ auth: false, message: 'login failed', token: null });
         }
         const token = jwt.sign(
           {

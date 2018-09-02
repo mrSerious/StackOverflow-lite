@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^pool" }] */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../../server';
@@ -7,7 +6,7 @@ chai.use(chaiHttp);
 
 chai.should();
 
-describe('routes : question', () => {
+describe('QUESTIONS CONTROLLER', () => {
   describe('GET /api/v1/questions', () => {
     it('should respond a success message and all questions', (done) => {
       chai.request(server)

@@ -23,19 +23,19 @@ class VerifyToken {
       || request.headers.authorization;
 
     if (!token) {
-      return response.status(403)
-        .send({
-          stat: false,
-          message: 'No token provided.'
+      return response.status(401)
+        .json({
+          status: 'Failure',
+          message: 'No token provided'
         });
     }
 
     verify(token, secret, (error, decoded) => {
       if (error) {
-        return response.status(500)
-          .send({
-            auth: false,
-            message: 'Failed to authenticate token.'
+        return response.status(403)
+          .json({
+            status: 'Failure',
+            message: 'Failed to authenticate token'
           });
       }
       request.userId = decoded.id;

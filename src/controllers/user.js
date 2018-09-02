@@ -31,7 +31,7 @@ class User {
       .then((result) => {
         if (result.rowCount !== 0) {
           return response.status(409).send({
-            status: 'failure',
+            status: 'Failure',
             message: 'user already exist',
           });
         }
@@ -49,7 +49,7 @@ class User {
               }
             );
             response.status(201).send({
-              status: 'success',
+              status: 'Success',
               message: 'user created',
               data: {
                 id: newUser.rows[0].id,
@@ -85,7 +85,7 @@ class User {
       .then((user) => {
         if (user.rowCount < 1) {
           return response.status(404).send({
-            status: 'failure',
+            status: 'Failure',
             message: 'user not found.',
           });
         }
@@ -93,7 +93,7 @@ class User {
           .compareSync(password, user.rows[0].password);
         if (!passwordIsValid) {
           return response
-            .status(401).send({ auth: false, token: null });
+            .status(401).send({ status: 'failure', message: 'Sign in failed' });
         }
         const token = jwt.sign(
           {
@@ -105,7 +105,7 @@ class User {
           }
         );
         return response.status(200).send({
-          status: 'success',
+          status: 'Success',
           message: 'login sucessful',
           data: {
             auth: true,
@@ -114,7 +114,7 @@ class User {
         });
       })
       .catch(error => response.status(500).send({
-        status: 'failure',
+        status: 'Failure',
         message: 'internal server error'
       }));
   }

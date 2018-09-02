@@ -19,8 +19,9 @@ class Question {
         data: { questions: result.rows }
       }))
       .catch(error => response.status(500).send({
-        status: 'failure',
-        mesage: 'Internal server error'
+        status: 'Failure',
+        mesage: 'Internal server error',
+        error
       }));
   }
 
@@ -38,7 +39,7 @@ class Question {
       .then((result) => {
         if (result.rowCount < 1) {
           return response.status(404).json({
-            status: 'failure',
+            status: 'Failure',
             message: 'Question not found'
           });
         }
@@ -53,8 +54,9 @@ class Question {
         });
       })
       .catch(error => response.status(500).send({
-        status: 'failure',
-        mesage: 'Internal server error'
+        status: 'Failure',
+        mesage: 'Internal server error',
+        error
       }));
   }
 
@@ -76,7 +78,7 @@ class Question {
       }))
       .catch((error) => {
         response.status(500).send({
-          status: 'failure',
+          status: 'Failure',
           message: 'Internal server error'
         });
       });
@@ -104,23 +106,23 @@ class Question {
                 });
               }
               return response.status(500).json({
-                status: 'failure',
+                status: 'Failure',
                 message: 'Something went wrong. Contact your administrator'
               });
             })
             .catch(error => response.status(500).send({
-              status: 'failure',
+              status: 'Failure',
               mesage: 'Internal server error',
             }));
         } else {
           return response.status(404).json({
-            status: 'failure',
+            status: 'Failure',
             message: 'Question not found'
           });
         }
       })
       .catch(error => response.status(500).send({
-        status: 'failure',
+        status: 'Failure',
         mesage: 'Internal server error'
       }));
   }

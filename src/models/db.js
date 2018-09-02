@@ -4,17 +4,17 @@ import config from '../config/config';
 
 Dotenv.config();
 
-// const env = process.env.NODE_ENV || 'development';
-// const configObj = config[env];
 let settings = '';
+
 if (process.env.NODE_ENV) {
   if (process.env.NODE_ENV === 'test') {
     settings = config.test;
   } else if (process.NODE_ENV === 'production') {
-    settings = config.production;
+    settings = process.env.HEROKU_POSTGRESQL_GREEN_URL;
   }
 }
 
-const pool = new pg.Pool(settings || config.development);
+// const pool = new pg.Pool(settings || config.development);
+const pool = new pg.Pool({ connectionString: process.env.HEROKU_POSTGRESQL_GREEN_URL, ssl: true, });
 
 export default pool;

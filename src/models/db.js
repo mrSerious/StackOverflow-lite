@@ -1,6 +1,7 @@
 import pg from 'pg';
 import Dotenv from 'dotenv';
 import config from '../config/config';
+const parseDbUrl = require('parse-database-url');
 
 Dotenv.config();
 
@@ -14,7 +15,6 @@ if (process.env.NODE_ENV) {
   }
 }
 
-// const pool = new pg.Pool(settings || config.development);
-const pool = new pg.Pool({ connectionString: process.env.HEROKU_POSTGRESQL_GREEN_URL, ssl: true, });
+const pool = new pg.Pool({ string: process.env.DATABASE_URL });
 
 export default pool;

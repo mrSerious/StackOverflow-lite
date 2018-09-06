@@ -38,9 +38,11 @@ class VerifyToken {
             message: 'Failed to authenticate token'
           });
       }
+
       request.userId = decoded.id;
       request.email = decoded.email;
       request.firstname = decoded.firstname;
+
       next();
     });
   }

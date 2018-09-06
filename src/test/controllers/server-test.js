@@ -8,7 +8,7 @@ chai.should();
 
 describe('SERVER TESTS', () => {
   describe('GET /api/v1', () => {
-    it('should display "Connected!" message', (done) => {
+    it('Should display "Connected!" message', (done) => {
       chai.request(server)
         .get('/api/v1')
         .end((error, response) => {
@@ -23,7 +23,7 @@ describe('SERVER TESTS', () => {
   });
 
   describe('GET /404', () => {
-    it('should throw an error', (done) => {
+    it('Should throw an error', (done) => {
       chai.request(server)
         .get('/')
         .end((error, response) => {

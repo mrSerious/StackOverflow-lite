@@ -6,9 +6,25 @@ chai.use(chaiHttp);
 
 chai.should();
 
+let userToken;
 describe('QUESTIONS CONTROLLER', () => {
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/signup')
+      .send({
+        lastname: 'James',
+        firstname: 'Crocker',
+        email: 'james.croaker@example.com',
+        password: process.env.TEST_USER_PASS
+      })
+      .end((error, response) => {
+        if (error) throw error;
+        userToken = response.body.data.token;
+        done();
+      });
+  });
   describe('GET /api/v1/questions', () => {
-    it('should respond a success message and all questions', (done) => {
+    it('Should get all questions', (done) => {
       chai.request(server)
         .get('/api/v1/questions')
         .end((error, response) => {
@@ -23,7 +39,7 @@ describe('QUESTIONS CONTROLLER', () => {
   });
 
   describe('GET /api/v1/questions/:questionId', () => {
-    it('should respond with a success message and a single question',
+    it('Should get a question by id',
       (done) => {
         chai.request(server)
           .get('/api/v1/questions/1')
@@ -36,7 +52,7 @@ describe('QUESTIONS CONTROLLER', () => {
           });
       });
 
-    it('should respond with a failure message', (done) => {
+    it('Should respond with not found if question does not exist', (done) => {
       chai.request(server)
         .get('/api/v1/questions/15')
         .end((error, response) => {
@@ -48,7 +64,7 @@ describe('QUESTIONS CONTROLLER', () => {
         });
     });
 
-    it('should respond with a validation error message', (done) => {
+    it('Should catch invalid parameter in get single question URL', (done) => {
       chai.request(server)
         .get('/api/v1/questions/w')
         .end((error, response) => {
@@ -63,10 +79,10 @@ describe('QUESTIONS CONTROLLER', () => {
   });
 
   describe('POST /api/v1/questions', () => {
-    it('should respond with a success message and a'
-      + ' single question that was added', (done) => {
+    it('Should post a new question', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
+        .set('x-access-token', userToken)
         .send({
           title: 'Qui aggredior inveniant desumptas',
           body: 'Ipsius cupere vulgus tes hos.',
@@ -80,9 +96,27 @@ describe('QUESTIONS CONTROLLER', () => {
         });
     });
 
-    it('should respond with validation error message', (done) => {
+    it('Should not post with invalid token', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
+        .set('x-access-token', `${userToken}rrr`)
+        .send({
+          title: 'Qui aggredior inveniant desumptas',
+          body: 'Ipsius cupere vulgus tes hos.',
+        })
+        .end((error, response) => {
+          response.status.should.equal(403);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Failed to authenticate token');
+          done();
+        });
+    });
+
+    it('Should not post with empty content field', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions')
+        .set('x-access-token', userToken)
         .send()
         .end((error, response) => {
           response.type.should.equal('application/json');
@@ -96,7 +130,7 @@ describe('QUESTIONS CONTROLLER', () => {
   });
 
   describe('DELETE /api/v1/questions/:questionId', () => {
-    it('should respond with a success message', (done) => {
+    it('Should respond with a success message', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/1')
         .end((error, response) => {
@@ -109,7 +143,7 @@ describe('QUESTIONS CONTROLLER', () => {
         });
     });
 
-    it('should respond with a not found message', (done) => {
+    it('Should respond with a not found message', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/50')
         .end((error, response) => {
@@ -120,7 +154,7 @@ describe('QUESTIONS CONTROLLER', () => {
           done();
         });
     });
-    it('should respond with validation error', (done) => {
+    it('Should respond with validation error', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/r')
         .end((error, response) => {

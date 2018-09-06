@@ -24,7 +24,8 @@ router.get('/questions', question.all);
 router.get('/questions/:questionId', validate.getQuestion, question.single);
 
 /* POST question */
-router.post('/questions', validate.postQuestion, question.createQuestion);
+router.post('/questions', [verify.check, validate.postQuestion],
+  question.createQuestion);
 
 /* POST answer */
 router.post('/questions/:questionId/answers',

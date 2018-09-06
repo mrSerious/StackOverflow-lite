@@ -18,10 +18,9 @@ class Question {
         message: 'Data retreival successful',
         data: { questions: result.rows }
       }))
-      .catch(error => response.status(500).send({
+      .catch(error => response.status(500).json({
         status: 'Failure',
-        mesage: 'Internal server error',
-        error
+        mesage: 'Internal server error'
       }));
   }
 
@@ -53,7 +52,7 @@ class Question {
           data: result.rows
         });
       })
-      .catch(error => response.status(500).send({
+      .catch(error => response.status(500).json({
         status: 'Failure',
         mesage: 'Internal server error',
         error
@@ -64,20 +63,22 @@ class Question {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - call back to be run
+   *
    * @return {Object} response - response object
    */
   static createQuestion(request, response, next) {
     const { body, title } = request.body;
-    db.query(`
-    INSERT INTO questions(title, body) 
-    values($1, $2) RETURNING *`, [title, body])
+    const { userId } = request;
+
+    db.query(`INSERT INTO questions(title, body, user_id) 
+    values($1, $2, $3) RETURNING *`, [title, body, userId])
       .then(newQuestion => response.status(201).json({
         status: 'Success',
         message: 'Question created successfully',
         data: newQuestion.rows
       }))
       .catch((error) => {
-        response.status(500).send({
+        response.status(500).json({
           status: 'Failure',
           message: 'Internal server error'
         });
@@ -110,7 +111,7 @@ class Question {
                 message: 'Something went wrong. Contact your administrator'
               });
             })
-            .catch(error => response.status(500).send({
+            .catch(error => response.status(500).json({
               status: 'Failure',
               mesage: 'Internal server error',
             }));
@@ -121,7 +122,7 @@ class Question {
           });
         }
       })
-      .catch(error => response.status(500).send({
+      .catch(error => response.status(500).json({
         status: 'Failure',
         mesage: 'Internal server error'
       }));

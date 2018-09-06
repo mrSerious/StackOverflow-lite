@@ -30,7 +30,7 @@ class User {
     db.query('SELECT * FROM users where email = $1', [email])
       .then((result) => {
         if (result.rowCount !== 0) {
-          return response.status(409).send({
+          return response.status(409).json({
             status: 'Failure',
             message: 'user already exist',
           });
@@ -48,7 +48,7 @@ class User {
                 expiresIn: 86400 // expires in 24 hours
               }
             );
-            response.status(201).send({
+            response.status(201).json({
               status: 'Success',
               message: 'user created',
               data: {
@@ -60,12 +60,12 @@ class User {
               },
             });
           })
-          .catch(error => response.status(500).send({
+          .catch(error => response.status(500).json({
             status: 'error',
             mesage: 'internal server error',
           }));
       })
-      .catch(error => response.status(500).send({
+      .catch(error => response.status(500).json({
         status: 'error',
         mesage: 'internal server error',
       }));
@@ -81,10 +81,11 @@ class User {
   static logIn(request, response, next) {
     const email = request.body.email.trim();
     const { password } = request.body;
+
     db.query('SELECT * FROM users where email = $1', [email])
       .then((user) => {
         if (user.rowCount < 1) {
-          return response.status(404).send({
+          return response.status(404).json({
             status: 'Failure',
             message: 'user not found.',
           });
@@ -93,7 +94,7 @@ class User {
           .compareSync(password, user.rows[0].password);
         if (!passwordIsValid) {
           return response
-            .status(401).send({ status: 'failure', message: 'Sign in failed' });
+            .status(401).json({ status: 'failure', message: 'Sign in failed' });
         }
         const token = jwt.sign(
           {
@@ -104,7 +105,7 @@ class User {
             expiresIn: 86400 // expires in 24 hours
           }
         );
-        return response.status(200).send({
+        return response.status(200).json({
           status: 'Success',
           message: 'login sucessful',
           data: {
@@ -113,7 +114,7 @@ class User {
           }
         });
       })
-      .catch(error => response.status(500).send({
+      .catch(error => response.status(500).json({
         status: 'Failure',
         message: 'internal server error'
       }));

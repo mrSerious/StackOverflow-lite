@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^error" }] */
 import db from '../models/db';
 
 /**
@@ -10,6 +10,7 @@ class Answer {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - go to the next
+   *
    * @returns {Object} response - response object
    */
   static createAnswer(request, response, next) {
@@ -17,18 +18,17 @@ class Answer {
     const userId = parseInt(request.userId, 10);
     const { content } = request.body;
 
-    db.query('INSERT INTO answers(answer_body, question_id, user_id) values($1, $2, $3)', [content, id, userId])
+    db.query(`INSERT INTO answers(answer_body, question_id, user_id) 
+    values($1, $2, $3)`, [content, id, userId])
       .then(() => response.status(201).json({
         status: 'Success',
         message: 'Answer created successfully',
       }))
-      .catch((error) => {
-        response.status(500).send({
-          status: 'Failure',
-          message: 'Internal server error',
-          error
-        });
-      });
+      .catch(error => response.status(500).json({
+        status: 'Failure',
+        message: 'Internal server error',
+        error
+      }));
   }
 
   /**
@@ -41,8 +41,8 @@ class Answer {
     const answerId = parseInt(request.params.answerId, 10);
     const questionId = parseInt(request.params.questionId, 10);
     const userId = parseInt(request.userId, 10);
-    const { content } = request.body;
-    
+    const { content, isAccepted } = request.body;
+
     db.query('SELECT * FROM answers WHERE id = $1', [answerId])
       .then((existQuery) => {
         if (existQuery.rowCount < 1) {
@@ -52,73 +52,91 @@ class Answer {
           });
         }
       })
-      .catch((error) => {
-        response.status(500).send({
+      .catch(error => response.status(500).json({
+        status: 'Failure',
+        message: 'Internal server error'
+      }));
+
+    if (content) {
+      db.query('SELECT * FROM answers WHERE id = $1', [answerId])
+        .then((answerToUpdate) => {
+          if (answerToUpdate.rows[0].user_id === userId) {
+            db.query(`UPDATE answers SET answer_body = ($1)
+            WHERE id = ($2) AND question_id = ($3)`,
+            [content, answerId, questionId])
+              .then(() => response.status(200).json({
+                status: 'Success',
+                message: 'Answer successfully updated'
+              }))
+              .catch(error => response.status(500).json({
+                status: 'Failure',
+                message: 'Internal server error',
+                error
+              }));
+          } else {
+            return response.status(403).json({
+              status: 'Failure',
+              message: 'You are unauthorized to modify this resource'
+            });
+          }
+        })
+        .catch(error => response.status(500).json({
           status: 'Failure',
-          message: 'Internal server error',
-          error
-        });
+          message: 'Internal server error'
+        }));
+    } else if (isAccepted) {
+      db.query('SELECT * FROM questions WHERE id = $1', [questionId])
+        .then((questionWithAnswer) => {
+          if (questionWithAnswer.rows[0].user_id === userId) {
+            db.query('SELECT * FROM answers WHERE isAccepted = true')
+              .then((isAcceptedExists) => {
+                if (isAcceptedExists.rowCount > 1
+                  && isAcceptedExists.rows[0].id !== questionId) {
+                  db.query(`UPDATE answers SET isAccepted 
+                    = false WHERE id = $1`, [isAcceptedExists.rows[0].id])
+                    .catch(error => response.status(500).json({
+                      status: 'Failure',
+                      message: 'Internal server error'
+                    }));
+                }
+
+                db.query(`UPDATE answers 
+                  SET isAccepted = ($1) WHERE id = ($2) 
+                  AND question_id = ($3) 
+                  AND user_id = ($4)`,
+                [isAccepted, answerId, questionId, userId])
+                  .then(() => {
+                    response.status(200).json({
+                      status: 'Success',
+                      message: 'Answer successfully updated'
+                    });
+                  })
+                  .catch(error => response.status(500).json({
+                    status: 'Failure',
+                    message: 'Internal server error'
+                  }));
+              })
+              .catch(error => response.status(500).json({
+                status: 'Failure',
+                message: 'Internal server error'
+              }));
+          } else {
+            return response.status(403).json({
+              status: 'Failure',
+              message: 'You are unauthorized to modify this resource'
+            });
+          }
+        })
+        .catch(error => response.status(500).json({
+          status: 'Failure',
+          message: 'Internal server error'
+        }));
+    } else {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'Content and Accepted answer cannot be empty'
       });
-
-    db.query('SELECT * FROM questions WHERE id = $1', [questionId])
-      .then((questionWithAnswer) => {
-        console.log(questionWithAnswer.rows[0].user_id, userId);
-        if (questionWithAnswer.rows[0].user_id === userId) {
-          db.query('UPDATE TABLE answers SET answer_body = $1 WHERE id = $2 AND question_id = $3', [content, answerId, questionId])
-            .then(() => response.status(200).json({
-              status: 'Success',
-              message: 'Answer successffuly set as selected'
-            }))
-            .catch(error => response.status(500).send({
-              status: 'Failure',
-              message: 'Internal server error',
-            }));
-        }
-      })
-      .catch(error => response.status(500).send({
-        status: 'Failure',
-        message: 'Internal server error',
-      }));
-
-    db.query('SELECT * FROM answers WHERE id = $1', [answerId])
-      .then((answerToUpdate) => {
-        if (answerToUpdate.rows[0].user_id === userId) {
-          db.query('SELECT * FROM answers WHERE isSelected = true')
-            .then((isSelectedExists) => {
-              db.query('UPDATE TABLE answers SET isSelected = false WHERE id = $1', [isSelectedExists.rows[0].id])
-                .catch(error => response.status(500).send({
-                  status: 'Failure',
-                  message: 'Internal server error',
-                }));
-            })
-            .catch(error => response.status(500).send({
-              status: 'Failure',
-              message: 'Internal server error',
-            }));
-
-          db.query('SELECT * FROM answers WHERE isSelected = true')
-            .then(() => {
-              db.query('UPDATE TABLE answers SET isSelected = true WHERE id = $1', [answerId])
-                .catch(error => response.status(500).send({
-                  status: 'Failure',
-                  message: 'Internal server error',
-                }));
-            })
-            .catch(error => response.status(500).send({
-              status: 'Failure',
-              message: 'Internal server error',
-            }));
-        }
-      })
-      .catch(error => response.status(500).send({
-        status: 'Failure',
-        message: 'Internal server error',
-      }));
-
-    return response.status(403).json({
-      status: 'Failure',
-      message: 'You are unauthorized'
-    });
+    }
   }
 }
 

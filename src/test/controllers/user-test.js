@@ -8,14 +8,14 @@ const should = chai.should();
 
 describe('USERS CONTROLLER', () => {
   describe('POST /auth/signup', () => {
-    it('should register a new user', (done) => {
+    it('Should register a new user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
           firstname: 'test',
           lastname: 'test',
           email: 'm_doe@example.com',
-          password: process.env.TEST_USER_PASS // get this from .env file
+          password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           should.not.exist(error);
@@ -23,11 +23,11 @@ describe('USERS CONTROLLER', () => {
           response.status.should.eql(201);
           response.type.should.eql('application/json');
           response.body.should.include.keys('status', 'message', 'data');
-          response.body.status.should.eql('success');
+          response.body.status.should.eql('Success');
           done();
         });
     });
-    it('should not register duplicate user', (done) => {
+    it('Should not register duplicate user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
@@ -45,7 +45,8 @@ describe('USERS CONTROLLER', () => {
         });
     });
 
-    it('should respond with validation error', (done) => {
+    it('Should respond with validation errors if firstname, '
+    + 'lastname, email or password fields are empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send()
@@ -72,7 +73,7 @@ describe('USERS CONTROLLER', () => {
   });
 
   describe('POST /auth/login', () => {
-    it('should login a user', (done) => {
+    it('Should login a user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -85,12 +86,13 @@ describe('USERS CONTROLLER', () => {
           response.status.should.eql(200);
           response.type.should.eql('application/json');
           response.body.should.include.keys('status', 'message', 'data');
-          response.body.status.should.eql('success');
+          response.body.status.should.eql('Success');
           should.exist(response.body.data.token);
           done();
         });
     });
-    it('should respond with validation error', (done) => {
+    it('Should respond with validation errors if '
+    + 'email or password fields are empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -102,7 +104,7 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
-    it('should respond with a sign in failed', (done) => {
+    it('Should respond with a error if password fields are empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -116,7 +118,8 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
-    it('should not login an unregistered user', (done) => {
+
+    it('Should not login an unregistered user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({

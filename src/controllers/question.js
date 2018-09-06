@@ -20,7 +20,7 @@ class Question {
       }))
       .catch(error => response.status(500).json({
         status: 'Failure',
-        mesage: 'Internal server error'
+        message: 'Internal server error'
       }));
   }
 
@@ -54,8 +54,7 @@ class Question {
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        mesage: 'Internal server error',
-        error
+        message: 'Internal server error'
       }));
   }
 
@@ -113,7 +112,7 @@ class Question {
             })
             .catch(error => response.status(500).json({
               status: 'Failure',
-              mesage: 'Internal server error',
+              message: 'Internal server error',
             }));
         } else {
           return response.status(404).json({
@@ -124,7 +123,7 @@ class Question {
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        mesage: 'Internal server error'
+        message: 'Internal server error'
       }));
   }
 }

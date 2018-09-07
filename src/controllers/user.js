@@ -62,12 +62,12 @@ class User {
           })
           .catch(error => response.status(500).json({
             status: 'error',
-            mesage: 'internal server error',
+            message: 'internal server error',
           }));
       })
       .catch(error => response.status(500).json({
         status: 'error',
-        mesage: 'internal server error',
+        message: 'internal server error',
       }));
   }
 

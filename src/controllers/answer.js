@@ -26,8 +26,7 @@ class Answer {
       }))
       .catch(error => response.status(500).json({
         status: 'Failure',
-        message: 'Internal server error',
-        error
+        message: 'Internal server error'
       }));
   }
 
@@ -70,8 +69,7 @@ class Answer {
               }))
               .catch(error => response.status(500).json({
                 status: 'Failure',
-                message: 'Internal server error',
-                error
+                message: 'Internal server error'
               }));
           } else {
             return response.status(403).json({

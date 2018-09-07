@@ -14,6 +14,7 @@ if (process.env.NODE_ENV) {
   }
 }
 
-const pool = new pg.Pool(settings || config.development);
+// const pool = new pg.Pool(settings || config.development);
+const pool = new pg.Pool(process.env.HEROKU_POSTGRESQL_GREEN_URL);
 
 export default pool;

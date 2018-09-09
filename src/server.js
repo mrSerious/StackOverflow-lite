@@ -11,9 +11,9 @@ Dotenv.config();
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
 app.use((request, response, next) => {

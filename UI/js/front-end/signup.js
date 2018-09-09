@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[sS]ign" }] */
-
 const url = 'https://stack-overflow-lite-app.herokuapp.com/api/v1/auth/signup';
 const form = document.getElementById('signup');
 
@@ -28,10 +26,16 @@ const signUp = (event) => {
       if (!response.ok) {
         throw response;
       }
-      return response.json(); // we only get here if there is no error
+      return response.json();
     })
-    .then((data) => {
-      console.log(data);
+    .then((newUser) => {
+      if (newUser.response) {
+        sessionStorage.setItem('x-access-token', newUser.data.token);
+        window.location.replace('login.html');
+        console.log(newUser);
+      } else {
+        console.log(newUser);
+      }
     })
     .catch((error) => {
       console.log(error);

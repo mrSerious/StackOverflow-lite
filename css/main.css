@@ -130,7 +130,6 @@ button:not(:disabled):not(.disabled) {
 /*
 * Navbar Styling
  */
-
 .navigation {
   z-index: 1;
   position: fixed;
@@ -251,7 +250,6 @@ button:not(:disabled):not(.disabled) {
 }
 
 /* Mobile navigation */
-
 .nav-mobile {
   display: none;
   position: absolute;
@@ -266,26 +264,33 @@ button:not(:disabled):not(.disabled) {
   .nav-mobile {
     display: block;
   }
+
   .site-navigation-links {
     width: 100%;
     /* padding: 0 0 15px; */
   }
+
   .site-navigation-links ul {
     display: none;
   }
+
   .site-navigation-links ul li {
     float: none;
   }
+
   .site-navigation-links ul li a {
     padding: 15px;
     line-height: 20px;
   }
+
   .site-navigation-links ul li ul li a {
     padding-left: 30px;
   }
+
   .nav-list {
     border-bottom: 1px solid #d1d1d193;
   }
+
   .nav-dropdown {
     position: static;
   }
@@ -347,7 +352,6 @@ button:not(:disabled):not(.disabled) {
 /*
 * Responsive Design Grid
  */
-
 *,
 *::before,
 *::after {
@@ -373,7 +377,6 @@ button:not(:disabled):not(.disabled) {
 /* 
 * Signin form styling
 */
-
 .signin-area {
   max-width: 400px;
   padding: 2rem 0;
@@ -400,10 +403,10 @@ button:not(:disabled):not(.disabled) {
 .heading-text>p {
   font-size: 0.8rem;
 }
+
 /* 
 * Signup form styling
 */
-
 .signup-area {
   padding: 2rem 0;
 }
@@ -415,7 +418,6 @@ button:not(:disabled):not(.disabled) {
 /* 
 *Index Page 
 */
-
 .questions {
   margin-top: 2rem;
 }
@@ -534,6 +536,7 @@ button:not(:disabled):not(.disabled) {
   margin-bottom: 1rem;
   font-size: .8rem;
 }
+
 .user-question a {
   font-weight: bold;
 }
@@ -541,7 +544,6 @@ button:not(:disabled):not(.disabled) {
 /* 
 * Questions Page
 */
-
 .question-header {
   margin-bottom: 2rem;
 }
@@ -618,7 +620,6 @@ button:not(:disabled):not(.disabled) {
 /*
 * user profile
 */
-
 .user-profile-card {
   padding: 1.5rem .6rem;
   background-color: #fff;
@@ -729,7 +730,6 @@ button:not(:disabled):not(.disabled) {
 /* 
 *New Question Page
 */
-
 .new-question-container {
   text-align: center;
 }
@@ -737,7 +737,6 @@ button:not(:disabled):not(.disabled) {
 /* 
 * footer
  */
-
 .footer {
   background: #28282e;
   color: #fff;
@@ -748,46 +747,79 @@ button:not(:disabled):not(.disabled) {
   /* padding: 10px; */
 }
 
+/* alerts messages */
+.alert {
+  background-color: #f44336;
+  color: white;
+  display: none;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: #00c070;
+}
+
 /* 
 * Any styling that should be applied to screen widths larger
 * than a mobile device: tablet, laptop, desktop, etc. 
 */
-
 @media only screen and (min-width: 800px) {
   .one {
     width: 100%;
   }
+
   .half {
     width: calc(100% / 2);
   }
+
   .one-third {
     width: calc(100% / 3);
   }
+
   .one-fourth {
     width: calc(100% / 4);
   }
+
   .two-thirds {
     width: calc(100% / 3 * 2);
   }
+
   .three-fourths {
     width: calc(100% / 4 * 3);
   }
+
   .column {
     float: left;
   }
+
   .question-summary .question-meta {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
   }
+
   body {
     font-size: 1em;
   }
+
   .site-navigation-links ul li a:hover,
   .site-navigation-links ul li a:visited:hover {
     border-bottom: 1px solid #00c070;
   }
+
   .upvote-button,
   .downvote-button {
     background-color: transparent;
@@ -799,6 +831,7 @@ button:not(:disabled):not(.disabled) {
     width: 60px;
     color: #919191 !important;
   }
+
   .answer-body-meta,
   .selected-answer-check {
     font-size: 0.8rem !important;
@@ -806,7 +839,6 @@ button:not(:disabled):not(.disabled) {
 }
 
 /* Styling */
-
 .column {
   /* border: 1px solid #666; */
   padding: 15px;

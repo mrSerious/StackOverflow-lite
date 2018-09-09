@@ -75,7 +75,7 @@ class User {
     } else {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Paswords do not match'
+        message: 'Passwords do not match'
       });
     }
   }
@@ -102,8 +102,10 @@ class User {
         const passwordIsValid = bcrypt
           .compareSync(password, user.rows[0].password);
         if (!passwordIsValid) {
-          return response
-            .status(401).json({ status: 'failure', message: 'Sign in failed' });
+          return response.status(401).json({
+            status: 'Failure',
+            message: 'Sign in failed'
+          });
         }
         const token = jwt.sign(
           {

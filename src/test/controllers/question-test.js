@@ -15,7 +15,8 @@ describe('QUESTIONS CONTROLLER', () => {
         lastname: 'James',
         firstname: 'Crocker',
         email: 'james.croaker@example.com',
-        password: process.env.TEST_USER_PASS
+        password: process.env.TEST_USER_PASS,
+        confirm_password: process.env.TEST_USER_PASS,
       })
       .end((error, response) => {
         if (error) throw error;

@@ -1,10 +1,11 @@
 {
   "extends": "airbnb-base",
   "env": {
-    "node": true,
+    "browser": true,
     "es6": true,
-    "mocha": true,
-    "jquery": true
+    "jquery": true,
+    "node": true,
+    "mocha": true
   },
   "rules": {
     "one-var": 0,

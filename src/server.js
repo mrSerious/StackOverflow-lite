@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import Dotenv from 'dotenv';
@@ -7,8 +8,10 @@ import apiVersion1 from './routes/routes-api1';
 
 Dotenv.config();
 
-const app = express();
 const port = process.env.PORT || 3000;
+
+const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());

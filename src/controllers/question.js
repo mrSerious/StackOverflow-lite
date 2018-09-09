@@ -21,7 +21,6 @@ class Question {
       .catch(error => response.status(500).json({
         status: 'Failure',
         message: 'Internal server error',
-        error
       }));
   }
 

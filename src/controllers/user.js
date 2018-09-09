@@ -21,6 +21,8 @@ class User {
     const firstname = request.body.firstname.trim();
     const lastname = request.body.lastname.trim();
     const email = request.body.email.trim();
+    // const password = request.body.password;
+    // const confirmPassword = request.body.confirm - password;
     const paswordHash = bcrypt.hashSync(request.body.password.trim(), 10);
 
     const text = 'INSERT INTO users(firstname, lastname, '

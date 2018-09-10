@@ -65,35 +65,38 @@
             <h2 class="">Create your account. It's free and only takes a minute.</h2>
             <p class="no-margin">Or <b><a href="login.html">login</a></b> if you already have an account.</p>
           </div>
-          <form action="" method="post">
+          <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <p id="error_paragraph" class="no-margin no-padding"></p>
+          </div>
+          <form id="signup" action="" method="post">
             <div class="row">
               <div class="form-group">
                 <div class="half column">
                   <label for="male">First Name</label>
-                  <input type="text" name="firstname">
+                  <input type="text" name="firstname" id="firstname">
                 </div>
                 <div class="half column">
                   <label for="male">Last Name</label>
-                  <input type="text" name="lastname">
+                  <input type="text" name="lastname" id="lastname">
                 </div>
                 <div class="half column">
-                  <label for="male">Username</label>
-                  <input type="text" name="username">
+                  <label for="male">Email</label>
+                  <input type="email" name="email" id="email">
                 </div>
                 <div class="half column">
                   <label for="male">Password</label>
-                  <input type="password" name="password">
+                  <input type="password" name="password" id="password">
                 </div>
                 <div class="half column">
                     <label for="male">Confirm Password</label>
-                    <input type="password" name="confirm-password">
+                    <input type="password" name="confirm_password" id="confirm_password">
                   </div>
                 <div class="one column">
-                  <button type="submit">Submit</button>
+                  <button id="signup_button" type="submit">Submit</button>
                 </div>
               </div>
             </div>
-
           </form>
         </div>
         <!-- /.signin-form -->
@@ -112,6 +115,7 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/front-end/signup.js"></script>
 </body>
 
 </html>

@@ -21,7 +21,8 @@ describe('ANSWERS CONTROLLER', () => {
         firstname: 'James',
         lastname: 'Hardy',
         email: 'james_hardy@example.com',
-        password: process.env.TEST_USER_PASS
+        password: process.env.TEST_USER_PASS,
+        confirm_password: process.env.TEST_USER_PASS
       })
       .end((error, response) => {
         if (error) throw error;
@@ -125,6 +126,20 @@ describe('ANSWERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.status.should.equal(401);
           response.body.status.should.eql('Failure');
+          done();
+        });
+    });
+
+    it('Should not update an answer that does not exist', (done) => {
+      chai.request(server)
+        .put('/api/v1/questions/4/answers/4000')
+        .set('x-access-token', userToken)
+        .send({ content: 'Testing the new answer route' })
+        .end((error, response) => {
+          response.type.should.equal('application/json');
+          response.status.should.equal(404);
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Cannot find that answer');
           done();
         });
     });

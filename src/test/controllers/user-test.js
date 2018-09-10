@@ -15,7 +15,8 @@ describe('USERS CONTROLLER', () => {
           firstname: 'test',
           lastname: 'test',
           email: 'm_doe@example.com',
-          password: process.env.TEST_USER_PASS
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           should.not.exist(error);
@@ -27,6 +28,7 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
+
     it('Should not register duplicate user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
@@ -34,7 +36,8 @@ describe('USERS CONTROLLER', () => {
           firstname: 'test',
           lastname: 'test',
           email: 'm_doe@example.com',
-          password: process.env.TEST_USER_PASS
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
           response.status.should.eql(409);
@@ -70,6 +73,26 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
+
+    it('Should verify password', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'test',
+          lastname: 'test',
+          email: 'm_doe1@example.com',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: `${process.env.TEST_USER_PASS}ss`
+        })
+        .end((error, response) => {
+          response.status.should.eql(400);
+          response.type.should.eql('application/json');
+          response.body.should.include.keys('status', 'message');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Passwords do not match');
+          done();
+        });
+    });
   });
 
   describe('POST /auth/login', () => {
@@ -91,6 +114,7 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
+
     it('Should respond with validation errors if '
     + 'email or password fields are empty', (done) => {
       chai.request(server)
@@ -104,7 +128,23 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
-    it('Should respond with a error if password fields are empty', (done) => {
+
+    it('Should not login if password is incorrect', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'm_doe@example.com',
+          password: `${process.env.TEST_USER_PASS}ss`
+        })
+        .end((error, response) => {
+          response.status.should.eql(401);
+          response.type.should.eql('application/json');
+          response.body.status.should.eql('Failure');
+          done();
+        });
+    });
+
+    it('Should respond with a error if password is not provided', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({

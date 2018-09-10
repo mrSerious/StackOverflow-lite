@@ -29,13 +29,9 @@ const signUp = (event) => {
       return response.json();
     })
     .then((newUser) => {
-      if (newUser.response) {
-        sessionStorage.setItem('x-access-token', newUser.data.token);
-        window.location.replace('login.html');
-        console.log(newUser);
-      } else {
-        console.log(newUser);
-      }
+      sessionStorage.setItem('x-access-token', newUser.data.token);
+      window.location.replace('login.html');
+      console.log(newUser);
     })
     .catch((error) => {
       console.log(error);

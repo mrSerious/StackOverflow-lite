@@ -65,14 +65,14 @@
             <h2 class="">Sign In To Your Account</h2>
             <p class="no-margin">Or <b><a href="signup.html">register</a></b> if you do not have an account.</p>
           </div>
-          <form action="" method="post">
+          <form id="login" action="" method="post">
             <div class="form-group">
-              <label for="male">Username</label>
-              <input class="bottom-border" type="text" name="username">
+              <label for="male">Email</label>
+              <input type="email" name="email" id="email">
             </div>
             <div class="form-group">
               <label for="male">Password</label>
-              <input type="password" name="password">
+              <input type="password" name="password" id="password">
             </div>
             <div class="form-group">
               <button type="submit">Submit</button>
@@ -96,6 +96,7 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/front-end/login.js"></script>
 </body>
 
 </html>

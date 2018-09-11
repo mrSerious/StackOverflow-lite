@@ -9,12 +9,14 @@ const signUp = (event) => {
   const firstname = document.getElementById('firstname');
   const password = document.getElementById('password');
   const email = document.getElementById('email');
+  const username = document.getElementById('username');
 
   fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       firstname: firstname.value,
       lastname: lastname.value,
+      username: username.value,
       email: email.value,
       password: password.value,
     }),
@@ -24,7 +26,7 @@ const signUp = (event) => {
   })
     .then((response) => {
       if (!response.ok) {
-        throw response;
+        throw new TypeError(response.statusText);
       }
       return response.json();
     })

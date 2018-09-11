@@ -9,6 +9,7 @@ class Validation {
   * @param {Object} request - request object
   * @param {Object} response - response object
   * @param {Function} next - next middleware function
+  *
   * @return {undefined}
   */
   static postAnswer(request, response, next) {
@@ -26,6 +27,27 @@ class Validation {
         data: errors
       });
     }
+    return next();
+  }
+
+  /**
+   * validates answer fields
+  * @param {Object} request - request object
+  * @param {Object} response - response object
+  * @param {Function} next - next middleware function
+  *
+  * @return {undefined}
+  */
+  static updateAnswer(request, response, next) {
+    const { content, isaccepted } = request.body;
+
+    if (!content && !isaccepted) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'You have sent an empty request',
+      });
+    }
+
     return next();
   }
 

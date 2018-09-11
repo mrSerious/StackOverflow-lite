@@ -12,9 +12,10 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'test',
-          lastname: 'test',
-          email: 'm_doe@example.com',
+          firstname: 'Lyod',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
           password: process.env.TEST_USER_PASS,
           confirm_password: process.env.TEST_USER_PASS
         })
@@ -33,9 +34,10 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'test',
-          lastname: 'test',
-          email: 'm_doe@example.com',
+          firstname: 'Lyod',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
           password: process.env.TEST_USER_PASS,
           confirm_password: process.env.TEST_USER_PASS
         })
@@ -78,9 +80,10 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'test',
-          lastname: 'test',
-          email: 'm_doe1@example.com',
+          firstname: 'Lyod',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
           password: process.env.TEST_USER_PASS,
           confirm_password: `${process.env.TEST_USER_PASS}ss`
         })
@@ -100,7 +103,7 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
-          email: 'm_doe@example.com',
+          email: 'l_banks@example.com',
           password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
@@ -133,7 +136,7 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
-          email: 'm_doe@example.com',
+          email: 'l_banks@example.com',
           password: `${process.env.TEST_USER_PASS}ss`
         })
         .end((error, response) => {

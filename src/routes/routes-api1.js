@@ -41,8 +41,8 @@ router.post('/auth/signup', validate.signUp, user.signUp);
 /* User login */
 router.post('/auth/login', validate.logIn, user.logIn);
 
-// update and answer
+// update an answer
 router.put('/questions/:questionId/answers/:answerId',
-  verify.check, answer.updateAnswer);
+  [verify.check, validate.updateAnswer], answer.updateAnswer);
 
 export default router;

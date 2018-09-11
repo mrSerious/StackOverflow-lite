@@ -20,7 +20,7 @@ const logIn = (event) => {
   })
     .then((response) => {
       if (!response.ok) {
-        throw response;
+        throw new TypeError(response.statusText);
       }
       return response.json();
     })

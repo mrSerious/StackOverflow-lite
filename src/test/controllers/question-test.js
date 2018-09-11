@@ -15,6 +15,7 @@ describe('QUESTIONS CONTROLLER', () => {
         lastname: 'James',
         firstname: 'Crocker',
         email: 'james.croaker@example.com',
+        username: 'james_croaker',
         password: process.env.TEST_USER_PASS,
         confirm_password: process.env.TEST_USER_PASS,
       })

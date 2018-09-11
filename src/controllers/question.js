@@ -12,7 +12,14 @@ class Question {
    * @return {Object} response - response object
    */
   static all(request, response) {
-    db.query('SELECT * FROM questions ORDER BY id ASC;')
+    db.query(`
+    SELECT q.id, title, users.id as userid, username, q.createdat,
+    COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
+    GROUP BY q.id),0) as answers 
+    FROM questions q
+    JOIN users ON users.id = q.user_id
+    ORDER BY createdat DESC
+    `)
       .then(result => response.json({
         status: 'Success',
         message: 'Data retreival successful',
@@ -21,6 +28,7 @@ class Question {
       .catch(error => response.status(500).json({
         status: 'Failure',
         message: 'Internal server error',
+        error
       }));
   }
 
@@ -33,24 +41,36 @@ class Question {
     // converts Id to an integer
     const id = parseInt(request.params.questionId, 10);
 
-    db.query(`SELECT * FROM questions FULL JOIN answers ON questions.id 
-    = answers.question_id WHERE questions.id = ${[id]} ORDER BY questions.id`)
+    db.query(`SELECT questions.id, title, body, user_id, username 
+    FROM questions JOIN users 
+    ON users.id = questions.user_id WHERE questions.id = ${id}`)
       .then((result) => {
         if (result.rowCount < 1) {
-          return response.status(404).json({
+          response.status(404).json({
             status: 'Failure',
             message: 'Question not found'
           });
+        } else {
+          const [question] = result.rows;
+          db.query(`SELECT answers.id, answer_body, users.id, username
+          FROM answers JOIN users ON users.id = answers.user_id
+          WHERE answers.question_id = ${id}`)
+            .then((answersResult) => {
+              const answers = answersResult.rows;
+
+              question.answers = answers;
+
+              response.status(200).json({
+                status: 'Success',
+                message: 'Request was successful',
+                data: question
+              });
+            })
+            .catch(error => response.status(500).json({
+              status: 'Failure',
+              message: 'Internal server error'
+            }));
         }
-        const answers = [];
-        for (let i = 0; i < result.rows.length; i += 1) {
-          answers.push(result.rows[i]);
-        }
-        return response.status(200).json({
-          status: 'Success',
-          message: 'Request was successful',
-          data: result.rows
-        });
       })
       .catch(error => response.status(500).json({
         status: 'Failure',

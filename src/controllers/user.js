@@ -21,14 +21,15 @@ class User {
     const firstname = request.body.firstname.trim();
     const lastname = request.body.lastname.trim();
     const email = request.body.email.trim();
+    const username = request.body.username.trim();
     const password = request.body.password.trim();
     const confirmPassword = request.body.confirm_password.trim();
     const paswordHash = bcrypt.hashSync(request.body.password.trim(), 10);
 
     if (password === confirmPassword) {
-      const text = 'INSERT INTO users(firstname, lastname, '
-      + 'email, password) VALUES($1, $2, $3, $4) RETURNING *';
-      const values = [firstname, lastname, email, paswordHash];
+      const text = `INSERT INTO users(firstname, lastname, username, 
+        email, password) VALUES($1, $2, $3, $4, $5) RETURNING *`;
+      const values = [firstname, lastname, username, email, paswordHash];
 
       db.query('SELECT * FROM users where email = $1', [email])
         .then((result) => {
@@ -58,6 +59,7 @@ class User {
                   id: newUser.rows[0].id,
                   firstname: newUser.rows[0].firstname,
                   lastname: newUser.rows[0].lastname,
+                  username: newUser.rows[0].username,
                   email: newUser.rows[0].email,
                   token
                 },
@@ -66,11 +68,12 @@ class User {
             .catch(error => response.status(500).json({
               status: 'error',
               message: 'internal server error',
+              error
             }));
         })
         .catch(error => response.status(500).json({
           status: 'error',
-          message: 'internal server error',
+          message: 'internal server error'
         }));
     } else {
       return response.status(400).json({

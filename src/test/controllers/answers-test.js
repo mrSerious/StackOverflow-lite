@@ -21,6 +21,7 @@ describe('ANSWERS CONTROLLER', () => {
         firstname: 'James',
         lastname: 'Hardy',
         email: 'james_hardy@example.com',
+        username: 'james_hardy',
         password: process.env.TEST_USER_PASS,
         confirm_password: process.env.TEST_USER_PASS
       })
@@ -187,7 +188,7 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
         .set('x-access-token', userToken)
-        .send({ isAccepted: true })
+        .send({ isaccepted: true })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(200);

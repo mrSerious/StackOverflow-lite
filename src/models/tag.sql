@@ -1,5 +1,6 @@
 -- drop table if exist
 DROP TABLE IF EXISTS tags CASCADE;
+
 -- create table
 CREATE TABLE tags(
   id SERIAL PRIMARY KEY,

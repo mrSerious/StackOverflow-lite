@@ -13,12 +13,12 @@ class Question {
    */
   static all(request, response) {
     db.query(`
-    SELECT questions.id, title, users.id as userid, username, 
-    COALESCE((SELECT COUNT (1) 
-    FROM answers WHERE answers.question_id = questions.id 
-    GROUP BY questions.id),0) as answers 
-    FROM questions 
-    JOIN users ON users.id = questions.user_id
+    SELECT q.id, title, users.id as userid, username, q.createdat,
+    COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
+    GROUP BY q.id),0) as answers 
+    FROM questions q
+    JOIN users ON users.id = q.user_id
+    ORDER BY createdat DESC
     `)
       .then(result => response.json({
         status: 'Success',
@@ -28,6 +28,7 @@ class Question {
       .catch(error => response.status(500).json({
         status: 'Failure',
         message: 'Internal server error',
+        error
       }));
   }
 
@@ -56,6 +57,7 @@ class Question {
           WHERE answers.question_id = ${id}`)
             .then((answersResult) => {
               const answers = answersResult.rows;
+
               question.answers = answers;
 
               response.status(200).json({

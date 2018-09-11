@@ -38,7 +38,7 @@ h6,
   font-family: inherit;
   font-weight: 600;
   line-height: 1.2;
-  color: #000;
+  color: #00c070;
 }
 
 #content {
@@ -107,8 +107,9 @@ button,
 button:not(:disabled):not(.disabled) {
   cursor: pointer;
 }
+
 button:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .clear {
@@ -205,10 +206,8 @@ button:hover {
   text-decoration: none;
 }
 
-.site-navigation-links ul li a:hover,
-.site-navigation-links ul li a:visited:hover {
+.site-navigation-links ul li a:hover {
   color: #00c070;
-  border-width: 80%
 }
 
 .site-navigation-links ul li a:not(:only-child):after,
@@ -224,6 +223,7 @@ button:hover {
 .site-navigation-links ul li ul li a {
   padding: 15px;
   line-height: 20px;
+  height: 70px;
 }
 
 .site-navigation-search {
@@ -782,25 +782,25 @@ button:hover {
   padding: 1rem 2rem;
 }
 
-.pagination > a {
+.pagination>a {
   /* border: 1px solid #00c070; */
   padding: 0.5rem 1.2rem;
   transition: all 0.6s ease-out;
 }
 
-.pagination > a > .fa {
+.pagination>a>.fa {
   font-size: 1rem;
 }
 
-.pagination > a {
+.pagination>a {
   margin: .1rem;
 }
 
-.pagination > a:hover {
+.pagination>a:hover {
   color: #ffffff;
   background-color: #00c070;
   /* border: 1px solid #00c070; */
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* 
@@ -836,6 +836,24 @@ button:hover {
     float: left;
   }
 
+  .site-navigation-links ul li a,
+  .site-navigation-links ul li a:visited {
+    line-height: 68px;
+  }
+
+  .site-navigation-links ul li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #00c070;
+    transition: width .3s;
+  }
+
+  .site-navigation-links ul li a:hover::after {
+    width: 100%;
+  }
+
   .question-summary .question-meta {
     display: flex;
     flex-direction: row;
@@ -847,10 +865,10 @@ button:hover {
     font-size: 1em;
   }
 
-  .site-navigation-links ul li a:hover,
+  /* .site-navigation-links ul li a:hover,
   .site-navigation-links ul li a:visited:hover {
     border-bottom: 1px solid #00c070;
-  }
+  } */
 
   .upvote-button,
   .downvote-button {

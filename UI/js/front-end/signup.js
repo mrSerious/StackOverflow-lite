@@ -31,7 +31,7 @@ const signUp = (event) => {
       return response.json();
     })
     .then((newUser) => {
-      sessionStorage.setItem('x-access-token', newUser.data.token);
+      localStorage.setItem('token', newUser.data.token);
       window.location.replace('login.html');
     })
     .catch((error) => {

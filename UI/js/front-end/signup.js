@@ -33,10 +33,9 @@ const signUp = (event) => {
     .then((newUser) => {
       sessionStorage.setItem('x-access-token', newUser.data.token);
       window.location.replace('login.html');
-      console.log(newUser);
     })
     .catch((error) => {
-      console.log(error);
+      throw error;
     });
 };
 

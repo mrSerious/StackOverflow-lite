@@ -59,8 +59,8 @@
     </section>
 
     <div class="container">
-      <div class="details-wrapper">
-        <div class="question-header">
+      <div id="question-details" class="details-wrapper">
+        <!-- <div class="question-header">
           <h1>Some Interesting Question Title</h1>
           <div class="meta-section tags">
             <a class="post-tag" href="">WordPress</a>
@@ -160,28 +160,28 @@
 
             <div class="clear"></div>
           </div>
+        </div> -->
+      </div>
+      
+      <div class="new-answer">
+          <div class="response-form response">
+            <form class="content-form" id="new_answer" action="" accept-charset="UTF-8" data-remote="true" method="post">
+              <div class="answer-form-wrapper">
+                <h2 class="space">Your Answer</h2>
 
-          <div class="new-answer">
-            <div class="response-form response">
-              <form class="content-form" id="new_answer" action="" accept-charset="UTF-8" data-remote="true" method="post">
-                <div class="answer-form-wrapper">
-                  <h2 class="space">Your Answer</h2>
-
-                  <div class="editor-wrap">
-                    <div class="editor-deco">
-                      <textarea name="answer[content]" id="answer_content" placeholder="Answer a question..." class="new-answer-content" data-markdown="true"
-                        style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;"></textarea>
-                    </div>
+                <div class="editor-wrap">
+                  <div class="editor-deco">
+                    <textarea name="answer[content]" id="answer_content" placeholder="Answer a question..." class="new-answer-content" data-markdown="true"
+                      style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;"></textarea>
                   </div>
                 </div>
-                <div class="form-submit">
-                  <button id="submit-button" type="submit" tabindex="120" autocomplete="off">Post Your Answer</button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div class="form-submit">
+                <button id="submit-button" type="submit" tabindex="120" autocomplete="off">Post Your Answer</button>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
     </div>
     <!-- /.container -->
   </div>
@@ -195,6 +195,7 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/front-end/question_details.js"></script>
 </body>
 
 </html>

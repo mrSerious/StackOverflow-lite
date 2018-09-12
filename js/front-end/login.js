@@ -24,13 +24,12 @@ const logIn = (event) => {
       }
       return response.json();
     })
-    .then((data) => {
-      sessionStorage.setItem('x-access-token', data.data.token);
+    .then((userLogin) => {
+      localStorage.setItem('token', userLogin.data.token);
       window.location.replace('index.html');
-      console.log(data);
     })
     .catch((error) => {
-      console.log(error);
+      throw error;
     });
 };
 

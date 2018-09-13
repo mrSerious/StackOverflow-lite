@@ -81,7 +81,7 @@ const getSingleQuestion = () => {
                 <i class="fa fa-check" aria-hidden="true"></i> <span class="hidden-on-small-screens">accepted answer</span></p>
             </div>
             <div class="clear"></div>
-            <p class="body">${question.answers[0].answer_body}</p>
+            <p class="body">${question.answers[i].answer_body}</p>
             <a href="">Add Comment</a>
           </div>
         </div>

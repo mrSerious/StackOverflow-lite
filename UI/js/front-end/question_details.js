@@ -20,7 +20,7 @@ const getSingleQuestion = () => {
       newcontent.className = 'some-class';
       let output = `
       <div class="question-header">
-        <h1>${question.title}</h1>
+        <h1 data-id="${question.id}">${question.title}</h1>
         <div class="meta-section tags">
           <a class="post-tag" href="">WordPress</a>
           <a class="post-tag" href="">Apache</a>
@@ -46,6 +46,8 @@ const getSingleQuestion = () => {
       </div>
       <div class="content-body">
         <p>${question.body}</p>
+        <a id="delete-question">Delete</a>
+        <div class="clear"></div>
       </div>
       <div class="answers">
         <div class="answers-header">

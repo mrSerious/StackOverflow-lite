@@ -5,11 +5,12 @@ const form = document.getElementById('signup');
 const signUp = (event) => {
   event.preventDefault();
 
-  const lastname = document.getElementById('lastname');
   const firstname = document.getElementById('firstname');
-  const password = document.getElementById('password');
+  const lastname = document.getElementById('lastname');
   const email = document.getElementById('email');
   const username = document.getElementById('username');
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirm_password');
 
   fetch(url, {
     method: 'POST',
@@ -19,6 +20,7 @@ const signUp = (event) => {
       username: username.value,
       email: email.value,
       password: password.value,
+      confirmPassword: confirmPassword.value
     }),
     headers: {
       'Content-Type': 'application/json'

@@ -319,8 +319,8 @@ button:hover {
 #nav-toggle span:after {
   cursor: pointer;
   border-radius: 50px;
-  height: 5px;
-  width: 35px;
+  height: 1px;
+  width: 30px;
   background: #00c070;
   position: absolute;
   display: block;

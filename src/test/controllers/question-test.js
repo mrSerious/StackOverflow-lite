@@ -183,7 +183,6 @@ describe('QUESTIONS CONTROLLER', () => {
         .delete('/api/v1/questions/r')
         .set('x-access-token', userToken)
         .end((error, response) => {
-          console.log(response);
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');

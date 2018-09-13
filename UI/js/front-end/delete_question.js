@@ -23,7 +23,7 @@ deleteButton.addEventListener('click', () => {
       return response.json();
     })
     .then((myJson) => {
-      console.log(myJson.status);
+      // console.log(myJson.status);
       window.location.replace('index.html');
     })
     .catch((error) => {

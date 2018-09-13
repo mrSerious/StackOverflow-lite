@@ -33,7 +33,7 @@ router.post('/questions/:questionId/answers',
 
 /* DELETE question */
 router.delete('/questions/:questionId',
-[verify.check, validate.deleteQuestion], question.destroy);
+  [verify.check, validate.deleteQuestion], question.destroy);
 
 /* User signup */
 router.post('/auth/signup', validate.signUp, user.signUp);

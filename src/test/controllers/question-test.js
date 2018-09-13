@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwt from 'jsonwebtoken';
 import server from '../../server';
 
 chai.use(chaiHttp);
@@ -7,6 +8,9 @@ chai.use(chaiHttp);
 chai.should();
 
 let userToken;
+const secondUserToken = jwt.sign({ id: 15 }, process.env.SECRET_KEY, {
+  expiresIn: 86400 // expires in 24 hours
+});
 describe('QUESTIONS CONTROLLER', () => {
   before((done) => {
     chai.request(server)
@@ -25,6 +29,7 @@ describe('QUESTIONS CONTROLLER', () => {
         done();
       });
   });
+
   describe('GET /api/v1/questions', () => {
     it('Should get all questions', (done) => {
       chai.request(server)
@@ -54,7 +59,7 @@ describe('QUESTIONS CONTROLLER', () => {
           });
       });
 
-    it('Should respond with not found if question does not exist', (done) => {
+    it('Should not get a question that does not exist', (done) => {
       chai.request(server)
         .get('/api/v1/questions/15')
         .end((error, response) => {
@@ -115,7 +120,7 @@ describe('QUESTIONS CONTROLLER', () => {
         });
     });
 
-    it('Should not post with empty content field', (done) => {
+    it('Should not post with empty request body', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
         .set('x-access-token', userToken)
@@ -132,9 +137,24 @@ describe('QUESTIONS CONTROLLER', () => {
   });
 
   describe('DELETE /api/v1/questions/:questionId', () => {
-    it('Should respond with a success message', (done) => {
+    it('Should not delete question if user is not authorized', (done) => {
       chai.request(server)
-        .delete('/api/v1/questions/1')
+        .delete('/api/v1/questions/5')
+        .set('x-access-token', secondUserToken)
+        .end((error, response) => {
+          response.status.should.equal(403);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('You are not authorized to modify this resource');
+          done();
+        });
+    });
+
+    it('Should let question owner delete question', (done) => {
+      chai.request(server)
+        .delete('/api/v1/questions/5')
+        .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(200);
           response.type.should.equal('application/json');
@@ -145,9 +165,10 @@ describe('QUESTIONS CONTROLLER', () => {
         });
     });
 
-    it('Should respond with a not found message', (done) => {
+    it('Should not delete a question that does not exist', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/50')
+        .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(404);
           response.type.should.equal('application/json');
@@ -156,10 +177,13 @@ describe('QUESTIONS CONTROLLER', () => {
           done();
         });
     });
-    it('Should respond with validation error', (done) => {
+
+    it('Should not delete a question if URL has invalid paramas', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/r')
+        .set('x-access-token', userToken)
         .end((error, response) => {
+          console.log(response);
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');

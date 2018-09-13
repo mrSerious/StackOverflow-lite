@@ -118,8 +118,8 @@ class Question {
     FROM questions 
     WHERE id = $1`, [id])
       .then((selectQueryResult) => {
-        if (userId === selectQueryResult.rows[0].user_id) {
-          if (selectQueryResult.rowCount !== 0) {
+        if (selectQueryResult.rowCount > 0) {
+          if (userId === selectQueryResult.rows[0].user_id) {
             db.query('DELETE FROM questions where id = $1', [id])
               .then((deleteQueryResult) => {
                 if (deleteQueryResult.rowCount === 1) {
@@ -138,21 +138,22 @@ class Question {
                 message: 'Internal server error',
               }));
           } else {
-            return response.status(404).json({
+            return response.status(403).json({
               status: 'Failure',
-              message: 'Question not found'
+              message: 'You are not authorized to modify this resource'
             });
           }
         } else {
-          return response.status(403).json({
+          return response.status(404).json({
             status: 'Failure',
-            message: 'You are not authorized to modify this resource'
+            message: 'Question not found'
           });
         }
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        message: 'Internal server error'
+        message: 'Internal server error',
+        error
       }));
   }
 }

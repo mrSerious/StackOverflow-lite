@@ -566,13 +566,15 @@ button:hover {
 }
 
 #delete-question {
+  background-color: #ffffff;
   border: 1px solid #ff000069;
   border-radius: 50px;
   color: #2525258a;
   float: right;
+  font-size: .8rem;
   font-weight: 400;
-  margin-right: 2rem;
-  padding: .2rem 1rem;
+  margin: .5rem .5rem;
+  padding: .2rem 1.5rem;
   transition: background-color .3s ease-in-out, color .3s ease-in-out;
   -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;  
 }

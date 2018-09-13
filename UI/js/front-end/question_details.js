@@ -1,11 +1,11 @@
-const questionUrl = `
+const url = `
 https://stack-overflow-lite-app.herokuapp.com/api/v1/questions`;
 const detailsContainer = document.getElementById('question-details');
 
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
 
-  fetch(`${questionUrl}/${id}`)
+  fetch(`${url}/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new TypeError(response.statusText);
@@ -17,10 +17,11 @@ const getSingleQuestion = () => {
       const answerCount = Object.keys(question.answers).length;
 
       const newcontent = document.createElement('div');
-      newcontent.className = 'some-class';
-      let output = `
+      newcontent.id = 'question-wrapper';
+      newcontent.setAttribute('data-id', question.id);
+      newcontent.innerHTML = `
       <div class="question-header">
-        <h1 data-id="${question.id}">${question.title}</h1>
+        <h1>${question.title}</h1>
         <div class="meta-section tags">
           <a class="post-tag" href="">WordPress</a>
           <a class="post-tag" href="">Apache</a>
@@ -46,7 +47,6 @@ const getSingleQuestion = () => {
       </div>
       <div class="content-body">
         <p>${question.body}</p>
-        <a id="delete-question">Delete</a>
         <div class="clear"></div>
       </div>
       <div class="answers">
@@ -56,7 +56,7 @@ const getSingleQuestion = () => {
         <div class="answers-list">`;
 
       for (let i = 0; i < answerCount; i += 1) {
-        output += `
+        newcontent.innerHTML += `
         <div class="answer-body">
           <div class="answer-vote-container">
             <button name="button" type="button" class="upvote-button">
@@ -81,17 +81,16 @@ const getSingleQuestion = () => {
                 <i class="fa fa-check" aria-hidden="true"></i> <span class="hidden-on-small-screens">accepted answer</span></p>
             </div>
             <div class="clear"></div>
-            <p>${question.answers[0].answer_body}</p>
+            <p class="body">${question.answers[0].answer_body}</p>
             <a href="">Add Comment</a>
           </div>
         </div>
         <div class="clear"></div>`;
       }
 
-      output += `
+      newcontent.innerHTML += `
         </div>
       </div>`;
-      newcontent.innerHTML = output;
       detailsContainer.appendChild(newcontent);
     })
     .catch((error) => {

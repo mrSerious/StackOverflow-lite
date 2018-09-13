@@ -73,7 +73,8 @@ class User {
         })
         .catch(error => response.status(500).json({
           status: 'error',
-          message: 'internal server error'
+          message: 'internal server error',
+          error
         }));
     } else {
       return response.status(400).json({

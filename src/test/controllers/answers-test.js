@@ -36,16 +36,16 @@ describe('ANSWERS CONTROLLER', () => {
             title: 'This question from the test',
             body: 'Question in answers test'
           })
-          .end((err) => {
-            if (err) throw err;
+          .end((error1) => {
+            if (error1) throw error1;
             chai.request(server)
               .post('/api/v1/questions/4/answers')
               .set('x-access-token', userToken)
               .send({
                 content: 'answer in answers test'
               })
-              .end((_error) => {
-                if (_error) throw _error;
+              .end((error2) => {
+                if (error2) throw error2;
                 done();
               });
           });

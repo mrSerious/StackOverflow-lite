@@ -111,29 +111,38 @@ class Question {
    */
   static destroy(request, response) {
     const id = request.params.questionId * 1;
+    const { userId } = request;
+
     db.query(`
     SELECT * 
     FROM questions 
     WHERE id = $1`, [id])
       .then((selectQueryResult) => {
-        if (selectQueryResult.rowCount !== 0) {
-          db.query('DELETE FROM questions where id = $1', [id])
-            .then((deleteQueryResult) => {
-              if (deleteQueryResult.rowCount === 1) {
-                return response.status(200).json({
-                  status: 'Success',
-                  message: 'Question deleted successfully'
+        if (selectQueryResult.rowCount > 0) {
+          if (userId === selectQueryResult.rows[0].user_id) {
+            db.query('DELETE FROM questions where id = $1', [id])
+              .then((deleteQueryResult) => {
+                if (deleteQueryResult.rowCount === 1) {
+                  return response.status(200).json({
+                    status: 'Success',
+                    message: 'Question deleted successfully'
+                  });
+                }
+                return response.status(500).json({
+                  status: 'Failure',
+                  message: 'Something went wrong. Contact your administrator'
                 });
-              }
-              return response.status(500).json({
+              })
+              .catch(error => response.status(500).json({
                 status: 'Failure',
-                message: 'Something went wrong. Contact your administrator'
-              });
-            })
-            .catch(error => response.status(500).json({
+                message: 'Internal server error',
+              }));
+          } else {
+            return response.status(403).json({
               status: 'Failure',
-              message: 'Internal server error',
-            }));
+              message: 'You are not authorized to modify this resource'
+            });
+          }
         } else {
           return response.status(404).json({
             status: 'Failure',
@@ -143,7 +152,8 @@ class Question {
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        message: 'Internal server error'
+        message: 'Internal server error',
+        error
       }));
   }
 }

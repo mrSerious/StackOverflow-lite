@@ -456,7 +456,6 @@ button:hover {
 
 .question-summary {
   padding: 5px;
-  /* border-bottom: 1px solid #eff0f1; */
   border-bottom: 1px solid #d8d8d8a1;
   margin-bottom: 5px;
 }
@@ -469,7 +468,6 @@ button:hover {
 .question-summary .question-meta {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-evenly; */
   align-items: center;
 }
 
@@ -546,7 +544,7 @@ button:hover {
 }
 
 /* 
-* Questions Page
+* question details
 */
 .question-header {
   margin-bottom: 2rem;
@@ -567,6 +565,25 @@ button:hover {
   font-size: .8rem;
 }
 
+#delete-question {
+  background-color: #ffffff;
+  border: 1px solid #ff000069;
+  border-radius: 50px;
+  color: #2525258a;
+  float: right;
+  font-size: .8rem;
+  font-weight: 400;
+  margin: .5rem .5rem;
+  padding: .2rem 1.5rem;
+  transition: background-color .3s ease-in-out, color .3s ease-in-out;
+  -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;  
+}
+
+#delete-question:hover {
+  background-color: #ff0000;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #ffffff;
+}
 .answers-list {
   margin-bottom: 2.1rem;
 }

@@ -576,7 +576,7 @@ button:hover {
   margin: .5rem .5rem;
   padding: .2rem 1.5rem;
   transition: background-color .3s ease-in-out, color .3s ease-in-out;
-  -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;  
+  -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;
 }
 
 #delete-question:hover {
@@ -584,6 +584,7 @@ button:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: #ffffff;
 }
+
 .answers-list {
   margin-bottom: 2.1rem;
 }
@@ -608,13 +609,18 @@ button:hover {
 }
 
 .new-answer {
-  margin-bottom: 2.5rem;
+  margin: 2.5rem 0;
 }
 
 .answer-body-container {
   padding: 21px 0 13px 21px;
   overflow: hidden;
-  border-bottom: solid 1px #cfcfcfa1;
+  border-bottom: solid 1px #cfcfcf54;
+}
+
+.answer-body-container>a {
+  margin-right: 1rem;
+  font-size: .8rem !important;
 }
 
 .upvote-button,
@@ -717,7 +723,6 @@ button:hover {
 .user-content-container {
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
 }
 
 .user-content-container>p>a {
@@ -734,9 +739,6 @@ button:hover {
 }
 
 .user-questions-view {
-  /* background-color: #fff; */
-  /* border: 1px solid #e5e5e5; */
-  /* border-radius: 4px; */
   margin: 20px 0;
 }
 

@@ -5,7 +5,7 @@ const deleteButton = document.getElementById('delete-question');
 
 deleteButton.addEventListener('click', () => {
   const questionId = document
-    .getElementById('question-wrapper').getAttribute('data-id');
+    .getElementById('question_title').getAttribute('data-id');
 
   const token = localStorage.getItem('token');
 

@@ -26,7 +26,9 @@
         <!-- navbrand -->
         <div class="brand">
           <a href="index.html">
-            <b><p id="logo"> SO </p></b>
+            <b>
+              <p id="logo"> SO </p>
+            </b>
           </a>
         </div>
         <form class="site-navigation-search">
@@ -60,28 +62,65 @@
 
     <div class="container">
       <div id="question-details" class="details-wrapper">
-        <a id="delete-question">Delete</a>
-        
+        <div class="question-header">
+          <h1 id="question_title"></h1>
+          <div class="meta-section tags">
+            <a class="post-tag" href="">WordPress</a>
+            <a class="post-tag" href="">Apache</a>
+            <a class="post-tag" href="">DigitalOcean</a>
+            <a class="post-tag" href="">DNS</a>
+            <a class="post-tag" href="">Linux Commands</a>
+            <a class="post-tag" href="">System Tools</a>
+            <a class="post-tag" href="">Ubuntu</a>
+          </div>
+          <div class="clear"></div>
+          <div class="info-bar">
+            <span class="date-info">
+              <span class>Posted 2 hours ago</span>
+            </span>
+            <span class="modified-info">
+              <span>Last modified 2 hours ago</span>
+            </span>
+            <span class="pageviews-info">
+              <span>4 views</span>
+            </span>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="content-body">
+          <p id="question_body"></p>
+          <a id="delete-question">Delete</a>
+          <div class="clear"></div>
+        </div>
+        <div class="answers">
+          <div class="answers-header">
+            <h2 id="answer_count"></h2>
+          </div>
+          <div class="answers-list" id="answer_list">
+          </div>
+          <div class="clear"></div>
+        </div>
       </div>
-      <div class="new-answer">
-          <div class="response-form response">
-            <form class="content-form" id="new_answer" accept-charset="UTF-8" data-remote="true" method="post">
-              <div class="answer-form-wrapper">
-                <h2 class="space">Your Answer</h2>
 
-                <div class="editor-wrap">
-                  <div class="editor-deco">
-                    <textarea name="answer[content]" id="answer_content" placeholder="Answer a question..." class="new-answer-content" data-markdown="true"
-                      style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;"></textarea>
-                  </div>
+      <div class="new-answer">
+        <div class="response-form response">
+          <form class="content-form" id="new_answer" accept-charset="UTF-8" data-remote="true" method="post">
+            <div class="answer-form-wrapper">
+              <h2 class="space">Your Answer</h2>
+
+              <div class="editor-wrap">
+                <div class="editor-deco">
+                  <textarea name="answer[content]" id="answer_content" placeholder="Answer a question..." class="new-answer-content"
+                    data-markdown="true" style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;"></textarea>
                 </div>
               </div>
-              <div class="form-submit">
-                <button id="submit-button" type="submit" tabindex="120" autocomplete="off">Post Your Answer</button>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div class="form-submit">
+              <button id="submit-button" type="submit" tabindex="120" autocomplete="off">Post Your Answer</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
     <!-- /.container -->
   </div>
@@ -98,6 +137,7 @@
   <script src="js/front-end/question_details.js"></script>
   <script src="js/front-end/delete_question.js"></script>
   <script src="js/front-end/answer_question.js"></script>
+  <script src="js/front-end/update_answer.js"></script>
 </body>
 
 </html>

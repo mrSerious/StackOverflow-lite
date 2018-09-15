@@ -52,10 +52,10 @@ class Question {
           });
         } else {
           const [question] = result.rows;
-          db.query(`SELECT answers.id, answer_body, isaccepted, answers.createdat, users.id, username
-          FROM answers JOIN users ON users.id = answers.user_id
+          db.query(`SELECT answers.id, answer_body, answers.question_id, isaccepted, answers.createdat, users.id as user_id, username
+          FROM answers JOIN users ON answers.user_id = users.id
           WHERE answers.question_id = ${id}
-          ORDER BY createdat DESC`)
+          ORDER BY answers.id DESC`)
             .then((answersResult) => {
               const answers = answersResult.rows;
 

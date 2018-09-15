@@ -573,7 +573,7 @@ button:hover {
   float: right;
   font-size: .8rem;
   font-weight: 400;
-  margin: .5rem .5rem;
+  margin: 0 .5rem;
   padding: .2rem 1.5rem;
   transition: background-color .3s ease-in-out, color .3s ease-in-out;
   -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;
@@ -587,10 +587,6 @@ button:hover {
 
 .answers-list {
   margin-bottom: 2.1rem;
-}
-
-.content-body {
-  margin-bottom: 2rem;
 }
 
 .answer-body-meta {
@@ -620,7 +616,9 @@ button:hover {
 
 .answer-body-container>a {
   margin-right: 1rem;
-  font-size: .8rem !important;
+  font-size: .6rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .upvote-button,
@@ -821,6 +819,52 @@ button:hover {
   /* border: 1px solid #00c070; */
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+/*  */
+.accept_answer {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: #f1f1f1;
+  color: #666;
+  top: 10px;
+  height: 30px;
+  width: 30px;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 7px;
+  outline: none;
+}
+
+#answer_update_form #answer_update {
+  resize: none;
+}
+
+.accept_answer:checked::before {
+  position: absolute;
+  font: 13px/1 'Open Sans', sans-serif;
+  left: 11px;
+  top: 7px;
+  content: '\02143';
+  transform: rotate(40deg);
+}
+
+.accept_answer:hover {
+  background-color: #f7f7f7;
+}
+
+.accept_answer:checked {
+  background-color: #f1f1f1;
+}
+
+.accept_answer_label {
+  font: 300 16px/1.7 'Open Sans', sans-serif;
+  color: #666;
+  cursor: pointer;
+}
+
 
 /* 
 * Any styling that should be applied to screen widths larger

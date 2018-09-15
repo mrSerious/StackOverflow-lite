@@ -1,6 +1,16 @@
 const url = `
 https://stack-overflow-lite-app.herokuapp.com/api/v1/questions`;
-// const detailsContainer = document.getElementById('question-details');
+
+const getIds = ('click', (event) => {
+  if (event.target.classList.contains('edit_answer')) {
+    const answerId = document.getElementById('answer_body')
+      .getAttribute('answer-id');
+    localStorage.setItem('answer-id', answerId);
+    const questionId = document.getElementById('question_title')
+      .getAttribute('question-id');
+    localStorage.setItem('question-id', questionId);
+  }
+});
 
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
@@ -14,13 +24,16 @@ const getSingleQuestion = () => {
     })
     .then((myJson) => {
       const question = myJson.data;
+      console.log(question);
       const answerCount = Object.keys(question.answers).length;
-      
+
       // build out page
-      document.getElementById('question_title').setAttribute('data-id', question.id);
+      document.getElementById('question_title')
+        .setAttribute('question-id', question.id);
       document.getElementById('question_title').innerHTML = question.title;
       document.getElementById('question_body').innerHTML = question.body;
-      document.getElementById('answer_count').innerHTML = `${answerCount} Answers`;
+      document.getElementById('answer_count')
+        .innerHTML = `${answerCount} Answers`;
 
       for (let i = 0; i < answerCount; i += 1) {
         const answerList = document.getElementById('answer_list');
@@ -89,8 +102,6 @@ const getSingleQuestion = () => {
 
         ansBodyContainer.appendChild(ansBodyMeta);
 
-        console.log(question.answers);
-
         if (question.answers[i].isaccepted) {
           // div with accepted answer
           const acceptedAns = document.createElement('div');
@@ -109,13 +120,15 @@ const getSingleQuestion = () => {
           acceptedAns.appendChild(acceptedText);
           ansBodyContainer.appendChild(acceptedAns);
         }
-          
+
         const clear = document.createElement('div');
         clear.className = 'clear';
         ansBodyContainer.appendChild(clear);
 
         const answer = document.createElement('p');
         answer.className = 'body';
+        answer.id = 'answer_body';
+        answer.setAttribute('answer-id', question.answers[i].id);
         answer.innerHTML = question.answers[i].answer_body;
 
         ansBodyContainer.appendChild(answer);
@@ -126,10 +139,12 @@ const getSingleQuestion = () => {
         ansBodyContainer.appendChild(addComment);
 
         const editAns = document.createElement('a');
-        editAns.href = ' ';
+        editAns.href = 'edit_answer.html';
         editAns.id = 'edit_answer';
+        editAns.className = 'edit_answer';
         editAns.innerHTML = 'Edit';
         ansBodyContainer.appendChild(editAns);
+        editAns.onclick = getIds;
 
         answerBody.appendChild(voteContainer);
         answerBody.appendChild(ansBodyContainer);

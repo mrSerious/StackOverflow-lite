@@ -67,14 +67,12 @@ class User {
             })
             .catch(error => response.status(500).json({
               status: 'error',
-              message: 'internal server error',
-              error
+              message: 'internal server error'
             }));
         })
         .catch(error => response.status(500).json({
           status: 'error',
-          message: 'internal server error',
-          error
+          message: 'internal server error'
         }));
     } else {
       return response.status(400).json({
@@ -120,12 +118,14 @@ class User {
             expiresIn: 86400 // expires in 24 hours
           }
         );
+        const loggedInUser = user.rows;
         return response.status(200).json({
           status: 'Success',
           message: 'login sucessful',
           data: {
             auth: true,
-            token
+            token,
+            loggedInUser
           }
         });
       })

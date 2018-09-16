@@ -34,6 +34,7 @@ const signUp = (event) => {
     })
     .then((newUser) => {
       localStorage.setItem('token', newUser.data.token);
+      localStorage.setItem('current-user', newUser.id);
       window.location.replace('login.html');
     })
     .catch((error) => {

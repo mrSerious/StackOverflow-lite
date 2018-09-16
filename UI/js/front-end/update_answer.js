@@ -3,7 +3,14 @@ const answerId = localStorage.getItem('answer-id');
 const answer = localStorage.getItem('answer');
 const form = document.getElementById('edit_answer_form');
 const accepted = document.getElementsByName('accept_answer');
-const url = `https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${questionId}/answers/${answerId}`;
+const questionOwner = localStorage.getItem('question-owner');
+const answerOwer = localStorage.getItem('answer-owner');
+const currentUser = localStorage.getItem('current-user');
+
+console.log(`answerOwer=>${answerOwer}`, `questionOwner ${questionOwner}`, `currentUser =>${currentUser}`);
+
+const url = `https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/
+${questionId}/answers/${answerId}`;
 
 document.getElementById('original_answer').innerHTML = answer;
 
@@ -14,10 +21,13 @@ const upDateAnswer = (event) => {
   let myUpdate;
 
   if (accepted[0].checked) {
-    myUpdate = { isaccepted: true };
-    console.log('accepted answer selected');
+    myUpdate = {
+      isaccepted: true
+    };
   } else if (content) {
-    myUpdate = { content: content.value };
+    myUpdate = {
+      content: content.value
+    };
   }
 
   fetch(url, {
@@ -34,8 +44,8 @@ const upDateAnswer = (event) => {
       }
       return response.json();
     })
-    .then((myJson) => {
-      console.log(myJson);
+    .then(() => {
+      window.location.replace('question_details.html');
     })
     .catch((error) => {
       throw error;

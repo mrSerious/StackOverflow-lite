@@ -1,6 +1,3 @@
-const url = `
-https://stack-overflow-lite-app.herokuapp.com/api/v1/questions`;
-
 const saveIds = (event) => {
   if (event.target.classList.contains('edit_answer')) {
     const questionId = document.getElementById('question_title')
@@ -12,13 +9,23 @@ const saveIds = (event) => {
 
     const answer = document.getElementById('answer_body').innerHTML;
     localStorage.setItem('answer', answer);
+
+    const questionOwner = document.getElementById('question_title')
+      .getAttribute('question-owner');
+    localStorage.setItem('question-owner', questionOwner);
+
+    const answerOwer = document.getElementById('username')
+      .getAttribute('answer-owner');
+    localStorage.setItem('answer-owner', answerOwer);
   }
 };
 
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
+  const url = `
+  https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
 
-  fetch(`${url}/${id}`)
+  fetch(url)
     .then((response) => {
       if (!response.ok) {
         throw new TypeError(response.statusText);
@@ -30,8 +37,9 @@ const getSingleQuestion = () => {
       const answerCount = Object.keys(question.answers).length;
 
       // build out page
-      document.getElementById('question_title')
-        .setAttribute('question-id', question.id);
+      const questionTitle = document.getElementById('question_title');
+      questionTitle.setAttribute('question-id', question.id);
+      questionTitle.setAttribute('question-owner', question.user_id);
       document.getElementById('question_title').innerHTML = question.title;
       const questionBody = document.getElementById('question_body');
       questionBody.innerHTML = question.body;
@@ -88,8 +96,10 @@ const getSingleQuestion = () => {
 
         const username = document.createElement('a');
         username.className = 'username';
+        username.id = 'username';
         username.href = 'profile.html';
         username.innerHTML = question.answers[i].username;
+        username.setAttribute('answer-owner', question.answers[i].user_id);
         user.appendChild(username);
         ansBodyMeta.appendChild(user);
 
@@ -115,13 +125,8 @@ const getSingleQuestion = () => {
           // children of p above
           const checkMark = document.createElement('i');
           checkMark.className = 'fa fa-check';
-          const acceptedText = document.createElement('span');
-          const text = document.createTextNode('accepted answer');
-          acceptedText.appendChild(text);
           accepted.appendChild(checkMark);
-          accepted.appendChild(acceptedText);
           acceptedAns.appendChild(checkMark);
-          acceptedAns.appendChild(acceptedText);
           ansBodyContainer.appendChild(acceptedAns);
         }
 

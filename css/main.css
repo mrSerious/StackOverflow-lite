@@ -599,9 +599,13 @@ button:hover {
 }
 
 .selected-answer-check {
+  border: 2px solid #00c07046;
+  border-radius: 50px;
+  background-color: #00c07013;
+  color: #00c070;
   font-size: 0.65rem;
   float: right;
-  margin-right: 1rem;
+  padding: 0 .5rem;
 }
 
 .new-answer {

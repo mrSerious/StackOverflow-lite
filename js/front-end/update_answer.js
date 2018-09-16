@@ -6,8 +6,19 @@ const accepted = document.getElementsByName('accept_answer');
 const questionOwner = localStorage.getItem('question-owner');
 const answerOwer = localStorage.getItem('answer-owner');
 const currentUser = localStorage.getItem('current-user');
+const content = document.getElementById('answer_update');
 
-console.log(`answerOwer=>${answerOwer}`, `questionOwner ${questionOwner}`, `currentUser =>${currentUser}`);
+if (questionOwner === currentUser) {
+  content.disabled = true;
+  document.getElementById('no-modify-content')
+    .innerHTML = 'You are not permitted modify this answer!';
+}
+
+if (answerOwer === currentUser) {
+  accepted[0].disabled = true;
+  document.getElementById('no-modify-isaccepted')
+    .innerHTML = 'You are not permitted accept this answer!';
+}
 
 const url = `https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/
 ${questionId}/answers/${answerId}`;
@@ -16,7 +27,7 @@ document.getElementById('original_answer').innerHTML = answer;
 
 const upDateAnswer = (event) => {
   event.preventDefault();
-  const content = document.getElementById('answer_update');
+  
   const token = localStorage.getItem('token');
   let myUpdate;
 

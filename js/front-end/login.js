@@ -27,7 +27,7 @@ const logIn = (event) => {
     .then((userLogin) => {
       console.log(userLogin);
       localStorage.setItem('token', userLogin.data.token);
-      localStorage.setItem('current-user', userLogin.id);
+      localStorage.setItem('current-user', userLogin.data.loggedInUser[0].id);
       window.location.replace('index.html');
     })
     .catch((error) => {

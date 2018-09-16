@@ -82,19 +82,24 @@ class Answer {
 
               if (isaccepted) {
                 if (question.rows[0].user_id === userId) {
-                  db.query('SELECT * FROM answers WHERE isAccepted = true')
+                  db.query(`
+                  SELECT * FROM answers WHERE isAccepted = true 
+                  AND question_id = $1`, [questionId])
                     .then((isAcceptedExists) => {
-                      if (isAcceptedExists.rowCount > 1
-                  && isAcceptedExists.rows[0].id !== questionId) {
-                        db.query(`UPDATE answers SET isAccepted 
-                    = false WHERE id = $1`, [isAcceptedExists.rows[0].id])
-                          .catch(error => response.status(500).json({
-                            status: 'Failure',
-                            message: 'Internal server error'
-                          }));
+                      if (isAcceptedExists.rowCount > 0) {
+                        for (let i = 0; i < isAcceptedExists.rowCount; i += 1) {
+                          db.query(`
+                        UPDATE answers SET isAccepted = false 
+                        WHERE id = $1`, [isAcceptedExists.rows[i].id])
+                            .catch(error => response.status(500).json({
+                              status: 'Failure',
+                              message: 'Internal server error'
+                            }));
+                        }
                       }
-                      db.query(`UPDATE answers SET isaccepted = ($1) 
-                    WHERE id = ($2) AND question_id = ($3) AND user_id = ($4)`,
+                      db.query(`
+                      UPDATE answers SET isaccepted = ($1) WHERE id = ($2) 
+                      AND question_id = ($3) AND user_id = ($4)`,
                       [isaccepted, answerId, questionId, userId])
                         .then(() => {
                           response.status(200).json({

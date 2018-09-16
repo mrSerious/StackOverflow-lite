@@ -24,9 +24,9 @@ class User {
     const username = request.body.username.trim();
     const password = request.body.password.trim();
     const confirmPassword = request.body.confirm_password.trim();
-    const paswordHash = bcrypt.hashSync(request.body.password.trim(), 10);
 
     if (password === confirmPassword) {
+      const paswordHash = bcrypt.hashSync(password, 10);
       const text = `INSERT INTO users(firstname, lastname, username, 
         email, password) VALUES($1, $2, $3, $4, $5) RETURNING *`;
       const values = [firstname, lastname, username, email, paswordHash];

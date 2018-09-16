@@ -616,9 +616,7 @@ button:hover {
 
 .answer-body-container>a {
   margin-right: 1rem;
-  font-size: .6rem;
   font-weight: bold;
-  text-transform: uppercase;
 }
 
 .upvote-button,
@@ -819,7 +817,8 @@ button:hover {
   /* border: 1px solid #00c070; */
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/*  */
+
+/* answers section */
 .accept_answer {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -836,6 +835,15 @@ button:hover {
   cursor: pointer;
   margin-right: 7px;
   outline: none;
+}
+
+.answer-vote-container>button {
+  border: 1px solid transparent;
+}
+
+.answer-vote-container>button:hover {
+  box-shadow: none;
+  border: 1px solid rgba(102, 102, 102, 0.24);
 }
 
 #answer_update_form #answer_update {
@@ -865,6 +873,15 @@ button:hover {
   cursor: pointer;
 }
 
+/* edit answer */
+#original_answer-container {
+  padding: 2rem 0;
+}
+
+#isaccepted_wrapper {
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
 
 /* 
 * Any styling that should be applied to screen widths larger

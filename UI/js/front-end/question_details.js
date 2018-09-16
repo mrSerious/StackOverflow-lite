@@ -1,11 +1,31 @@
-const url = `
-https://stack-overflow-lite-app.herokuapp.com/api/v1/questions`;
-const detailsContainer = document.getElementById('question-details');
+const saveIds = (event) => {
+  if (event.target.classList.contains('edit_answer')) {
+    const questionId = document.getElementById('question_title')
+      .getAttribute('question-id');
+    localStorage.setItem('question-id', questionId);
+
+    const answerId = event.target.getAttribute('answer-id');
+    localStorage.setItem('answer-id', answerId);
+
+    const answer = document.getElementById('answer_body').innerHTML;
+    localStorage.setItem('answer', answer);
+
+    const questionOwner = document.getElementById('question_title')
+      .getAttribute('question-owner');
+    localStorage.setItem('question-owner', questionOwner);
+
+    const answerOwer = document.getElementById('username')
+      .getAttribute('answer-owner');
+    localStorage.setItem('answer-owner', answerOwer);
+  }
+};
 
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
+  const url = `
+  https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
 
-  fetch(`${url}/${id}`)
+  fetch(url)
     .then((response) => {
       if (!response.ok) {
         throw new TypeError(response.statusText);
@@ -16,82 +36,129 @@ const getSingleQuestion = () => {
       const question = myJson.data;
       const answerCount = Object.keys(question.answers).length;
 
-      const newcontent = document.createElement('div');
-      newcontent.id = 'question-wrapper';
-      newcontent.setAttribute('data-id', question.id);
-      newcontent.innerHTML = `
-      <div class="question-header">
-        <h1>${question.title}</h1>
-        <div class="meta-section tags">
-          <a class="post-tag" href="">WordPress</a>
-          <a class="post-tag" href="">Apache</a>
-          <a class="post-tag" href="">DigitalOcean</a>
-          <a class="post-tag" href="">DNS</a>
-          <a class="post-tag" href="">Linux Commands</a>
-          <a class="post-tag" href="">System Tools</a>
-          <a class="post-tag" href="">Ubuntu</a>
-        </div>
-        <div class="clear"></div>
-        <div class="info-bar">
-          <span class="date-info">
-            <span class>Posted 2 hours ago</span>
-          </span>
-          <span class="modified-info">
-            <span>Last modified 2 hours ago</span>
-          </span>
-          <span class="pageviews-info">
-            <span>4 views</span>
-          </span>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="content-body">
-        <p>${question.body}</p>
-        <div class="clear"></div>
-      </div>
-      <div class="answers">
-        <div class="answers-header">
-          <h2>${answerCount} Answers</h2>
-        </div>
-        <div class="answers-list">`;
+      // build out page
+      const questionTitle = document.getElementById('question_title');
+      questionTitle.setAttribute('question-id', question.id);
+      questionTitle.setAttribute('question-owner', question.user_id);
+      document.getElementById('question_title').innerHTML = question.title;
+      const questionBody = document.getElementById('question_body');
+      questionBody.innerHTML = question.body;
+      questionBody.setAttribute('question-body', question.body);
+      document.getElementById('answer_count')
+        .innerHTML = `${answerCount} Answers`;
 
       for (let i = 0; i < answerCount; i += 1) {
-        newcontent.innerHTML += `
-        <div class="answer-body">
-          <div class="answer-vote-container">
-            <button name="button" type="button" class="upvote-button">
-              <i class="fa fa-arrow-up" aria-hidden="true"></i>
-              <span class="new-upvote-count">1</span>
-            </button>
-            <button name="button" type="button" class="downvote-button">
-              <i class="fa fa-arrow-down" aria-hidden="true"></i>
-              <span class="new-upvote-count">0</span>
-            </button>
-          </div>
-          <div class="answer-body-container">
-            <div class="answer-body-meta">
-              <span class="user">
-                <a class="username" href="profile.html">${question.answers[i].username}</a>
-              </span>
-              <span class="answer-label-separator"></span>
-              <span class="answer-response-time">about 9 hours ago</span>
-            </div>
-            <div class="selected-answer-check">
-              <p class="no-margin">
-                <i class="fa fa-check" aria-hidden="true"></i> <span class="hidden-on-small-screens">accepted answer</span></p>
-            </div>
-            <div class="clear"></div>
-            <p class="body">${question.answers[i].answer_body}</p>
-            <a href="">Add Comment</a>
-          </div>
-        </div>
-        <div class="clear"></div>`;
-      }
+        const answerList = document.getElementById('answer_list');
+        const answerBody = document.createElement('div');
+        answerBody.id = 'answer-body';
 
-      newcontent.innerHTML += `
-        </div>
-      </div>`;
-      detailsContainer.appendChild(newcontent);
+        // first div with votes
+        const voteContainer = document.createElement('div');
+        voteContainer.className = 'answer-vote-container';
+
+        // upvote button
+        const upVote = document.createElement('button');
+        upVote.name = 'button';
+        upVote.type = 'button';
+        upVote.className = 'upvote-button';
+        const upArrow = document.createElement('i');
+        upArrow.className = 'fa fa-arrow-up';
+        upVote.appendChild(upArrow);
+        const upCount = document.createElement('span');
+        upCount.className = 'new-upvote-count';
+        upCount.innerHTML = 0;
+        upVote.appendChild(upCount);
+        voteContainer.appendChild(upVote);
+
+        // upvote button
+        const downVote = document.createElement('button');
+        downVote.name = 'button';
+        downVote.type = 'button';
+        downVote.className = 'downvote-button';
+        const downArrow = document.createElement('i');
+        downArrow.className = 'fa fa-arrow-down';
+        downVote.appendChild(downArrow);
+        const downCount = document.createElement('span');
+        downCount.className = 'new-upvote-count';
+        downCount.innerHTML = 0;
+        downVote.appendChild(downCount);
+        voteContainer.appendChild(downVote);
+
+        // second div with answer body
+        const ansBodyContainer = document.createElement('div');
+        ansBodyContainer.className = 'answer-body-container';
+        const ansBodyMeta = document.createElement('div');
+        ansBodyMeta.className = 'answer-body-meta';
+
+        // first span in body meta
+        const user = document.createElement('span');
+        user.className = 'user';
+
+        const username = document.createElement('a');
+        username.className = 'username';
+        username.id = 'username';
+        username.href = 'profile.html';
+        username.innerHTML = question.answers[i].username;
+        username.setAttribute('answer-owner', question.answers[i].user_id);
+        user.appendChild(username);
+        ansBodyMeta.appendChild(user);
+
+        // second span in body meta
+        const seperator = document.createElement('span');
+        seperator.className = 'answer-label-separator';
+        ansBodyMeta.appendChild(seperator);
+
+        // third span in body meta
+        const time = document.createElement('span');
+        time.className = 'answer-response-time';
+        time.innerHTML = ' answered 9 hours ago';
+        ansBodyMeta.appendChild(time);
+
+        ansBodyContainer.appendChild(ansBodyMeta);
+
+        if (question.answers[i].isaccepted) {
+          // div with accepted answer
+          const acceptedAns = document.createElement('div');
+          acceptedAns.className = 'selected-answer-check';
+          const accepted = document.createElement('p');
+          accepted.className = 'no-margin';
+          // children of p above
+          const checkMark = document.createElement('i');
+          checkMark.className = 'fa fa-check';
+          accepted.appendChild(checkMark);
+          acceptedAns.appendChild(checkMark);
+          ansBodyContainer.appendChild(acceptedAns);
+        }
+
+        const clear = document.createElement('div');
+        clear.className = 'clear';
+        ansBodyContainer.appendChild(clear);
+
+        const answer = document.createElement('p');
+        answer.className = 'body';
+        answer.id = 'answer_body';
+        answer.innerHTML = question.answers[i].answer_body;
+
+        ansBodyContainer.appendChild(answer);
+
+        const addComment = document.createElement('a');
+        addComment.href = ' ';
+        addComment.innerHTML = 'add comment';
+        ansBodyContainer.appendChild(addComment);
+
+        const editAns = document.createElement('a');
+        editAns.href = 'edit_answer.html';
+        editAns.id = 'edit_answer';
+        editAns.className = 'edit_answer';
+        editAns.innerHTML = 'edit';
+        editAns.setAttribute('answer-id', question.answers[i].id);
+        ansBodyContainer.appendChild(editAns);
+        editAns.onclick = saveIds;
+
+        answerBody.appendChild(voteContainer);
+        answerBody.appendChild(ansBodyContainer);
+        answerList.appendChild(answerBody);
+      }
     })
     .catch((error) => {
       throw error;

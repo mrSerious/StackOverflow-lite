@@ -15,6 +15,7 @@ class VerifyToken {
   * @param {Object} request - request object
   * @param {Object} response - response object
   * @param {Function} next - next middleware function
+  *
   * @return {undefined}
   */
   static check(request, response, next) {

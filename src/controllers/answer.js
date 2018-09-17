@@ -3,6 +3,7 @@ import db from '../models/db';
 
 /**
  * @class Answer
+ *
  * @classdesc class representing Answer
  */
 class Answer {
@@ -34,6 +35,7 @@ class Answer {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - go to the next
+   *
    * @returns {Object} response - response object
    */
   static updateAnswer(request, response, next) {

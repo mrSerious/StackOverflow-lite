@@ -3,12 +3,14 @@ import db from '../models/db';
 
 /**
  * @class Question
+ *
  * @classdesc class representing Question
  */
 class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
   static getAllQuestions(request, response) {
@@ -35,6 +37,7 @@ class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
   static getSingleQuestion(request, response) {
@@ -109,6 +112,7 @@ class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
   static deleteQuestion(request, response) {

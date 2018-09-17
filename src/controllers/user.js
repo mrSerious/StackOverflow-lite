@@ -8,14 +8,16 @@ Dotenv.config();
 
 /**
  * @class User
+ *
  * @classdesc class representing User
  */
 class User {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
-   * @return {Object} response - response object
    * @param {Function} next - call back to be run
+   *
+   * @return {Object} response - response object
    */
   static signUp(request, response, next) {
     const firstname = request.body.firstname.trim();
@@ -86,8 +88,9 @@ class User {
   /**
  * @param {Object} request - request object
  * @param {Object} response - response object
- * @return {Object} response - response object
  * @param {Function} next - call back to be run
+ *
+ * @return {Object} response - response object
  */
   static logIn(request, response, next) {
     const email = request.body.email.trim();

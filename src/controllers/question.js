@@ -3,15 +3,17 @@ import db from '../models/db';
 
 /**
  * @class Question
+ *
  * @classdesc class representing Question
  */
 class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
-  static all(request, response) {
+  static getAllQuestions(request, response) {
     db.query(`
     SELECT q.id, title, users.id as userid, username, q.createdat,
     COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
@@ -35,9 +37,10 @@ class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
-  static single(request, response) {
+  static getSingleQuestion(request, response) {
     // converts Id to an integer
     const id = parseInt(request.params.questionId, 10);
 
@@ -52,10 +55,11 @@ class Question {
           });
         } else {
           const [question] = result.rows;
-          db.query(`SELECT answers.id, answer_body, answers.question_id, isaccepted, answers.createdat, users.id as user_id, username
+          db.query(`
+          SELECT answers.id, answer_body, answers.question_id, 
+          isaccepted, answers.createdat, users.id as user_id, username
           FROM answers JOIN users ON answers.user_id = users.id
-          WHERE answers.question_id = ${id}
-          ORDER BY answers.id DESC`)
+          WHERE answers.question_id = ${id} ORDER BY answers.id DESC`)
             .then((answersResult) => {
               const answers = answersResult.rows;
 
@@ -108,9 +112,10 @@ class Question {
   /**
    * @param {Object} request - request object
    * @param {Object} response - response object
+   *
    * @return {Object} response - response object
    */
-  static destroy(request, response) {
+  static deleteQuestion(request, response) {
     const id = request.params.questionId * 1;
     const { userId } = request;
 

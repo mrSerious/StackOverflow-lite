@@ -56,6 +56,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static getQuestion(request, response, next) {
@@ -80,6 +81,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static postQuestion(request, response, next) {
@@ -103,6 +105,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static signUp(request, response, next) {
@@ -144,6 +147,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static logIn(request, response, next) {
@@ -175,6 +179,7 @@ class Validation {
   * @param {Object} request - request object
   * @param {Object} response - response object
   * @param {Function} next - next middleware function
+  *
   * @return {undefined}
   */
   static deleteQuestion(request, response, next) {

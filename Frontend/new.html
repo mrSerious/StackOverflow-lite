@@ -11,7 +11,6 @@
   <!-- Fonts  -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,900|Orbitron" rel="stylesheet">
 
-
   <!-- Styles -->
   <link type="text/css" rel="stylesheet" href="./css/normalize.min.css" />
   <link type="text/css" rel="stylesheet" href="./css/main.css">
@@ -68,12 +67,12 @@
       </div>
 
       <div class="new-question-form">
-        <form>
+        <form id="new_question" method="post">
           <div class="row">
             <div class="form-group">
               <div class="one column">
                 <label for="title">What's your question?*</label>
-                <input placeholder="Tell us what you need help figuring out" name="title" type="text">
+                <input id="title" placeholder="Tell us what you need help figuring out" name="title" type="text">
               </div>
             </div>
 
@@ -85,7 +84,7 @@
 
               <div class="one column">
                 <label for="male">What else do we need to know?*</label>
-                <textarea name="content" rows="5" cols="30" placeholder="Include details like logs, error messages, OS used, or steps you've already taken."></textarea>
+                <textarea id="body" name="content" rows="5" cols="30" placeholder="Include details like logs, error messages, OS used, or steps you've already taken."></textarea>
               </div>
 
               <div class="one column">
@@ -109,6 +108,7 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/front-end/new_question.js"></script>
 </body>
 
 </html>

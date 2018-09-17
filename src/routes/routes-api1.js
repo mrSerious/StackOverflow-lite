@@ -18,10 +18,11 @@ router.get('/', (request, response) => {
 });
 
 /* GET all questions */
-router.get('/questions', question.all);
+router.get('/questions', question.getAllQuestions);
 
 /* GET single question */
-router.get('/questions/:questionId', validate.getQuestion, question.single);
+router.get('/questions/:questionId',
+  validate.getQuestion, question.getSingleQuestion);
 
 /* POST question */
 router.post('/questions', [verify.check, validate.postQuestion],
@@ -33,7 +34,7 @@ router.post('/questions/:questionId/answers',
 
 /* DELETE question */
 router.delete('/questions/:questionId',
-  [verify.check, validate.deleteQuestion], question.destroy);
+  [verify.check, validate.deleteQuestion], question.deleteQuestion);
 
 /* User signup */
 router.post('/auth/signup', validate.signUp, user.signUp);

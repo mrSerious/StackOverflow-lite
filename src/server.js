@@ -20,13 +20,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
+app.use('/', express.static('Frontend'));
 app.use((request, response, next) => {
   response.status(404).json({
     status: 'Failure',
     message: 'Sorry can\'t find that page!'
   });
 });
-app.use('/', express.static('Frontend'));
 
 app.listen(port);
 

@@ -26,7 +26,7 @@ app.use((request, response, next) => {
     message: 'Sorry can\'t find that page!'
   });
 });
-app.use(express.static('Frontend'));
+app.use('/', express.static('Frontend'));
 
 app.listen(port);
 

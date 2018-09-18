@@ -11,6 +11,8 @@ const signUp = (event) => {
   const username = document.getElementById('username');
   const password = document.getElementById('password');
   const confirmPassword = document.getElementById('confirm_password');
+  const errorParagraph = document.getElementById('error_paragraph');
+  const alert = document.getElementById('error-alert');
 
   fetch(url, {
     method: 'POST',
@@ -20,19 +22,19 @@ const signUp = (event) => {
       username: username.value,
       email: email.value,
       password: password.value,
-      confirmPassword: confirmPassword.value
+      confirm_password: confirmPassword.value
     }),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
     }
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new TypeError(response.statusText);
-      }
-      return response.json();
-    })
+    .then(response => response.json())
     .then((newUser) => {
+      if (newUser.status === 'Failure') {
+        errorParagraph.innerHTML = newUser.message;
+        alert.style.display = 'block';
+      }
       localStorage.setItem('token', newUser.data.token);
       localStorage.setItem('current-user', newUser.id);
       window.location.replace('login.html');

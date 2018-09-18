@@ -25,7 +25,6 @@ const logIn = (event) => {
       return response.json();
     })
     .then((userLogin) => {
-      console.log(userLogin);
       localStorage.setItem('token', userLogin.data.token);
       localStorage.setItem('current-user', userLogin.data.loggedInUser[0].id);
       window.location.replace('index.html');

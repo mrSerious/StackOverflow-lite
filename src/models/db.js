@@ -6,7 +6,6 @@ import config from '../config/config';
 Dotenv.config();
 
 const env = process.env.NODE_ENV || 'development';
-
 const dbConfig = parseDbUrl(process.env.DATABASE_URL);
 
 let settings = '';

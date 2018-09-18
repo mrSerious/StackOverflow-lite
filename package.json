@@ -38,7 +38,8 @@
     "mocha": "^5.2.0",
     "node-fetch": "^2.2.0",
     "parse-database-url": "^0.3.0",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "swagger-ui-express": "^4.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -1,229 +1,103 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0",
-    "title": "Stackoverflow-lite Web App",
-    "description": "API docs for StackOverFlow-Lite"
+    "version": "1.0.0",
+    "title": "Stackoverflow-lite Web App API",
+    "description": "API docs for StackOverFlow-Lite",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "tersoo.atsen@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   },
-  "host": "stack-overflow-lite.herokuapp.com/",
+  "host": "https://stack-overflow-lite-app.herokuapp.com",
   "basePath": "/api/v1",
+  "tags": [{
+      "name": "Users",
+      "description": "User API enpoints"
+    },
+    {
+      "name": "Questions",
+      "description": "Question API enpoints"
+    },
+    {
+      "name": "Answers",
+      "description": "Answer API enpoints"
+    }
+  ],
   "schemes": [
+    "https",
     "http"
   ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
   "paths": {
-    "/questions": {
-      "get": {
-        "description": "Route to get all questions",
-        "summary": "/api/v1/questions",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "QuestionsGet",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Data retreival successful"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "GET",
-              "uri": "/questions"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/questions",
-            "x-testDescription": "Route to get all questions"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      },
+    "/auth/signup": {
       "post": {
-        "description": "End point to add a new question",
-        "summary": "/api/v1/questions",
         "tags": [
-          "Misc"
+          "Users"
         ],
-        "operationId": "QuestionsPost",
+        "summary": "Signs up a new user",
+        "description": "Signup a new application user",
+        "operationId": "userSignup",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "A user object to be registered in the application",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        }],
         "responses": {
           "200": {
-            "description": "Question added successfully"
+            "description": "user created"
+          },
+          "409": {
+            "description": "user already exist"
           },
           "500": {
             "description": "Internal server error"
           }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/questions"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/questions1",
-            "x-testDescription": "End point to add a new question"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      }
-    },
-    "/questions/1": {
-      "get": {
-        "description": "Route to get a single question",
-        "summary": "/api/v1/questions/1",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "Questions1Get",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Request was successful"
-          },
-          "404": {
-            "description": "Question not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "GET",
-              "uri": "/questions/1"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/questions/1",
-            "x-testDescription": "Route to get a single question"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
-        }
-      },
-      "delete": {
-        "description": "End point to delete a question",
-        "summary": "/api/v1/questions/1",
-        "tags": [
-          "Misc"
-        ],
-        "operationId": "Questions1Delete",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Question deleted successfully"
-          },
-          "404": {
-            "description": "Question not found"
-          }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "DELETE",
-              "uri": "/questions/1"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/questions/11",
-            "x-testDescription": "End point to delete a question"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
         }
       }
     },
     "/auth/login": {
       "post": {
-        "description": "route to log users in",
-        "summary": "/api/v1/auth/login",
+        "summary": "Logs in a user",
+        "description": "Logins a registered user into the application",
         "tags": [
-          "Misc"
+          "Users"
         ],
-        "operationId": "AuthLoginPost",
+        "operationId": "userLogin",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+            "name": "email",
+            "in": "query",
+            "description": "User email for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login (hidden)",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "login sucessful"
@@ -234,131 +108,350 @@
           "401": {
             "description": "login failed"
           }
-        },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/auth/login"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/auth/login",
-            "x-testDescription": "route to log users in"
-          }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
         }
       }
     },
-    "/auth/signup": {
-      "post": {
-        "description": "Route to sign up new users",
-        "summary": "/api/v1/auth/signup",
+    "/questions": {
+      "get": {
+        "security": [{
+          "token": []
+        }],
         "tags": [
-          "Misc"
+          "Questions"
         ],
-        "operationId": "AuthSignupPost",
+        "summary": "Gets all questions",
+        "description": "Get all questions stored in the application",
+        "operationId": "getQuestions",
         "produces": [
           "application/json"
         ],
-        "parameters": [],
         "responses": {
           "200": {
-            "description": "user created"
-          },
-          "409": {
-            "description": "user already exist"
+            "description": "Data retreival successful"
           },
           "500": {
             "description": "Internal server error"
-          }          
-        },
-        "security": [],
-        "x-unitTests": [
+          }
+        }
+      },
+      "post": {
+        "security": [{
+          "token": []
+        }],
+        "tags": [
+          "Questions"
+        ],
+        "summary": "Adds question",
+        "description": "Add a new question to the application",
+        "operationId": "postQuestion",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "x-access-token",
+            "in": "header",
+            "description": "A token is required for authentication and authorization",
+            "required": true,
+            "type": "string"
+          },
           {
-            "request": {
-              "method": "POST",
-              "uri": "/auth/signup"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/auth/signup",
-            "x-testDescription": "Route to sign up new users"
+            "in": "body",
+            "name": "body",
+            "description": "Question object to be added to the application",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Question"
+            }
           }
         ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
+        "responses": {
+          "200": {
+            "description": "Question added successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized! Invalid token"
+          },
+          "403": {
+            "description": "No token!, Action forbidden! please sign up or login"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
       }
     },
-    "/questions/1/answers": {
-      "post": {
-        "description": "Route to add a question",
-        "summary": "/api/v1/questions/1/answers/",
+    "/questions/{questionId}": {
+      "get": {
+        "summary": "Finds a question",
+        "description": "Finds single question by ID",
         "tags": [
-          "Misc"
+          "Questions"
         ],
+        "operationId": "getSingleQuestion",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "questionId",
+          "in": "path",
+          "description": "ID of question to return",
+          "required": true,
+          "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "Request was successful"
+          },
+          "404": {
+            "description": "Question not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [{
+          "token": []
+        }],
+        "tags": [
+          "Questions"
+        ],
+        "summary": "Deletes a question",
+        "description": "Delete a question by ID",
+        "operationId": "deleteSingleQuestion",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "x-access-token",
+            "in": "header",
+            "description": "A token is required for authentication and authorization",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "ID of question to return",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized, please provide a valid token"
+          },
+          "404": {
+            "description": "Question not found"
+          }
+        }
+      }
+    },
+    "/questions/{questionId}/answers": {
+      "post": {
+        "security": [{
+          "token": []
+        }],
+        "tags": [
+          "Answers"
+        ],
+        "summary": "Add answer",
+        "description": "Add a new answer for a question",
+        "operationId": "postAnswer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "x-access-token",
+            "in": "header",
+            "description": "A token is required for authentication and authorization",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "ID of question with the answer",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Answer",
+            "in": "body",
+            "description": "A answer object to be added to the application",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostAnswerModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized!"
+          },
+          "403": {
+            "description": "Access denied!"
+          }
+        }
+      }
+    },
+    "/questions/{questionId}/answers/{answerId}": {
+      "put": {
+        "security": [{
+          "token": []
+        }],
+        "tags": [
+          "Answers"
+        ],
+        "summary": "Update answer",
+        "description": "Update answer",
         "operationId": "Questions1AnswersPost",
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+            "name": "x-access-token",
+            "in": "header",
+            "description": "A token is required for authentication and authorization",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "ID of question with the answer",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "answerId",
+            "in": "path",
+            "description": "ID of answer to be updated",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "Answer",
+            "in": "body",
+            "description": "Updates an answer",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": ""
           }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "name": "x-access-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "username",
+        "email",
+        "password",
+        "confrimpassword"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
         },
-        "security": [],
-        "x-unitTests": [
-          {
-            "request": {
-              "method": "POST",
-              "uri": "/questions/1/answers"
-            },
-            "expectedResponse": {
-              "x-allowExtraHeaders": true,
-              "x-bodyMatchMode": "NONE",
-              "x-arrayOrderedMatching": false,
-              "x-arrayCheckCount": false,
-              "x-matchResponseSchema": true,
-              "headers": {}
-            },
-            "x-testShouldPass": true,
-            "x-testEnabled": true,
-            "x-testName": "/api/v1/questions/1/answers/",
-            "x-testDescription": "Route to add a question"
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "confirmpassword": {
+          "type": "string"
+        }
+      }
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "Answers": {
+          "type": "array",
+          "items": {
+            "type": "object"
           }
-        ],
-        "x-operation-settings": {
-          "CollectParameters": false,
-          "AllowDynamicQueryParameters": false,
-          "AllowDynamicFormParameters": false,
-          "IsMultiContentStreaming": false
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     }

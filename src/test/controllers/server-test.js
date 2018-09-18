@@ -25,7 +25,7 @@ describe('SERVER TESTS', () => {
   describe('GET /404', () => {
     it('Should throw an error', (done) => {
       chai.request(server)
-        .get('/')
+        .get('/questions')
         .end((error, response) => {
           response.redirects.length.should.equal(0);
           response.status.should.equal(404);

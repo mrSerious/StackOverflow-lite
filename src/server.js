@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import Dotenv from 'dotenv';
@@ -12,8 +13,10 @@ const swaggerDocument = require('../swagger.json');
 const app = express();
 const port = process.env.PORT || 3000;
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
 app.use((request, response, next) => {

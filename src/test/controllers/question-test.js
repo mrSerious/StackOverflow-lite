@@ -1,15 +1,37 @@
-/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^pool" }] */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server';
+import jwt from 'jsonwebtoken';
+import server from '../../server';
 
 chai.use(chaiHttp);
 
 chai.should();
 
-describe('routes : question', () => {
+let userToken;
+const secondUserToken = jwt.sign({ id: 15 }, process.env.SECRET_KEY, {
+  expiresIn: 86400 // expires in 24 hours
+});
+describe('QUESTIONS CONTROLLER', () => {
+  before((done) => {
+    chai.request(server)
+      .post('/api/v1/auth/signup')
+      .send({
+        lastname: 'James',
+        firstname: 'Crocker',
+        email: 'james.croaker@example.com',
+        username: 'james_croaker',
+        password: process.env.TEST_USER_PASS,
+        confirm_password: process.env.TEST_USER_PASS,
+      })
+      .end((error, response) => {
+        if (error) throw error;
+        userToken = response.body.data.token;
+        done();
+      });
+  });
+
   describe('GET /api/v1/questions', () => {
-    it('should respond a success message and all questions', (done) => {
+    it('Should get all questions', (done) => {
       chai.request(server)
         .get('/api/v1/questions')
         .end((error, response) => {
@@ -24,7 +46,7 @@ describe('routes : question', () => {
   });
 
   describe('GET /api/v1/questions/:questionId', () => {
-    it('should respond with a success message and a single question',
+    it('Should get a question by id',
       (done) => {
         chai.request(server)
           .get('/api/v1/questions/1')
@@ -37,7 +59,7 @@ describe('routes : question', () => {
           });
       });
 
-    it('should respond with a failure message', (done) => {
+    it('Should not get a question that does not exist', (done) => {
       chai.request(server)
         .get('/api/v1/questions/15')
         .end((error, response) => {
@@ -49,7 +71,7 @@ describe('routes : question', () => {
         });
     });
 
-    it('should respond with a validation error message', (done) => {
+    it('Should catch invalid parameter in get single question URL', (done) => {
       chai.request(server)
         .get('/api/v1/questions/w')
         .end((error, response) => {
@@ -64,10 +86,10 @@ describe('routes : question', () => {
   });
 
   describe('POST /api/v1/questions', () => {
-    it('should respond with a success message and a'
-      + ' single question that was added', (done) => {
+    it('Should post a new question', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
+        .set('x-access-token', userToken)
         .send({
           title: 'Qui aggredior inveniant desumptas',
           body: 'Ipsius cupere vulgus tes hos.',
@@ -81,9 +103,27 @@ describe('routes : question', () => {
         });
     });
 
-    it('should respond with validation error message', (done) => {
+    it('Should not post with invalid token', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
+        .set('x-access-token', `${userToken}rrr`)
+        .send({
+          title: 'Qui aggredior inveniant desumptas',
+          body: 'Ipsius cupere vulgus tes hos.',
+        })
+        .end((error, response) => {
+          response.status.should.equal(403);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Failed to authenticate token');
+          done();
+        });
+    });
+
+    it('Should not post with empty request body', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions')
+        .set('x-access-token', userToken)
         .send()
         .end((error, response) => {
           response.type.should.equal('application/json');
@@ -97,9 +137,24 @@ describe('routes : question', () => {
   });
 
   describe('DELETE /api/v1/questions/:questionId', () => {
-    it('should respond with a success message', (done) => {
+    it('Should not delete question if user is not authorized', (done) => {
       chai.request(server)
-        .delete('/api/v1/questions/1')
+        .delete('/api/v1/questions/5')
+        .set('x-access-token', secondUserToken)
+        .end((error, response) => {
+          response.status.should.equal(403);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('You are not authorized to modify this resource');
+          done();
+        });
+    });
+
+    it('Should let question owner delete question', (done) => {
+      chai.request(server)
+        .delete('/api/v1/questions/5')
+        .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(200);
           response.type.should.equal('application/json');
@@ -110,9 +165,10 @@ describe('routes : question', () => {
         });
     });
 
-    it('should respond with a not found message', (done) => {
+    it('Should not delete a question that does not exist', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/50')
+        .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(404);
           response.type.should.equal('application/json');
@@ -121,9 +177,11 @@ describe('routes : question', () => {
           done();
         });
     });
-    it('should respond with validation error', (done) => {
+
+    it('Should not delete a question if URL has invalid paramas', (done) => {
       chai.request(server)
         .delete('/api/v1/questions/r')
+        .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(400);
           response.type.should.equal('application/json');

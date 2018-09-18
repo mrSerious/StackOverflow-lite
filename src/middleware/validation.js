@@ -9,6 +9,7 @@ class Validation {
   * @param {Object} request - request object
   * @param {Object} response - response object
   * @param {Function} next - next middleware function
+  *
   * @return {undefined}
   */
   static postAnswer(request, response, next) {
@@ -30,10 +31,32 @@ class Validation {
   }
 
   /**
+   * validates answer fields
+  * @param {Object} request - request object
+  * @param {Object} response - response object
+  * @param {Function} next - next middleware function
+  *
+  * @return {undefined}
+  */
+  static updateAnswer(request, response, next) {
+    const { content, isaccepted } = request.body;
+
+    if (!content && !isaccepted) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'You have sent an empty request',
+      });
+    }
+
+    return next();
+  }
+
+  /**
    * validates question fields
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static getQuestion(request, response, next) {
@@ -58,6 +81,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static postQuestion(request, response, next) {
@@ -68,7 +92,7 @@ class Validation {
 
     if (errors) {
       return response.status(400).json({
-        status: 'failure',
+        status: 'Failure',
         message: 'Validation failed',
         data: errors
       });
@@ -81,6 +105,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static signUp(request, response, next) {
@@ -109,7 +134,7 @@ class Validation {
     const errors = request.validationErrors();
     if (errors) {
       return response.status(400).json({
-        status: 'failure',
+        status: 'Failure',
         message: 'Validation failed',
         data: errors
       });
@@ -122,6 +147,7 @@ class Validation {
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
+   *
    * @return {undefined}
    */
   static logIn(request, response, next) {
@@ -140,7 +166,7 @@ class Validation {
     const errors = request.validationErrors();
     if (errors) {
       return response.status(400).json({
-        status: 'failure',
+        status: 'Failure',
         message: 'Validation failed',
         data: errors
       });
@@ -153,6 +179,7 @@ class Validation {
   * @param {Object} request - request object
   * @param {Object} response - response object
   * @param {Function} next - next middleware function
+  *
   * @return {undefined}
   */
   static deleteQuestion(request, response, next) {

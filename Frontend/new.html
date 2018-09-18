@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required Tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>New Question</title>
+
+  <!-- Fonts  -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,900|Orbitron" rel="stylesheet">
+
+  <!-- Styles -->
+  <link type="text/css" rel="stylesheet" href="./css/normalize.min.css" />
+  <link type="text/css" rel="stylesheet" href="./css/main.css">
+
+  <!-- fontawesome -->
+  <link type="text/css" rel="stylesheet" href="./css/font-awesome/css/font-awesome.css">
+</head>
+
+<body id="new-body">
+  <div id="content">
+    <section class="navigation">
+      <div class="nav-container">
+        <!-- navbrand -->
+        <div class="brand">
+          <a href="index.html">
+            <b><p id="logo"> SO </p></b>
+          </a>
+        </div>
+        <form class="site-navigation-search">
+          <input type="search" placeholder="Search for..." value="" name="s" title="Search for:">
+        </form>
+        <!-- nav  -->
+        <nav class="site-navigation-links">
+          <div class="nav-mobile">
+            <a id="nav-toggle" href="#!">
+              <span></span>
+            </a>
+          </div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html">Questions</a>
+            </li>
+            <li>
+              <a href="new.html">Ask Question</a>
+            </li>
+            <li>
+              <a href="login.html">Sign In</a>
+            </li>
+            <li>
+              <a href="signup.html">Sign Up</a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.nav -->
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="new-question-container">
+        <div class="new-question-heading">
+          <h1 class="new-question-header">Ask a question</h1>
+          <div class="new-question-sub">Running into trouble? Our developer community is here to help!</div>
+        </div>
+      </div>
+
+      <div class="new-question-form">
+        <form id="new_question" method="post">
+          <div class="row">
+            <div class="form-group">
+              <div class="one column">
+                <label for="title">What's your question?*</label>
+                <input id="title" placeholder="Tell us what you need help figuring out" name="title" type="text">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="one column">
+                <label for="tags">Tags*</label>
+                <input type="text" name="tags" placeholder="Add a couple tags to help others find your question">
+              </div>
+
+              <div class="one column">
+                <label for="male">What else do we need to know?*</label>
+                <textarea id="body" name="content" rows="5" cols="30" placeholder="Include details like logs, error messages, OS used, or steps you've already taken."></textarea>
+              </div>
+
+              <div class="one column">
+                <button type="submit">Submit</button>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.container -->
+  </div>
+  <!-- /#Content -->
+
+  <!--Footer-->
+  <footer class="footer">
+    <p class="footer-company-name no-margin">StackOver-Lite &copy; 2018</p>
+  </footer>
+
+  <!--Scripts-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/front-end/new_question.js"></script>
+</body>
+
+</html>

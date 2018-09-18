@@ -10,6 +10,7 @@ import apiVersion1 from './routes/routes-api1';
 Dotenv.config();
 
 const swaggerDocument = require('../swagger.json');
+
 const app = express();
 const port = process.env.PORT || 3000;
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -25,6 +26,7 @@ app.use((request, response, next) => {
     message: 'Sorry can\'t find that page!'
   });
 });
+app.use(express.static('Frontend'));
 
 app.listen(port);
 

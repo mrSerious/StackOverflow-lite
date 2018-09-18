@@ -10,6 +10,7 @@ import apiVersion1 from './routes/routes-api1';
 Dotenv.config();
 
 const swaggerDocument = require('../swagger.json');
+
 const app = express();
 const port = process.env.PORT || 3000;
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(expressValidator());
 app.use('/api/v1', apiVersion1);
+app.use('/', express.static('Frontend'));
 app.use((request, response, next) => {
   response.status(404).json({
     status: 'Failure',

@@ -1,14 +1,13 @@
+/* eslint-disable max-len */
 const form = document.getElementById('new_answer');
 
-const newAnswer = () => {
+const newAnswer = (event) => {
+  event.preventDefault();
   const answerContent = document.getElementById('answer_content');
   const questionId = document
-    .getElementById('question-wrapper').getAttribute('data-id');
+    .getElementById('question_title').getAttribute('question-id');
   const token = localStorage.getItem('token');
   const answerURL = `https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${questionId}/answers`;
-
-  console.log(answerContent, answerURL, questionId);
-
   fetch(answerURL, {
     method: 'POST',
     body: JSON.stringify({

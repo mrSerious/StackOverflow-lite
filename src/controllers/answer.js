@@ -77,7 +77,7 @@ class Answer {
                 } else {
                   response.status(403).json({
                     status: 'Failure',
-                    message: 'You are not authorized to modify this resource'
+                    message: 'You are not allowed to perform the requested operation'
                   });
                 }
               }
@@ -121,7 +121,7 @@ class Answer {
                 } else {
                   response.status(403).json({
                     status: 'Failure',
-                    message: 'You are not authorized to modify this resource'
+                    message: 'You are not allowed to perform the requested operation'
                   });
                 }
               }

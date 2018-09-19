@@ -27,7 +27,7 @@ class VerifyToken {
       return response.status(401)
         .json({
           status: 'Failure',
-          message: 'No token provided'
+          message: 'You need to login to perform this operation'
         });
     }
 
@@ -36,7 +36,7 @@ class VerifyToken {
         return response.status(403)
           .json({
             status: 'Failure',
-            message: 'Failed to authenticate token'
+            message: 'You are not allowed to perform the requested operation'
           });
       }
 

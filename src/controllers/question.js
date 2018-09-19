@@ -24,7 +24,7 @@ class Question {
     `)
       .then(result => response.json({
         status: 'Success',
-        message: 'Data retreival successful',
+        message: 'Questions retrieved successfully',
         data: { questions: result.rows }
       }))
       .catch(error => response.status(500).json({

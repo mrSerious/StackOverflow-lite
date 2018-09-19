@@ -38,7 +38,7 @@ describe('QUESTIONS CONTROLLER', () => {
           response.status.should.equal(200);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Success');
-          response.body.message.should.eql('Data retreival successful');
+          response.body.message.should.eql('Questions retrieved successfully');
           response.body.data.should.include.keys('questions');
           done();
         });
@@ -75,11 +75,10 @@ describe('QUESTIONS CONTROLLER', () => {
       chai.request(server)
         .get('/api/v1/questions/w')
         .end((error, response) => {
-          response.status.should.equal(400);
+          response.status.should.equal(404);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Validation failed');
-          response.body.data[0].msg.should.eql('Invalid url parameter');
+          response.body.message.should.eql('Sorry can\'t find that page!');
           done();
         });
     });
@@ -91,8 +90,8 @@ describe('QUESTIONS CONTROLLER', () => {
         .post('/api/v1/questions')
         .set('x-access-token', userToken)
         .send({
-          title: 'Qui aggredior inveniant desumptas',
-          body: 'Ipsius cupere vulgus tes hos.',
+          title: 'Qui aggredior inveniant desumptas aggredior inveniant desumptas',
+          body: 'Ipsius cupere vulgus tes hos aggredior inveniant desumptas',
         })
         .end((error, response) => {
           response.status.should.equal(201);
@@ -115,22 +114,44 @@ describe('QUESTIONS CONTROLLER', () => {
           response.status.should.equal(403);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Failed to authenticate token');
+          response.body.message.should
+            .eql('You are not allowed to perform the requested operation');
           done();
         });
     });
 
-    it('Should not post with empty request body', (done) => {
+    it('Should not post with empty title field', (done) => {
       chai.request(server)
         .post('/api/v1/questions')
         .set('x-access-token', userToken)
-        .send()
+        .send({
+          title: '',
+          body: 'Ipsius cupere vulgus tes hos.',
+        })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(400);
-          response.body.message.should.eql('Validation failed');
-          response.body.data[0].msg.should.eql('Title cannot be empty');
-          response.body.data[1].msg.should.eql('Question body cannot be empty');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"title" must be a valid string of minimum lenght 20');
+          done();
+        });
+    });
+
+    it('Should not create new question with empty body', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions')
+        .set('x-access-token', userToken)
+        .send({
+          title: 'Qui aggredior inveniant desumptas',
+          body: '',
+        })
+        .end((error, response) => {
+          response.type.should.equal('application/json');
+          response.status.should.equal(400);
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"body" must be a valid string of minimum lenght 20');
           done();
         });
     });
@@ -183,11 +204,10 @@ describe('QUESTIONS CONTROLLER', () => {
         .delete('/api/v1/questions/r')
         .set('x-access-token', userToken)
         .end((error, response) => {
-          response.status.should.equal(400);
+          response.status.should.equal(404);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Validation failed');
-          response.body.data[0].msg.should.eql('Invalid url parameter');
+          response.body.message.should.eql('Sorry can\'t find that page!');
           done();
         });
     });

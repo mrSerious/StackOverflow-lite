@@ -21,20 +21,18 @@ router.get('/', (request, response) => {
 router.get('/questions', question.getAllQuestions);
 
 /* GET single question */
-router.get('/questions/:questionId',
-  validate.getQuestion, question.getSingleQuestion);
+router.get('/questions/:questionId([0-9]+)', question.getSingleQuestion);
 
 /* POST question */
 router.post('/questions', [verify.check, validate.postQuestion],
   question.createQuestion);
 
 /* POST answer */
-router.post('/questions/:questionId/answers',
+router.post('/questions/:questionId([0-9]+)/answers',
   [verify.check, validate.postAnswer], answer.createAnswer);
 
 /* DELETE question */
-router.delete('/questions/:questionId',
-  [verify.check, validate.deleteQuestion], question.deleteQuestion);
+router.delete('/questions/:questionId([0-9]+)', verify.check, question.deleteQuestion);
 
 /* User signup */
 router.post('/auth/signup', validate.signUp, user.signUp);
@@ -43,7 +41,7 @@ router.post('/auth/signup', validate.signUp, user.signUp);
 router.post('/auth/login', validate.logIn, user.logIn);
 
 // update an answer
-router.put('/questions/:questionId/answers/:answerId',
+router.put('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)',
   [verify.check, validate.updateAnswer], answer.updateAnswer);
 
 export default router;

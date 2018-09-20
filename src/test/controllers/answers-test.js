@@ -41,9 +41,7 @@ describe('ANSWERS CONTROLLER', () => {
             chai.request(server)
               .post('/api/v1/questions/4/answers')
               .set('x-access-token', userToken)
-              .send({
-                content: 'answer in answers test'
-              })
+              .send({ content: 'This answer will be used in the tests for the answer route' })
               .end((error2) => {
                 if (error2) throw error2;
                 done();
@@ -56,26 +54,21 @@ describe('ANSWERS CONTROLLER', () => {
     it('Should not let user add answer if user is not logged in', (done) => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
-        .send({
-          content: 'Testing the new answer route'
-        })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
           response.status.should.equal(401);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('No token provided');
+          response.body.message.should.eql('You need to login to perform this operation');
           done();
         });
     });
 
     it('Should let user add an answer if they are logged in', (done) => {
-      // console.log(userToken);
       chai.request(server)
         .post('/api/v1/questions/1/answers')
         .set('x-access-token', userToken)
-        .send({
-          content: 'Testing the new answer route'
-        })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
           response.status.should.equal(201);
           response.type.should.equal('application/json');
@@ -89,14 +82,12 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/questions/w/answers')
         .set('x-access-token', userToken)
-        .send({
-          content: 'Testing the new answer route'
-        })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
-          response.status.should.equal(400);
+          response.status.should.equal(404);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Validation failed');
+          response.body.message.should.eql('Sorry can\'t find that page!');
           done();
         });
     });
@@ -106,13 +97,12 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
         .set('x-access-token', userToken)
-        .send()
+        .send({ content: '' })
         .end((error, response) => {
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Validation failed');
-          response.body.data[0].msg.should.eql('Content cannot be empty');
+          response.body.message.should.eql('"content" must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -122,7 +112,7 @@ describe('ANSWERS CONTROLLER', () => {
     it('Should not allow update if user not logged in', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
-        .send({ content: 'Testing the new answer route' })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(401);
@@ -135,7 +125,7 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4000')
         .set('x-access-token', userToken)
-        .send({ content: 'Testing the new answer route' })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(404);
@@ -149,11 +139,13 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
         .set('x-access-token', secondUserToken)
-        .send({ content: 'Testing the new answer route' })
+        .send({ content: 'This answer will be used in the tests for the answer route' })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(403);
           response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('You are not allowed to perform the requested operation');
           done();
         });
     });
@@ -171,15 +163,16 @@ describe('ANSWERS CONTROLLER', () => {
         });
     });
 
-    it('Should not let unauthorized user update an answer', (done) => {
+    it('Should not update answer if content too short', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
-        .set('x-access-token', secondUserToken)
-        .send({ content: 'Testing the new answer route' })
+        .set('x-access-token', userToken)
+        .send({ content: 'Joy' })
         .end((error, response) => {
           response.type.should.equal('application/json');
-          response.status.should.equal(403);
+          response.status.should.equal(400);
           response.body.status.should.eql('Failure');
+          response.body.message.should.eql('"content" must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -197,7 +190,7 @@ describe('ANSWERS CONTROLLER', () => {
         });
     });
 
-    it('Should not update an answer if request body is empty', (done) => {
+    it('Should not update an answer if nothing is sent', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
         .set('x-access-token', userToken)

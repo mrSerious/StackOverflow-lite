@@ -12,7 +12,7 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'Lyod',
+          firstname: 'Lyods',
           lastname: 'Banks',
           email: 'l_banks@example.com',
           username: 'lyod_banks',
@@ -34,7 +34,7 @@ describe('USERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'Lyod',
+          firstname: 'Lyods',
           lastname: 'Banks',
           email: 'l_banks@example.com',
           username: 'lyod_banks',
@@ -50,37 +50,158 @@ describe('USERS CONTROLLER', () => {
         });
     });
 
-    it('Should respond with validation errors if firstname, '
-    + 'lastname, email or password fields are empty', (done) => {
+    it('Should not signup user if firstname field is empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
-        .send()
+        .send({
+          firstname: '',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
+        })
         .end((error, response) => {
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Validation failed');
-          response.body.data[0].msg.should.eql('First Name is required');
-          response.body.data[1].msg.should.eql('You have not entered a string');
-          response.body.data[2].msg.should.eql('Last Name is required');
-          response.body.data[3].msg.should.eql('You have not entered a string');
-          response.body.data[4].msg.should.eql('Email is required');
-          response.body.data[5].msg.should
-            .eql('You must provide an email address');
-          response.body.data[6].msg.should.eql('Password is required');
-          response.body.data[7].msg.should
-            .eql('Password must be at least 5 chars long');
-          response.body.data[8].msg.should
-            .eql('Password must contain a number');
+          response.body.message.should
+            .eql('"First Name" must be a valid string of minimum lenght 5');
           done();
         });
     });
 
-    it('Should verify password', (done) => {
+    it('Should not signup user if lastname field is empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/signup')
         .send({
-          firstname: 'Lyod',
+          firstname: 'Lyods',
+          lastname: '',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"Last Name" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should not signup user if email field is empty', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
+          lastname: 'Banks',
+          email: '',
+          username: 'lyod_banks',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"Email" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should not signup user if username field is empty', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: '',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"Username" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should not signup user if password field is empty', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
+          password: '',
+          confirm_password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"Password" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should not signup user if password does not '
+      + 'contain a number', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
+          password: process.env.TEST_USER_PASS_ONE,
+          confirm_password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.equal(400);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Password must contain a number');
+          done();
+        });
+    });
+
+    it('Should not signup user if confirm password field is empty', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
+          lastname: 'Banks',
+          email: 'l_banks@example.com',
+          username: 'lyod_banks',
+          password: process.env.TEST_USER_PASS,
+          confirm_password: ''
+        })
+        .end((error, response) => {
+          response.status.should.eql(400);
+          response.type.should.eql('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('"Confirm password" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should verify the password and confirm password fields', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send({
+          firstname: 'Lyods',
           lastname: 'Banks',
           email: 'l_banks@example.com',
           username: 'lyod_banks',
@@ -118,16 +239,32 @@ describe('USERS CONTROLLER', () => {
         });
     });
 
-    it('Should respond with validation errors if '
-    + 'email or password fields are empty', (done) => {
+    it('Should not login user if email field is empty', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
           email: '',
+          password: process.env.TEST_USER_PASS
+        })
+        .end((error, response) => {
+          response.status.should.eql(400);
+          response.body.message.should
+            .eql('"Email" must be a valid string of minimum lenght 5');
+          done();
+        });
+    });
+
+    it('Should not login user if password field is empty', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'l_banks@example.com',
           password: ''
         })
         .end((error, response) => {
           response.status.should.eql(400);
+          response.body.message.should
+            .eql('"Password" must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -140,6 +277,7 @@ describe('USERS CONTROLLER', () => {
           password: `${process.env.TEST_USER_PASS}ss`
         })
         .end((error, response) => {
+          console.log(response.body);
           response.status.should.eql(401);
           response.type.should.eql('application/json');
           response.body.status.should.eql('Failure');
@@ -147,7 +285,7 @@ describe('USERS CONTROLLER', () => {
         });
     });
 
-    it('Should respond with a error if password is not provided', (done) => {
+    it('Should not login user if password is not provided', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
         .send({
@@ -162,6 +300,22 @@ describe('USERS CONTROLLER', () => {
         });
     });
 
+    it('Should not login user if password does not contain a number', (done) => {
+      chai.request(server)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'michael@example.com',
+          password: process.env.TEST_USER_PASS_ONE
+        })
+        .end((error, response) => {
+          response.status.should.eql(400);
+          response.type.should.eql('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Password must contain a number');
+          done();
+        });
+    });
+
     it('Should not login an unregistered user', (done) => {
       chai.request(server)
         .post('/api/v1/auth/login')
@@ -170,6 +324,7 @@ describe('USERS CONTROLLER', () => {
           password: process.env.TEST_USER_PASS
         })
         .end((error, response) => {
+          console.log(response.body);
           response.status.should.eql(404);
           response.type.should.eql('application/json');
           response.body.status.should.eql('Failure');

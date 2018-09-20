@@ -13,20 +13,15 @@ class Validation {
   * @return {undefined}
   */
   static postAnswer(request, response, next) {
-    request
-      .checkBody('content', 'Content cannot be empty').notEmpty();
-    request
-      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
-
-    const errors = request.validationErrors();
-
-    if (errors) {
+    const { content } = request.body;
+    if (!content || content.length < 5 || typeof content !== 'string'
+    || !/.*\S.*./.test(content) || /\.+/.test(content)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Validation failed',
-        data: errors
+        message: '"content" must be a valid string of minimum lenght 5'
       });
     }
+
     return next();
   }
 
@@ -48,31 +43,16 @@ class Validation {
       });
     }
 
-    return next();
-  }
-
-  /**
-   * validates question fields
-   * @param {Object} request - request object
-   * @param {Object} response - response object
-   * @param {Function} next - next middleware function
-   *
-   * @return {undefined}
-   */
-  static getQuestion(request, response, next) {
-    request
-      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
-
-    const errors = request.validationErrors();
-
-    if (errors) {
-      return response.status(400)
-        .json({
+    if (content) {
+      if (content.length < 5 || typeof content !== 'string'
+      || !/.*\S.*./.test(content)) {
+        return response.status(400).json({
           status: 'Failure',
-          message: 'Validation failed',
-          data: errors
+          message: '"content" must be a valid string of minimum lenght 5'
         });
+      }
     }
+
     return next();
   }
 
@@ -85,18 +65,24 @@ class Validation {
    * @return {undefined}
    */
   static postQuestion(request, response, next) {
-    request.checkBody('title', 'Title cannot be empty').notEmpty();
-    request.checkBody('body', 'Question body cannot be empty').notEmpty();
+    const { title, body } = request.body;
 
-    const errors = request.validationErrors();
-
-    if (errors) {
+    if (!title || title.length < 5 || typeof title !== 'string'
+      || !/.*\S.*./.test(title) || /\.+/.test(title)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Validation failed',
-        data: errors
+        message: '"title" must be a valid string of minimum lenght 20'
       });
     }
+
+    if (!body || body.length < 5 || typeof body !== 'string'
+      || !/.*\S.*./.test(body) || /\.+/.test(body)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"body" must be a valid string of minimum lenght 20'
+      });
+    }
+
     return next();
   }
 
@@ -109,36 +95,67 @@ class Validation {
    * @return {undefined}
    */
   static signUp(request, response, next) {
-    request.check('firstname')
-      .notEmpty().withMessage('First Name is required')
-      .isString()
-      .withMessage('You have not entered a string');
+    const {
+      firstname, lastname, username, email, password
+    } = request.body;
+    const confirmPassword = request.body.confirm_password;
 
-    request.check('lastname')
-      .notEmpty().withMessage('Last Name is required')
-      .isString()
-      .withMessage('You have not entered a string');
-
-    request.check('email')
-      .notEmpty().withMessage('Email is required')
-      .isEmail()
-      .withMessage('You must provide an email address');
-
-    request.check('password')
-      .notEmpty().withMessage('Password is required')
-      .isLength({ min: 5 })
-      .withMessage('Password must be at least 5 chars long')
-      .matches(/\d/)
-      .withMessage('Password must contain a number');
-
-    const errors = request.validationErrors();
-    if (errors) {
+    if (!firstname || firstname.length < 5 || typeof firstname !== 'string'
+    || !/.*\S.*./.test(firstname) || /\.+/.test(firstname)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Validation failed',
-        data: errors
+        message: '"First Name" must be a valid string of minimum lenght 5'
       });
     }
+
+    if (!lastname || lastname.length < 5 || typeof lastname !== 'string'
+    || !/.*\S.*./.test(lastname) || /\.+/.test(lastname)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"Last Name" must be a valid string of minimum lenght 5'
+      });
+    }
+
+    if (!username || username.length < 5 || typeof username !== 'string'
+    || !/.*\S.*./.test(username) || /\.+/.test(username)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"Username" must be a valid string of minimum lenght 5'
+      });
+    }
+
+    if (!email || email.length < 5 || typeof email !== 'string'
+    || /\.+/.test(confirmPassword)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"Email" must be a valid string of minimum lenght 5'
+      });
+    }
+
+    if (!password || password.length < 5 || typeof password !== 'string'
+    || !/.*\S.*./.test(password) || /\.+/.test(password)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"Password" must be a valid string of minimum lenght 5'
+      });
+    }
+
+    if (!/\d/.test(password)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'Password must contain a number'
+      });
+    }
+
+    if (!confirmPassword || confirmPassword.length < 5
+    || typeof confirmPassword !== 'string' || !/.*\S.*./.test(confirmPassword)
+    || /\.+/.test(confirmPassword)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: '"Confirm password" must be a valid string of minimum lenght 5'
+      });
+    }
+
     return next();
   }
 
@@ -151,50 +168,30 @@ class Validation {
    * @return {undefined}
    */
   static logIn(request, response, next) {
-    request.check('email')
-      .notEmpty().withMessage('Email is required')
-      .isEmail()
-      .withMessage('You must provide an email address');
+    const { email, password } = request.body;
 
-    request.check('password')
-      .notEmpty().withMessage('Password is required')
-      .isLength({ min: 5 })
-      .withMessage('Password must be at least 5 chars long')
-      .matches(/\d/)
-      .withMessage('Password must contain a number');
-
-    const errors = request.validationErrors();
-    if (errors) {
+    if (!email || email.length < 5 || typeof email !== 'string') {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Validation failed',
-        data: errors
+        message: '"Email" must be a valid string of minimum lenght 5'
       });
     }
-    return next();
-  }
 
-  /**
-   * validates answer fields
-  * @param {Object} request - request object
-  * @param {Object} response - response object
-  * @param {Function} next - next middleware function
-  *
-  * @return {undefined}
-  */
-  static deleteQuestion(request, response, next) {
-    request
-      .checkParams('questionId', 'Invalid url parameter').notEmpty().isInt();
-
-    const errors = request.validationErrors();
-
-    if (errors) {
+    if (!password || password.length < 5 || typeof password !== 'string'
+    || !/.*\S.*./.test(password) || /\.+/.test(password)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Validation failed',
-        data: errors
+        message: '"Password" must be a valid string of minimum lenght 5'
       });
     }
+
+    if (!/\d/.test(password)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'Password must contain a number'
+      });
+    }
+
     return next();
   }
 }

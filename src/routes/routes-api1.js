@@ -32,7 +32,8 @@ router.post('/questions/:questionId([0-9]+)/answers',
   [verify.check, validate.postAnswer], answer.createAnswer);
 
 /* DELETE question */
-router.delete('/questions/:questionId([0-9]+)', verify.check, question.deleteQuestion);
+router.delete('/questions/:questionId([0-9]+)',
+  verify.check, question.deleteQuestion);
 
 /* User signup */
 router.post('/auth/signup', validate.signUp, user.signUp);
@@ -43,5 +44,8 @@ router.post('/auth/login', validate.logIn, user.logIn);
 // update an answer
 router.put('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)',
   [verify.check, validate.updateAnswer], answer.updateAnswer);
+
+// get user
+router.get('/users/:userId([0-9]+)', user.getProfile);
 
 export default router;

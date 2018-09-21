@@ -84,7 +84,6 @@ class User {
     }
   }
 
-  // login route
   /**
  * @param {Object} request - request object
  * @param {Object} response - response object
@@ -135,6 +134,72 @@ class User {
       .catch(error => response.status(500).json({
         status: 'Failure',
         message: 'internal server error'
+      }));
+  }
+
+  /**
+ * @param {Object} request - request object
+ * @param {Object} response - response object
+ * @param {Function} next - call back to be run
+ *
+ * @return {Object} response - response object
+ */
+  static getProfile(request, response, next) {
+    const userId = parseInt(request.params.userId, 10);
+
+    db.query(`SELECT users.id, firstname, lastname, email, 
+    username, image_url, createdat 
+    FROM users where id = $1`, [userId])
+      .then((result) => {
+        if (result.rowCount < 1) {
+          return response.status(404).json({
+            status: 'Failure',
+            message: 'User not found'
+          });
+        }
+        const [user] = result.rows;
+        db.query(`
+        SELECT questions.id, title, body, createdat 
+        FROM questions
+        WHERE questions.user_id = ${userId}`)
+          .then((result2) => {
+            const questionCount = result2.rowCount;
+            user.questionCount = questionCount;
+            const userQuestions = result2.rows;
+            user.userQuestions = userQuestions;
+
+            db.query(`
+            SELECT answers.id, answer_body, answers.createdat, title
+            FROM answers JOIN questions ON answers.question_id = questions.id
+            WHERE answers.user_id = ${userId} ORDER BY createdat DESC`)
+              .then((result3) => {
+                const answerCount = result3.rowCount;
+                user.answerCount = answerCount;
+                const userAnswers = result3.rows;
+                user.userAnswers = userAnswers;
+
+                return response.status(404).json({
+                  status: 'Success',
+                  message: 'User retrieved successfully',
+                  data: user
+                });
+              })
+              .catch(error => response.status(500).json({
+                status: 'Failure',
+                message: 'internal server error',
+                error
+              }));
+          })
+          .catch(error => response.status(500).json({
+            status: 'Failure',
+            message: 'internal server error',
+            error
+          }));
+      })
+      .catch(error => response.status(500).json({
+        status: 'Failure',
+        message: 'internal server error',
+        error
       }));
   }
 }

@@ -120,14 +120,21 @@ class User {
             expiresIn: 86400 // expires in 24 hours
           }
         );
-        const loggedInUser = user.rows;
+        const loggedInUser = {
+          id: user.rows[0].id,
+          firstname: user.rows[0].firstname,
+          lastname: user.rows[0].lastname,
+          email: user.rows[0].email,
+          image_url: user.rows[0].image_url,
+          createdat: user.rows[0].createdat
+        };
         return response.status(200).json({
           status: 'Success',
           message: 'login sucessful',
           data: {
+            loggedInUser,
             auth: true,
-            token,
-            loggedInUser
+            token
           }
         });
       })
@@ -165,20 +172,22 @@ class User {
           .then((result2) => {
             const questionCount = result2.rowCount;
             user.questionCount = questionCount;
-            const userQuestions = result2.rows;
+            let userQuestions = [];
+            userQuestions = [result2.rows];
             user.userQuestions = userQuestions;
 
             db.query(`
-            SELECT answers.id, answer_body, answers.createdat, title
+            SELECT answers.id, answer_body, answers.createdat, title, question_id
             FROM answers JOIN questions ON answers.question_id = questions.id
             WHERE answers.user_id = ${userId} ORDER BY createdat DESC`)
               .then((result3) => {
                 const answerCount = result3.rowCount;
                 user.answerCount = answerCount;
-                const userAnswers = result3.rows;
+                let userAnswers = [];
+                userAnswers = [result3.rows];
                 user.userAnswers = userAnswers;
 
-                return response.status(404).json({
+                return response.status(200).json({
                   status: 'Success',
                   message: 'User retrieved successfully',
                   data: user

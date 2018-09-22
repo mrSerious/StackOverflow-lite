@@ -60,165 +60,235 @@
     </section>
 
     <div class="container">
-      <div class="user-profile-container">
-        <div class="row">
-          <div class="one-fourth column">
-            <div class="user-profile-card">
-              <div class="user-header">
-                <img class="user-profile-image" src="./img/user-image.svg">
-
-                <div class="user-name">
-                  <h3 class="big-profile-heading no-margin">Alex</h3>
-                  <span>jigSaw</span>
-                </div>
-                <div class="clear"></div>
-              </div>
-              <div class="user-meta-wrapper">
-                <div class="user-metadata">
-                  <span class="user-date">Joined July 2018</span>
-                  <div class="user-location-container">
-                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    <span class="user-location">Always somewhere</span>
+        <div class="user-profile-container">
+            <div class="row">
+              <div class="one column">
+                <div class="user-profile-card">
+                  <div class="row">
+                    <div class="two-thirds column">
+                      <div class="user-header">
+                        <div class="row">
+                          <div class="one-third column">
+                            <div class="avatar">
+                              <img class="user-profile-image" src="./img/user.png">
+                            </div>
+                          </div>
+                          <div class="two-thirds column">
+                            <div class="user-name">
+                              <div>
+                                <h2 class="big-profile-heading no-margin">Alex</h2>
+                                <h3 class="no-margin">jigSaw</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="one-third column">
+                      <div class="user-meta-wrapper">
+                        <div class="user-metadata">
+                          <p>Joined July 2018</p>
+                          <p>Asked x questions</p>
+                          <p>Answered x questions</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="user-social-information">
-                  <ul>
-                    <li class="social-website social-link">
-                      <i class="fa fa-link" aria-hidden="true"></i>
-                      <a href="">https://dearlifethankyou.com</a>
-
-                    </li>
-                    <li class="SocialTwitter ember-view SocialLink">
-                      <i class="fa fa-twitter" aria-hidden="true"></i>
-                      <a href="">daJig</a>
-                    </li>
+              </div>
+    
+              <div class="one column no-margin">
+                <div class="user-content-container">
+                  <ul class="nav nav-tabs no-padding no-margin">
+                    <li>
+                      <a class="tablinks" id="defaultOpen" onclick="openTab(event, 'user-questions')" href="#">your
+                        questions</a></li>
+                    <li>
+                      <a class="tablinks" onclick="openTab(event, 'user-answers')" href="#">your answers</a></li>
                   </ul>
                 </div>
-                <hr>
-                <div class="user-content-container">
-                  <p class="no-margin"><a href="profile.html">Questions 5</a></p>
-                  <p class="no-margin"><a href="profile_answers.html">Answers 3</a></p>
-                </div>
               </div>
-            </div>
-          </div>
-          <div class="three-fourths column">
-            <div class="user-content">
-              <h2>Recent Questions</h2>
-              <a class="sort-button" href="">Sort By Popular</a>
-              <div class="user-questions-view">
-                <div class="list-wrapper">
-                  <div id="question-mini-list">
-
-                    <div class="question-summary">
-                      <div class="question-body">
-                        <div class="user-question">
-                          <span>asked 5 minutes ago
-                          </span>
+    
+              <div class="one column">
+                <div class="user-content">
+                  <div id="user-questions" class="tabcontent">
+                    <h2>Recent Questions</h2>
+                    <a class="sort-button" href="">Sort By Popular</a>
+                    <div class="user-questions-view">
+                      <div class="list-wrapper">
+                        <div id="question-mini-list">
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 5 minutes ago
+                                </span>
+                              </div>
+                              <h2 class="question-title">
+                                <a href="questions.html">How to stream (upload) large amount of data with Requests in
+                                  Python?</a>
+                              </h2>
+                              <div class="tags">
+                                <a href="" class="post-tag" title="" rel="tag">python-3.x</a>
+                                <a href="" class="post-tag" title="" rel="tag">python-requests</a>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 23 minutes
+                                </span>
+                              </div>
+                              <h2 class="question-title">
+                                <a href="questions.html">How do I place Emmet closing div's comment on the same line?</a>
+                              </h2>
+                              <div class="tags">
+                                <a href="" class="post-tag" title="" rel="tag">html</a>
+                                <a href="" class="post-tag" title="" rel="tag">emmet</a>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 75 minutes ago
+                                </span>
+                              </div>
+                              <h2 class="question-title">
+                                <a href="questions.html">How do I implement css card flexbox positioning?</a>
+                              </h2>
+                              <div class="tags">
+                                <a href="" class="post-tag" title="" rel="tag">html</a>
+                                <a href="" class="post-tag" title="" rel="tag">flexbox</a>
+                                <a href="" class="post-tag" title="" rel="tag">css</a>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 1 month ago
+                                </span>
+                              </div>
+                              <h2 class="question-title">
+                                <a href="questions.html">Elasticsearch index mapping not working</a>
+                              </h2>
+                              <div class="tags">
+                                <a href="" class="post-tag" title="" rel="tag">elasticsearch</a>
+                                <a href="" class="post-tag" title="" rel="tag">kibana</a>
+                                <a href="" class="post-tag" title="" rel="tag">amazon-web-services</a>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 1 year ago
+                                </span>
+                              </div>
+                              <h2 class="question-title">
+                                <a href="questions.html">Foreign key constraint lead to a duplicate entry in MySQL 5.7 but
+                                  not 5.6</a>
+                              </h2>
+                              <div class="tags">
+                                <a href="" class="post-tag" title="" rel="tag">mysql</a>
+                                <a href="" class="post-tag" title="" rel="tag">mysql-5.6</a>
+                                <a href="" class="post-tag" title="" rel="tag">mysql-5.7</a>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
                         </div>
-                        <h2 class="question-title">
-                          <a href="question_details.html">How to stream (upload) large amount of data with Requests in Python?</a>
-                        </h2>
-                        <div class="tags">
-                          <a href="" class="post-tag" title="" rel="tag">python-3.x</a>
-                          <a href="" class="post-tag" title="" rel="tag">python-requests</a>
-                        </div>
-                        <div class="clear"></div>
                       </div>
-                      <a class="button" href="">Delete</a>
-                      <div class="clear"></div>
                     </div>
-                    <!-- /.question-summary -->
-
-                    <div class="question-summary">
-                      <div class="question-body">
-                        <div class="user-question">
-                          <span>asked 23 minutes
-                          </span>
+                  </div>
+                  <div id="user-answers" class="tabcontent">
+                    <h2>Recent Answers</h2>
+                    <a class="sort-button" href="">Sort By Popular</a>
+                    <div class="user-questions-view">
+                      <div class="list-wrapper">
+                        <div id="question-mini-list">
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 5 minutes ago
+                                </span>
+                              </div>
+                              <h5 class="question-title">
+                                Answer to <a href="questions.html">"How to stream (upload) large amount of data with
+                                  Requests in Python?"</a>
+                              </h5>
+                              <div class="tags">
+                                <p> Qua ita jam lucem nullo fidei hodie rebus. Ipse novo soni ipsa mali ad post gi.
+                                  Probatur occurrit occurrat me an cogitans sensibus se. Ei de vitae se velut certi ea.
+                                  Assidere loquendo ab corporea ex mo ii quolibet. </p>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 23 minutes
+                                </span>
+                              </div>
+                              <h5 class="question-title">
+                                Answer to <a href="questions.html">"How do I place Emmet closing div's comment on the same
+                                  line?"</a>
+                              </h5>
+                              <div class="tags">
+                                <p>Se de vi infinite credamus callidus. Sap illo ordo nudi quo. Alium ens sequi timet cau
+                                  vobis ferri. Somniorum distinguo occurrere recurrunt vix nia efficitur judicarem. Sola
+                                  cera co ac esse ex in enim erat. </p>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
+    
+                          <div class="question-summary">
+                            <div class="question-body">
+                              <div class="user-question">
+                                <span>asked 75 minutes ago
+                                </span>
+                              </div>
+                              <h5 class="question-title">
+                                Answer to <a href="questions.html">How do I implement css card flexbox positioning?</a>
+                              </h5>
+                              <div class="tags">
+                                <p>Manebo mo possim placet im restat seriem. Alio per jam uno ecce atra. Visae serie curis
+                                  circa ac et. Ha affirmabam de mortalibus exponantur repugnaret praevidere ei aucupantur.
+                                  Est patrocinio objectivae ima pauperrimi.</p>
+                              </div>
+                              <div class="clear"></div>
+                            </div>
+                          </div>
+                          <!-- /.question-summary -->
                         </div>
-                        <h2 class="question-title">
-                          <a href="question_details.html">How do I place Emmet closing div's comment on the same line?</a>
-                        </h2>
-                        <div class="tags">
-                          <a href="" class="post-tag" title="" rel="tag">html</a>
-                          <a href="" class="post-tag" title="" rel="tag">emmet</a>
-                        </div>
-                        <div class="clear"></div>
                       </div>
-                      <a class="button" href="">Delete</a>
-                      <div class="clear"></div>
                     </div>
-                    <!-- /.question-summary -->
-
-                    <div class="question-summary">
-                      <div class="question-body">
-                        <div class="user-question">
-                          <span>asked 75 minutes ago
-                          </span>
-                        </div>
-                        <h2 class="question-title">
-                          <a href="question_details.html">How do I implement css card flexbox positioning?</a>
-                        </h2>
-                        <div class="tags">
-                          <a href="" class="post-tag" title="" rel="tag">html</a>
-                          <a href="" class="post-tag" title="" rel="tag">flexbox</a>
-                          <a href="" class="post-tag" title="" rel="tag">css</a>
-                        </div>
-                        <div class="clear"></div>
-                      </div>
-                      <a class="button" href="">Delete</a>
-                      <div class="clear"></div>
-                    </div>
-                    <!-- /.question-summary -->
-
-                    <div class="question-summary">
-                      <div class="question-body">
-                        <div class="user-question">
-                          <span>asked 1 month ago
-                          </span>
-                        </div>
-                        <h2 class="question-title">
-                          <a href="question_details.html">Elasticsearch index mapping not working</a>
-                        </h2>
-                        <div class="tags">
-                          <a href="" class="post-tag" title="" rel="tag">elasticsearch</a>
-                          <a href="" class="post-tag" title="" rel="tag">kibana</a>
-                          <a href="" class="post-tag" title="" rel="tag">amazon-web-services</a>
-                        </div>
-                        <div class="clear"></div>
-                      </div>
-                      <a class="button" href="">Delete</a>
-                      <div class="clear"></div>
-                    </div>
-                    <!-- /.question-summary -->
-
-                    <div class="question-summary">
-                      <div class="question-body">
-                        <div class="user-question">
-                          <span>asked 1 year ago
-                          </span>
-                        </div>
-                        <h2 class="question-title">
-                          <a href="question_details.html">Foreign key constraint lead to a duplicate entry in MySQL 5.7 but not 5.6</a>
-                        </h2>
-                        <div class="tags">
-                          <a href="" class="post-tag" title="" rel="tag">mysql</a>
-                          <a href="" class="post-tag" title="" rel="tag">mysql-5.6</a>
-                          <a href="" class="post-tag" title="" rel="tag">mysql-5.7</a>
-                        </div>
-                        <div class="clear"></div>
-                      </div>
-                      <a class="button" href="">Delete</a>
-                      <div class="clear"></div>
-                    </div>
-                    <!-- /.question-summary -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
     <!-- /.container -->
   </div>
@@ -232,6 +302,8 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/openTab.js"></script>
+  <script src="js/front-end/profile.js"></script>
 </body>
 
 </html>

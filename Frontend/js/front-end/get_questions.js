@@ -42,7 +42,7 @@ const getAllQuestions = () => {
             <div class="three-fourths column">
               <div class="user-question">
                 <span>asked by
-                  <a href="profile.html">${array[i].username}</a>
+                  <a class="user_link" user-id="${array[i].userid}" href="profile.html">${array[i].username}</a>
                   1 year ago
                 </span>
               </div>
@@ -71,5 +71,9 @@ document.addEventListener('click', (event) => {
   if (event.target.classList.contains('question_link')) {
     const questionId = event.target.getAttribute('data-id');
     localStorage.setItem('data-id', questionId);
+  }
+  if (event.target.classList.contains('user_link')) {
+    const questionId = event.target.getAttribute('user-id');
+    localStorage.setItem('user-id', questionId);
   }
 });

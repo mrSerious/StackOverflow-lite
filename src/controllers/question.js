@@ -17,10 +17,8 @@ class Question {
     db.query(`
     SELECT q.id, title, users.id as userid, username, q.createdat,
     COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
-    GROUP BY q.id),0) as answers 
-    FROM questions q
-    JOIN users ON users.id = q.user_id
-    ORDER BY createdat DESC
+    GROUP BY q.id),0) as answers FROM questions q
+    JOIN users ON users.id = q.user_id ORDER BY createdat DESC
     `)
       .then(result => response.json({
         status: 'Success',
@@ -56,8 +54,8 @@ class Question {
         } else {
           const [question] = result.rows;
           db.query(`
-          SELECT answers.id, answer_body, answers.question_id, 
-          isaccepted, answers.createdat, users.id as user_id, username
+          SELECT answers.id, answer_body, answers.question_id, isaccepted, 
+          answers.createdat, users.id as user_id, username
           FROM answers JOIN users ON answers.user_id = users.id
           WHERE answers.question_id = ${id} ORDER BY answers.id DESC`)
             .then((answersResult) => {
@@ -141,7 +139,7 @@ class Question {
               })
               .catch(error => response.status(500).json({
                 status: 'Failure',
-                message: 'Internal server error',
+                message: 'Internal server error'
               }));
           } else {
             return response.status(403).json({
@@ -158,8 +156,7 @@ class Question {
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        message: 'Internal server error',
-        error
+        message: 'Internal server error'
       }));
   }
 }

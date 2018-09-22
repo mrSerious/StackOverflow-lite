@@ -177,9 +177,10 @@ class User {
             user.userQuestions = userQuestions;
 
             db.query(`
-            SELECT answers.id, answer_body, answers.createdat, title, question_id
-            FROM answers JOIN questions ON answers.question_id = questions.id
-            WHERE answers.user_id = ${userId} ORDER BY createdat DESC`)
+            SELECT answers.id, answer_body, answers.createdat, title, 
+            question_id FROM answers JOIN questions ON 
+            answers.question_id = questions.id WHERE 
+            answers.user_id = ${userId} ORDER BY createdat DESC`)
               .then((result3) => {
                 const answerCount = result3.rowCount;
                 user.answerCount = answerCount;
@@ -195,20 +196,17 @@ class User {
               })
               .catch(error => response.status(500).json({
                 status: 'Failure',
-                message: 'internal server error',
-                error
+                message: 'internal server error'
               }));
           })
           .catch(error => response.status(500).json({
             status: 'Failure',
-            message: 'internal server error',
-            error
+            message: 'internal server error'
           }));
       })
       .catch(error => response.status(500).json({
         status: 'Failure',
-        message: 'internal server error',
-        error
+        message: 'internal server error'
       }));
   }
 }

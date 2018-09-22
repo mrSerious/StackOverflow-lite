@@ -46,6 +46,6 @@ router.put('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)',
   [verify.check, validate.updateAnswer], answer.updateAnswer);
 
 // get user
-router.get('/users/:userId([0-9]+)', user.getProfile);
+router.get('/users/:userId([0-9]+)', verify.check, user.getProfile);
 
 export default router;

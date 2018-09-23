@@ -8,13 +8,13 @@ const answerOwer = localStorage.getItem('answer-owner');
 const currentUser = localStorage.getItem('current-user');
 const content = document.getElementById('answer_update');
 
-if (questionOwner === currentUser) {
+if (questionOwner !== currentUser) {
   content.disabled = true;
   document.getElementById('no-modify-content')
     .innerHTML = 'You are not permitted modify this answer!';
 }
 
-if (answerOwer === currentUser) {
+if (answerOwer !== currentUser) {
   accepted[0].disabled = true;
   document.getElementById('no-modify-isaccepted')
     .innerHTML = 'You are not permitted accept this answer!';
@@ -27,7 +27,7 @@ document.getElementById('original_answer').innerHTML = answer;
 
 const upDateAnswer = (event) => {
   event.preventDefault();
-  
+
   const token = localStorage.getItem('token');
   let myUpdate;
 

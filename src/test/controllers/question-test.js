@@ -133,7 +133,7 @@ describe('QUESTIONS CONTROLLER', () => {
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"title" must be a valid string of minimum lenght 20');
+            .eql('Your question must be a valid string of minimum lenght 20');
           done();
         });
     });
@@ -151,7 +151,7 @@ describe('QUESTIONS CONTROLLER', () => {
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"body" must be a valid string of minimum lenght 20');
+            .eql('Your question description must be a valid string of minimum lenght 20');
           done();
         });
     });

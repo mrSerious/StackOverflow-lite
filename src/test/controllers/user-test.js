@@ -67,7 +67,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"First Name" must be a valid string of minimum lenght 5');
+            .eql('First Name must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -88,7 +88,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"Last Name" must be a valid string of minimum lenght 5');
+            .eql('Last Name must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -109,7 +109,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"Email" must be a valid string of minimum lenght 5');
+            .eql('Email must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -130,7 +130,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"Username" must be a valid string of minimum lenght 5');
+            .eql('Username must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -151,7 +151,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"Password" must be a valid string of minimum lenght 5');
+            .eql('Password must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -194,7 +194,7 @@ describe('USERS CONTROLLER', () => {
           response.type.should.eql('application/json');
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('"Confirm password" must be a '
+            .eql('Confirm password must be a '
             + 'valid string of minimum lenght 5');
           done();
         });
@@ -253,7 +253,7 @@ describe('USERS CONTROLLER', () => {
         .end((error, response) => {
           response.status.should.eql(400);
           response.body.message.should
-            .eql('"Email" must be a valid string of minimum lenght 5');
+            .eql('Email must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -268,7 +268,7 @@ describe('USERS CONTROLLER', () => {
         .end((error, response) => {
           response.status.should.eql(400);
           response.body.message.should
-            .eql('"Password" must be a valid string of minimum lenght 5');
+            .eql('Password must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -375,6 +375,5 @@ describe('USERS CONTROLLER', () => {
           done();
         });
     });
-
   });
 });

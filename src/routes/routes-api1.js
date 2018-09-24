@@ -51,6 +51,6 @@ router.get('/users/:userId([0-9]+)', verify.check, user.getProfile);
 
 // POST comment
 router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/comments',
-  verify.check, comment.createComment);
+  verify.check, validate.postComment, comment.createComment);
 
 export default router;

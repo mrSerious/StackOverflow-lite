@@ -87,7 +87,7 @@ class Validation {
   }
 
   /**
-   * validates question fields
+   * validates Signup
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
@@ -160,7 +160,7 @@ class Validation {
   }
 
   /**
-   * validates question fields
+   * validates Login
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
@@ -189,6 +189,28 @@ class Validation {
       return response.status(400).json({
         status: 'Failure',
         message: 'Password must contain a number'
+      });
+    }
+
+    return next();
+  }
+
+  /**
+   * validates comment fields
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @param {Function} next - next middleware function
+   *
+   * @return {undefined}
+   */
+  static postComment(request, response, next) {
+    const { comment } = request.body;
+
+    if (!comment || comment.lengh < 20 || typeof password !== 'string'
+      || /\s+|\.+/.test(comment)) {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'Your comment must be a valid string of minimum lenght 5'
       });
     }
 

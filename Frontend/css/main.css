@@ -462,6 +462,7 @@ button:hover {
   clear: both;
 }
 
+.user-answers,
 .question-summary {
   padding: 1.5rem 0;
   border-bottom: 1px solid #d8d8d8a1;
@@ -479,7 +480,7 @@ button:hover {
   align-items: center;
 }
 
-.question-summary .question-title {
+.question-summary .question_link {
   margin: 0 0 10px 0;
   padding: 0;
 }
@@ -511,6 +512,7 @@ button:hover {
   text-align: center;
 }
 
+.answer,
 .tags {
   line-height: 18px;
   float: left;
@@ -542,9 +544,9 @@ button:hover {
   position: relative;
 }
 
+.answer-age,
 .user-question {
   margin-bottom: 1rem;
-  font-size: .8rem;
 }
 
 .user-question a {
@@ -757,6 +759,7 @@ button:hover {
   float: none;
 }
 
+.user-answers-view,
 .user-questions-view {
   margin: 20px 0;
 }

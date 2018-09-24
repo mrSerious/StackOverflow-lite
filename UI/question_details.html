@@ -133,7 +133,27 @@
                   atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
                   similique
                   sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-                <a href="">Add Comment</a>
+                <!-- modal triiger -->
+                <a id="add_comment" href="">Add Comment</a>
+
+                <!-- Modal -->
+                <div id="comment_modal" class="modal">
+                  <!-- Modal content -->
+                  <div class="modal_content">
+                    <span class="close_modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    <div class="clear"></div>
+                    <div id="answer_comment_wrapper">
+                      <form id="answer_comment_form">
+
+                        <div id="comment">
+                          <textarea type="text" name="comment" rows="5" id="comment_answer" placeholder="Type you comment here"></textarea>
+                        </div>
+
+                        <button id="comment_button" type="submit">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
                 <a href="edit_answer.html">Edit</a>
               </div>
             </div>
@@ -207,6 +227,7 @@
   <!--Scripts-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/comment_modal.js"></script>
 </body>
 
 </html>

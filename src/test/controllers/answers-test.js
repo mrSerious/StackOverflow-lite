@@ -102,7 +102,7 @@ describe('ANSWERS CONTROLLER', () => {
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('"content" must be a valid string of minimum lenght 5');
+          response.body.message.should.eql('Your answer must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -172,7 +172,7 @@ describe('ANSWERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('"content" must be a valid string of minimum lenght 5');
+          response.body.message.should.eql('Your answer must be a valid string of minimum lenght 5');
           done();
         });
     });

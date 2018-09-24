@@ -18,7 +18,7 @@ class Validation {
     || !/.*\S.*./.test(content) || /\.+/.test(content)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"content" must be a valid string of minimum lenght 5'
+        message: 'Your answer must be a valid string of minimum lenght 5'
       });
     }
 
@@ -48,7 +48,7 @@ class Validation {
       || !/.*\S.*./.test(content)) {
         return response.status(400).json({
           status: 'Failure',
-          message: '"content" must be a valid string of minimum lenght 5'
+          message: 'Your answer must be a valid string of minimum lenght 5'
         });
       }
     }
@@ -67,19 +67,19 @@ class Validation {
   static postQuestion(request, response, next) {
     const { title, body } = request.body;
 
-    if (!title || title.length < 5 || typeof title !== 'string'
+    if (!title || title.length < 20 || typeof title !== 'string'
       || !/.*\S.*./.test(title) || /\.+/.test(title)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"title" must be a valid string of minimum lenght 20'
+        message: 'Your question must be a valid string of minimum lenght 20'
       });
     }
 
-    if (!body || body.length < 5 || typeof body !== 'string'
+    if (!body || body.length < 20 || typeof body !== 'string'
       || !/.*\S.*./.test(body) || /\.+/.test(body)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"body" must be a valid string of minimum lenght 20'
+        message: 'Your question description must be a valid string of minimum lenght 20'
       });
     }
 
@@ -104,7 +104,7 @@ class Validation {
     || !/.*\S.*./.test(firstname) || /\.+/.test(firstname)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"First Name" must be a valid string of minimum lenght 5'
+        message: 'First Name must be a valid string of minimum lenght 5'
       });
     }
 
@@ -112,7 +112,7 @@ class Validation {
     || !/.*\S.*./.test(lastname) || /\.+/.test(lastname)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Last Name" must be a valid string of minimum lenght 5'
+        message: 'Last Name must be a valid string of minimum lenght 5'
       });
     }
 
@@ -120,7 +120,7 @@ class Validation {
     || !/.*\S.*./.test(username) || /\.+/.test(username)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Username" must be a valid string of minimum lenght 5'
+        message: 'Username must be a valid string of minimum lenght 5'
       });
     }
 
@@ -128,7 +128,7 @@ class Validation {
     || /\.+/.test(confirmPassword)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Email" must be a valid string of minimum lenght 5'
+        message: 'Email must be a valid string of minimum lenght 5'
       });
     }
 
@@ -136,7 +136,7 @@ class Validation {
     || !/.*\S.*./.test(password) || /\.+/.test(password)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Password" must be a valid string of minimum lenght 5'
+        message: 'Password must be a valid string of minimum lenght 5'
       });
     }
 
@@ -152,7 +152,7 @@ class Validation {
     || /\.+/.test(confirmPassword)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Confirm password" must be a valid string of minimum lenght 5'
+        message: 'Confirm password must be a valid string of minimum lenght 5'
       });
     }
 
@@ -173,7 +173,7 @@ class Validation {
     if (!email || email.length < 5 || typeof email !== 'string') {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Email" must be a valid string of minimum lenght 5'
+        message: 'Email must be a valid string of minimum lenght 5'
       });
     }
 
@@ -181,7 +181,7 @@ class Validation {
     || !/.*\S.*./.test(password) || /\.+/.test(password)) {
       return response.status(400).json({
         status: 'Failure',
-        message: '"Password" must be a valid string of minimum lenght 5'
+        message: 'Password must be a valid string of minimum lenght 5'
       });
     }
 

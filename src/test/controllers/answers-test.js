@@ -51,7 +51,7 @@ describe('ANSWERS CONTROLLER', () => {
   });
 
   describe('POST /api/v1/questions/:questionId/answers', () => {
-    it('Should not let user add answer if user is not logged in', (done) => {
+    it('Should not let unathenticated user add an answer', (done) => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
         .send({ content: 'This answer will be used in the tests for the answer route' })
@@ -117,6 +117,23 @@ describe('ANSWERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.status.should.equal(401);
           response.body.status.should.eql('Failure');
+          done();
+        });
+    });
+
+    it('Should not update a answer if question does not exist', (done) => {
+      chai.request(server)
+        .put('/api/v1/questions/400000/answers/4')
+        .set('x-access-token', userToken)
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
+        .end((error, response) => {
+          console.log(response);
+          response.type.should.equal('application/json');
+          response.status.should.equal(404);
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Cannot find that question');
           done();
         });
     });

@@ -38,7 +38,7 @@ class Comment {
                 db.query(`
                 INSERT INTO comments(comment_body, user_id, answer_id) 
                   values($1, $2, $3)`, [comment, userId, answerId])
-                  .then(() => response.status(200).json({
+                  .then(() => response.status(201).json({
                     status: 'Success',
                     message: 'Comment added sucessfully'
                   }))

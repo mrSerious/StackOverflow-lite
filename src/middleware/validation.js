@@ -15,7 +15,7 @@ class Validation {
   static postAnswer(request, response, next) {
     const { content } = request.body;
     if (!content || content.length < 5 || typeof content !== 'string'
-    || !/.*\S.*./.test(content) || /\.+/.test(content)) {
+    || !/.*\S.*./.test(content) || /^\.+/.test(content)) {
       return response.status(400).json({
         status: 'Failure',
         message: 'Your answer must be a valid string of minimum lenght 5'
@@ -206,8 +206,7 @@ class Validation {
   static postComment(request, response, next) {
     const { comment } = request.body;
 
-    if (!comment || comment.lengh < 20 || typeof password !== 'string'
-      || /\s+|\.+/.test(comment)) {
+    if (!comment || comment.lengh < 20 || typeof comment !== 'string') {
       return response.status(400).json({
         status: 'Failure',
         message: 'Your comment must be a valid string of minimum lenght 5'

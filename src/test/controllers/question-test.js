@@ -160,7 +160,7 @@ describe('QUESTIONS CONTROLLER', () => {
   describe('DELETE /api/v1/questions/:questionId', () => {
     it('Should not delete question if user is not authorized', (done) => {
       chai.request(server)
-        .delete('/api/v1/questions/5')
+        .delete('/api/v1/questions/4')
         .set('x-access-token', secondUserToken)
         .end((error, response) => {
           response.status.should.equal(403);
@@ -174,7 +174,7 @@ describe('QUESTIONS CONTROLLER', () => {
 
     it('Should let question owner delete question', (done) => {
       chai.request(server)
-        .delete('/api/v1/questions/5')
+        .delete('/api/v1/questions/6')
         .set('x-access-token', userToken)
         .end((error, response) => {
           response.status.should.equal(200);

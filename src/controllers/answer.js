@@ -47,92 +47,90 @@ class Answer {
     db.query('SELECT * FROM answers WHERE id = $1', [answerId])
       .then((answerToUpdate) => {
         if (answerToUpdate.rowCount < 1) {
-          response.status(404).json({
+          return response.status(404).json({
             status: 'Failure',
             message: 'Cannot find that answer'
           });
-        } else {
-          db.query('SELECT * from questions where id = $1', [questionId])
-            .then((question) => {
-              if (question.rowCount < 1) {
-                response.status(404).json({
+        }
+
+        db.query('SELECT * from questions where id = $1', [questionId])
+          .then((question) => {
+            if (question.rowCount < 1) {
+              return response.status(404).json({
+                status: 'Failure',
+                message: 'Cannot find that question'
+              });
+            }
+
+            if (content) {
+              if (answerToUpdate.rows[0].user_id === userId) {
+                db.query(`UPDATE answers SET answer_body = ($1)
+                WHERE id = ($2) AND question_id = ($3)`,
+                [content, answerId, questionId])
+                  .then(() => response.status(200).json({
+                    status: 'Success',
+                    message: 'Answer successfully updated'
+                  }))
+                  .catch(error => response.status(500).json({
+                    status: 'Failure',
+                    message: 'Internal server error'
+                  }));
+              } else {
+                response.status(403).json({
                   status: 'Failure',
-                  message: 'Cannot find that question'
+                  message: 'You are not allowed to '
+                    + 'perform the requested operation'
                 });
               }
+            }
 
-              if (content) {
-                if (answerToUpdate.rows[0].user_id === userId) {
-                  db.query(`UPDATE answers SET answer_body = ($1)
-                WHERE id = ($2) AND question_id = ($3)`,
-                  [content, answerId, questionId])
-                    .then(() => response.status(200).json({
-                      status: 'Success',
-                      message: 'Answer successfully updated'
-                    }))
-                    .catch(error => response.status(500).json({
-                      status: 'Failure',
-                      message: 'Internal server error'
-                    }));
-                } else {
-                  response.status(403).json({
-                    status: 'Failure',
-                    message: 'You are not allowed to '
-                    + 'perform the requested operation'
-                  });
-                }
-              }
-
-              if (isaccepted) {
-                if (question.rows[0].user_id === userId) {
-                  db.query(`
+            if (isaccepted) {
+              if (question.rows[0].user_id === userId) {
+                db.query(`
                   SELECT * FROM answers WHERE isAccepted = true 
                   AND question_id = $1`, [questionId])
-                    .then((isAcceptedExists) => {
-                      if (isAcceptedExists.rowCount > 0) {
-                        for (let i = 0; i < isAcceptedExists.rowCount; i += 1) {
-                          db.query(`
+                  .then((isAcceptedExists) => {
+                    if (isAcceptedExists.rowCount > 0) {
+                      for (let i = 0; i < isAcceptedExists.rowCount; i += 1) {
+                        db.query(`
                         UPDATE answers SET isAccepted = false 
                         WHERE id = $1`, [isAcceptedExists.rows[i].id])
-                            .catch(error => response.status(500).json({
-                              status: 'Failure',
-                              message: 'Internal server error'
-                            }));
-                        }
+                          .catch(error => response.status(500).json({
+                            status: 'Failure',
+                            message: 'Internal server error'
+                          }));
                       }
-                      db.query(`
+                    }
+                    db.query(`
                       UPDATE answers SET isaccepted = ($1) WHERE id = ($2) 
                       AND question_id = ($3) AND user_id = ($4)`,
-                      [isaccepted, answerId, questionId, userId])
-                        .then(() => {
-                          response.status(200).json({
-                            status: 'Success',
-                            message: 'Answer successfully updated'
-                          });
-                        })
-                        .catch(error => response.status(500).json({
-                          status: 'Failure',
-                          message: 'Internal server error'
-                        }));
-                    })
-                    .catch(error => response.status(500).json({
-                      status: 'Failure',
-                      message: 'Internal server error'
-                    }));
-                } else {
-                  response.status(403).json({
+                    [isaccepted, answerId, questionId, userId])
+                      .then(() => response.status(200).json({
+                        status: 'Success',
+                        message: 'Answer successfully updated'
+                      }))
+                      .catch(error => response.status(500).json({
+                        status: 'Failure',
+                        message: 'Internal server error'
+                      }));
+                  })
+                  .catch(error => response.status(500).json({
                     status: 'Failure',
-                    message: 'You are not allowed to perform the '
+                    message: 'Internal server error'
+                  }));
+              } else {
+                return response.status(403).json({
+                  status: 'Failure',
+                  message: 'You are not allowed to perform the '
                     + 'requested operation'
-                  });
-                }
+                });
               }
-            })
-            .catch(error => response.status(500).json({
-              status: 'Failure',
-              message: 'Internal server error'
-            }));
-        }
+            }
+          })
+          .catch(error => response.status(500).json({
+            status: 'Failure',
+            message: 'Internal server error'
+          }));
       })
       .catch(error => response.status(500).json({
         status: 'Failure',

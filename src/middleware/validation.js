@@ -14,8 +14,7 @@ class Validation {
   */
   static postAnswer(request, response, next) {
     const { content } = request.body;
-    if (!content || content.length < 5 || typeof content !== 'string'
-    || !/.*\S.*./.test(content) || /^\.+/.test(content)) {
+    if (!content || content.length < 5 || typeof content !== 'string') {
       return response.status(400).json({
         status: 'Failure',
         message: 'Your answer must be a valid string of minimum lenght 5'

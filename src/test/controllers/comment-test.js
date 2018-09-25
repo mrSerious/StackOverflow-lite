@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import jwt from 'jsonwebtoken';
 import server from '../../server';
 
 chai.use(chaiHttp);
@@ -37,7 +36,10 @@ describe('COMMENTS CONTROLLER', () => {
             chai.request(server)
               .post('/api/v1/questions/4/answers')
               .set('x-access-token', userToken)
-              .send({ content: 'Nos mea requiratur lor quamprimum intellectui et ordinem' })
+              .send({
+                content: 'Nos mea requiratur lor quamprimum '
+                  + 'intellectui et ordinem'
+              })
               .end((error2) => {
                 if (error2) throw error2;
                 done();
@@ -46,16 +48,20 @@ describe('COMMENTS CONTROLLER', () => {
       });
   });
 
-  describe('POST /api/v1/questions/:questionId/answers/:answerId/comments', () => {
+  describe('POST /api/v1/questions/:questionId/answers/:answerId/'
+    + 'comments', () => {
     it('Should not let unathenticated users add comment', (done) => {
       chai.request(server)
         .post('/api/v1/questions/5/answers/6/comments/')
-        .send({ comment: 'This comment will be used for tests in the comment route' })
+        .send({
+          comment: 'This comment will be used for tests in the comment route'
+        })
         .end((error, response) => {
           response.type.should.eql('application/json');
           response.status.should.equal(401);
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('You need to login to perform this operation');
+          response.body.message.should
+            .eql('You need to login to perform this operation');
           done();
         });
     });
@@ -109,7 +115,8 @@ describe('COMMENTS CONTROLLER', () => {
         });
     });
 
-    it('Should not add comment if comment field is empty or invalid', (done) => {
+    it('Should not add comment if comment field is empty or '
+      + 'invalid', (done) => {
       chai.request(server)
         .post('/api/v1/questions/5/answers/6/comments/')
         .set('x-access-token', userToken)
@@ -120,7 +127,8 @@ describe('COMMENTS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Your comment must be a valid string of minimum lenght 5');
+          response.body.message.should
+            .eql('Your comment must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -129,7 +137,9 @@ describe('COMMENTS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/questions/5/answers/6/comments/')
         .set('x-access-token', userToken)
-        .send({ comment: 'This comment will be used for tests in the comment route' })
+        .send({
+          comment: 'This comment will be used for tests in the comment route'
+        })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(201);

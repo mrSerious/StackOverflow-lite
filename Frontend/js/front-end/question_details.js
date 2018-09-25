@@ -143,6 +143,7 @@ const getSingleQuestion = () => {
 
         const addComment = document.createElement('a');
         addComment.href = ' ';
+        addComment.id = 'add_comment';
         addComment.innerHTML = 'add comment';
         ansBodyContainer.appendChild(addComment);
 

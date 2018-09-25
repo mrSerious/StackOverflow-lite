@@ -3,6 +3,7 @@ import { Router } from 'express';
 import question from '../controllers/question';
 import answer from '../controllers/answer';
 import user from '../controllers/user';
+import comment from '../controllers/comment';
 
 import validate from '../middleware/validation';
 import verify from '../middleware/verifyToken';
@@ -35,17 +36,21 @@ router.post('/questions/:questionId([0-9]+)/answers',
 router.delete('/questions/:questionId([0-9]+)',
   verify.check, question.deleteQuestion);
 
-/* User signup */
+/* SIGNUP User */
 router.post('/auth/signup', validate.signUp, user.signUp);
 
-/* User login */
+/* LOGIN User */
 router.post('/auth/login', validate.logIn, user.logIn);
 
-// update an answer
+// PUT answer
 router.put('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)',
   [verify.check, validate.updateAnswer], answer.updateAnswer);
 
-// get user
+// GET user
 router.get('/users/:userId([0-9]+)', verify.check, user.getProfile);
+
+// POST comment
+router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/comments',
+  verify.check, validate.postComment, comment.createComment);
 
 export default router;

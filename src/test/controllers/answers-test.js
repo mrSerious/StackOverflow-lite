@@ -41,7 +41,10 @@ describe('ANSWERS CONTROLLER', () => {
             chai.request(server)
               .post('/api/v1/questions/4/answers')
               .set('x-access-token', userToken)
-              .send({ content: 'This answer will be used in the tests for the answer route' })
+              .send({
+                content: 'This answer will be used in the tests for '
+                + 'the answer route'
+              })
               .end((error2) => {
                 if (error2) throw error2;
                 done();
@@ -51,15 +54,18 @@ describe('ANSWERS CONTROLLER', () => {
   });
 
   describe('POST /api/v1/questions/:questionId/answers', () => {
-    it('Should not let user add answer if user is not logged in', (done) => {
+    it('Should not let unathenticated user add an answer', (done) => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.status.should.equal(401);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('You need to login to perform this operation');
+          response.body.message.should
+            .eql('You need to login to perform this operation');
           done();
         });
     });
@@ -68,7 +74,9 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/questions/1/answers')
         .set('x-access-token', userToken)
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.status.should.equal(201);
           response.type.should.equal('application/json');
@@ -82,7 +90,9 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .post('/api/v1/questions/w/answers')
         .set('x-access-token', userToken)
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.status.should.equal(404);
           response.type.should.equal('application/json');
@@ -102,7 +112,8 @@ describe('ANSWERS CONTROLLER', () => {
           response.status.should.equal(400);
           response.type.should.equal('application/json');
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Your answer must be a valid string of minimum lenght 5');
+          response.body.message.should
+            .eql('Your answer must be a valid string of minimum lenght 5');
           done();
         });
     });
@@ -112,7 +123,9 @@ describe('ANSWERS CONTROLLER', () => {
     it('Should not allow update if user not logged in', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(401);
@@ -121,11 +134,29 @@ describe('ANSWERS CONTROLLER', () => {
         });
     });
 
+    it('Should not update a answer if question does not exist', (done) => {
+      chai.request(server)
+        .put('/api/v1/questions/400000/answers/4')
+        .set('x-access-token', userToken)
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
+        .end((error, response) => {
+          response.type.should.equal('application/json');
+          response.status.should.equal(404);
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Cannot find that question');
+          done();
+        });
+    });
+
     it('Should not update an answer that does not exist', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4000')
         .set('x-access-token', userToken)
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(404);
@@ -139,7 +170,9 @@ describe('ANSWERS CONTROLLER', () => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')
         .set('x-access-token', secondUserToken)
-        .send({ content: 'This answer will be used in the tests for the answer route' })
+        .send({
+          content: 'This answer will be used in the tests for the answer route'
+        })
         .end((error, response) => {
           response.type.should.equal('application/json');
           response.status.should.equal(403);
@@ -172,7 +205,8 @@ describe('ANSWERS CONTROLLER', () => {
           response.type.should.equal('application/json');
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
-          response.body.message.should.eql('Your answer must be a valid string of minimum lenght 5');
+          response.body.message.should
+            .eql('Your answer must be a valid string of minimum lenght 5');
           done();
         });
     });

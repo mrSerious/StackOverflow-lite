@@ -14,8 +14,7 @@ class Validation {
   */
   static postAnswer(request, response, next) {
     const { content } = request.body;
-    if (!content || content.length < 5 || typeof content !== 'string'
-    || !/.*\S.*./.test(content) || /\.+/.test(content)) {
+    if (!content || content.length < 5 || typeof content !== 'string') {
       return response.status(400).json({
         status: 'Failure',
         message: 'Your answer must be a valid string of minimum lenght 5'
@@ -87,7 +86,7 @@ class Validation {
   }
 
   /**
-   * validates question fields
+   * validates Signup
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
@@ -160,7 +159,7 @@ class Validation {
   }
 
   /**
-   * validates question fields
+   * validates Login
    * @param {Object} request - request object
    * @param {Object} response - response object
    * @param {Function} next - next middleware function
@@ -189,6 +188,27 @@ class Validation {
       return response.status(400).json({
         status: 'Failure',
         message: 'Password must contain a number'
+      });
+    }
+
+    return next();
+  }
+
+  /**
+   * validates comment fields
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @param {Function} next - next middleware function
+   *
+   * @return {undefined}
+   */
+  static postComment(request, response, next) {
+    const { comment } = request.body;
+
+    if (!comment || comment.lengh < 20 || typeof comment !== 'string') {
+      return response.status(400).json({
+        status: 'Failure',
+        message: 'Your comment must be a valid string of minimum lenght 5'
       });
     }
 

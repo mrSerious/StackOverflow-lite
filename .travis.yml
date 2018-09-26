@@ -1,7 +1,7 @@
 env:
   global:
   - CC_TEST_REPORTER_ID=9be6d10a869826c526f2fd01eaaf884a4da46edcc8cc769a002d37a121833e97
-  - export NODE_ENV=test
+  # - export NODE_ENV=test
 language: node_js
 node_js:
   - '8'
@@ -22,6 +22,6 @@ script:
   - npm test
 after_success:
   - npm run coverage
-  - ./cc-test-reporter after-build -t lcov --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   email: false

@@ -53,6 +53,7 @@ class Question {
           });
         } else {
           const [question] = result.rows;
+
           db.query(`
           SELECT answers.id, answer_body, answers.question_id, isaccepted, 
           answers.createdat, users.id as user_id, username
@@ -60,14 +61,30 @@ class Question {
           WHERE answers.question_id = ${id} ORDER BY answers.id DESC`)
             .then((answersResult) => {
               const answers = answersResult.rows;
-
-              question.answers = answers;
-
-              response.status(200).json({
-                status: 'Success',
-                message: 'Request was successful',
-                data: question
-              });
+              for (let i = 0; i < answers.length; i += 1) {
+                db.query(`SELECT comment_body, comments.createdat, username
+                FROM comments JOIN users ON comments.user_id = users.id
+                WHERE comments.answer_id = ${answers[i].id} 
+                ORDER BY comments.id DESC`)
+                  .then((commentResult) => {
+                    const comments = commentResult.rows;
+                    const commentCount = commentResult.rowCount;
+                    answers[i].comments = comments;
+                    answers[i].commentCount = commentCount;
+                    question.answers = answers;
+                    if (i === answers.length - 1) {
+                      response.status(200).json({
+                        status: 'Success',
+                        message: 'Request was successful',
+                        data: question
+                      });
+                    }
+                  })
+                  .catch(error => response.status(500).json({
+                    status: 'Failure',
+                    message: 'Internal server error'
+                  }));
+              }
             })
             .catch(error => response.status(500).json({
               status: 'Failure',

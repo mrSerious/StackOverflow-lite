@@ -2,7 +2,7 @@
 const myJson = JSON.parse(localStorage.getItem('user-data'));
 
 const answersTab = () => {
-  const answers = myJson.userAnswers[0];
+  const answers = myJson.userAnswers;
   for (let i = 0; i < answers.length; i += 1) {
     const answerList = document.getElementById('answer-mini-list');
     const userAnswers = document.createElement('div');

@@ -604,7 +604,6 @@ button:hover {
 }
 
 .answer-body-meta {
-  font-size: 0.65rem;
   float: left;
 }
 
@@ -627,7 +626,7 @@ button:hover {
 }
 
 .answer-body-container {
-  padding: 21px 0 13px 21px;
+  padding: 21px 0 13px 0;
   overflow: hidden;
   border-bottom: 1px solid #d8d8d8a1;
 }
@@ -935,10 +934,10 @@ button:hover {
 * comments modal
 */
 .modal {
+  animation: fadeEffect 1s;
   display: none;
   position: fixed;
   z-index: 1;
-  /* padding-top: 100px; */
   left: 0;
   top: 0;
   width: 100%;
@@ -986,6 +985,19 @@ button:hover {
 
 #comment_button {
   margin-top: 1rem;
+}
+
+/* 
+* comment styling
+*/
+.comments_container {
+  font-size: .8rem;
+  margin-top: 1.5rem;
+}
+
+.comment_body {
+  padding: 0.5rem 0;
+  border-top: 1px solid #9e9e9e41;
 }
 
 /* 
@@ -1062,7 +1074,6 @@ button:hover {
     color: #919191 !important;
   }
 
-  .answer-body-meta,
   .selected-answer-check {
     font-size: 0.8rem !important;
   }

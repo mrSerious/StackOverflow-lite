@@ -141,12 +141,6 @@ const getSingleQuestion = () => {
 
         ansBodyContainer.appendChild(answer);
 
-        const addComment = document.createElement('a');
-        addComment.href = ' ';
-        addComment.id = 'add_comment';
-        addComment.innerHTML = 'add comment';
-        ansBodyContainer.appendChild(addComment);
-
         const editAns = document.createElement('a');
         editAns.href = 'edit_answer.html';
         editAns.id = 'edit_answer';
@@ -155,6 +149,40 @@ const getSingleQuestion = () => {
         editAns.setAttribute('answer-id', question.answers[i].id);
         ansBodyContainer.appendChild(editAns);
         editAns.onclick = saveIds;
+
+        const commentsContainer = document.createElement('div');
+        commentsContainer.className = 'comments_container';
+
+        const userComments = question.answers[i].comments;
+        const count = question.answers[i].commentCount;
+        for (let idx = 0; idx < count; idx += 1) {
+          const commentBody = document.createElement('div');
+          commentBody.className = 'comment_body';
+          const commentMeta = document.createElement('div');
+          commentMeta.className = 'comment_meta';
+          const commentTime = document.createElement('span');
+          commentTime.innerHTML = ' on Sept 28 2018';
+          const commentOwner = document.createElement('span');
+          commentOwner.innerHTML = userComments[idx].username;
+          commentMeta.appendChild(commentOwner);
+          commentMeta.appendChild(commentTime);
+          commentBody.appendChild(commentMeta);
+          const commentParagraph = document.createElement('p');
+          commentParagraph.className = 'no-margin';
+          commentParagraph.innerHTML = userComments[idx].comment_body;
+          commentBody.appendChild(commentParagraph);
+          commentsContainer.appendChild(commentBody);
+        }
+
+        ansBodyContainer.appendChild(commentsContainer);
+
+        const addComment = document.createElement('a');
+        addComment.href = ' ';
+        addComment.setAttribute('answer-id', question.answers[i].id);
+        addComment.id = 'add_comment';
+        addComment.className = 'add_comment';
+        addComment.innerHTML = 'add comment';
+        ansBodyContainer.appendChild(addComment);
 
         answerBody.appendChild(voteContainer);
         answerBody.appendChild(ansBodyContainer);

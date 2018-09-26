@@ -1,8 +1,10 @@
 document.addEventListener('click', (event) => {
-  event.preventDefault();
-  if (event.target.id === 'add_comment') {
+  if (event.target.classList.contains('add_comment')) {
+    event.preventDefault();
     const modal = document.getElementById('comment_modal');
     const closeModal = document.getElementsByClassName('close_modal')[0];
+    const answerId = event.target.getAttribute('answer-id');
+    localStorage.setItem('answer-id', answerId);
 
     modal.style.display = 'block';
 
@@ -10,8 +12,8 @@ document.addEventListener('click', (event) => {
       modal.style.display = 'none';
     };
 
-    window.onclick = (event) => {
-      if (event.target == modal) {
+    window.onclick = (event1) => {
+      if (event1.target === modal) {
         modal.style.display = 'none';
       }
     };

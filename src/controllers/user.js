@@ -173,7 +173,7 @@ class User {
             const questionCount = result2.rowCount;
             user.questionCount = questionCount;
             let userQuestions = [];
-            userQuestions = [result2.rows];
+            userQuestions = result2.rows;
             user.userQuestions = userQuestions;
 
             db.query(`
@@ -185,7 +185,7 @@ class User {
                 const answerCount = result3.rowCount;
                 user.answerCount = answerCount;
                 let userAnswers = [];
-                userAnswers = [result3.rows];
+                userAnswers = result3.rows;
                 user.userAnswers = userAnswers;
 
                 return response.status(200).json({

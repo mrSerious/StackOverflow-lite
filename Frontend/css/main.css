@@ -589,18 +589,16 @@ button:hover {
   border-radius: 50px;
   color: inherit;
   float: right;
-  font-size: .8rem;
   margin: 0 .5rem;
   padding: .2rem 1.5rem;
-  transition: background-color .6s ease, color .6s ease;
-  -webkit-transition: background-color .6s ease, color .6s ease;
+  transition: background-color .3s ease, color .3s ease;
+  -webkit-transition: background-color .3s ease, color .3s ease;
 }
 
 #delete-question:hover {
-  background-color: #ff0000;
-  border: 1px solid #ff0000;
+  border: 1px solid #ff0000b4;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  color: #ffffff;
+  color: #ff0000b4;
 }
 
 .answers-list {

@@ -22,6 +22,7 @@ script:
   - npm test
 after_success:
   - npm run coverage
+  - npm run coveralls
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   email: false

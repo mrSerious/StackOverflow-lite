@@ -10,7 +10,7 @@ CREATE TABLE answers(
 	updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO answers(answer_body, user_id, question_id) VALUES
-  ('sample body 1', 1, 1),
-  ('sample body 2', 2, 2),
-  ('sample body 2', 1, 3);
+INSERT INTO answers(answer_body, user_id, question_id, isaccepted) VALUES
+  ('sample answer 1', 1, 1, false),
+  ('sample answer 2', 2, 2, false),
+  ('sample answer 3', 1, 3, true);

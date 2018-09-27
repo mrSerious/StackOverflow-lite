@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import server from '../../server';
 
 chai.use(chaiHttp);
-
 chai.should();
 
 let userToken;
@@ -90,7 +89,8 @@ describe('QUESTIONS CONTROLLER', () => {
         .post('/api/v1/questions')
         .set('x-access-token', userToken)
         .send({
-          title: 'Qui aggredior inveniant desumptas aggredior inveniant desumptas',
+          title: 'Qui aggredior inveniant desumptas '
+          + 'aggredior inveniant desumptas',
           body: 'Ipsius cupere vulgus tes hos aggredior inveniant desumptas',
         })
         .end((error, response) => {
@@ -151,7 +151,49 @@ describe('QUESTIONS CONTROLLER', () => {
           response.status.should.equal(400);
           response.body.status.should.eql('Failure');
           response.body.message.should
-            .eql('Your question description must be a valid string of minimum lenght 20');
+            .eql('Your question description must be a valid string of '
+            + 'minimum lenght 20');
+          done();
+        });
+    });
+  });
+
+  describe('SEARCH /api/v1/questions?q=<queryString>', () => {
+    it('Should respond with 404 if result is empty', (done) => {
+      chai.request(server)
+        .get('/api/v1/questions')
+        .query({ q: 'foo' })
+        .end((error, response) => {
+          response.status.should.equal(404);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Your search returned no matches');
+          done();
+        });
+    });
+
+    it('Should get all questions if query string is empty', (done) => {
+      chai.request(server)
+        .get('/api/v1/questions')
+        .query({ q: '' })
+        .end((error, response) => {
+          response.status.should.equal(200);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Questions retrieved successfully');
+          done();
+        });
+    });
+
+    it('Should successfully return result of search', (done) => {
+      chai.request(server)
+        .get('/api/v1/questions')
+        .query({ q: 'Qui' })
+        .end((error, response) => {
+          response.status.should.equal(200);
+          response.type.should.equal('application/json');
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Your search was successful');
           done();
         });
     });

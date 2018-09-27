@@ -22,7 +22,7 @@ class Question {
       GROUP BY q.id),0) as answers FROM questions q
       JOIN users ON users.id = q.user_id ORDER BY createdat DESC
       `)
-        .then(result => response.json({
+        .then(result => response.status(200).json({
           status: 'Success',
           message: 'Questions retrieved successfully',
           data: { questions: result.rows }
@@ -42,15 +42,15 @@ class Question {
       `)
         .then((result) => {
           if (result.rowCount < 1) {
-            response.status(200).json({
-              status: 'Success',
+            response.status(404).json({
+              status: 'Failure',
               message: 'Your search returned no matches',
               data: { questions: result.rows }
             });
           } else {
             response.status(200).json({
               status: 'Success',
-              message: 'Your search returned results',
+              message: 'Your search was successful',
               data: { questions: result.rows }
             });
           }

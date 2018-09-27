@@ -32,8 +32,8 @@
             </b>
           </a>
         </div>
-        <form class="site-navigation-search">
-          <input type="search" placeholder="Search for..." value="" name="s" title="Search for:">
+        <form method="GET" class="site-navigation-search">
+          <input type="search" placeholder="Search for..." id="search" name="q" title="search">
         </form>
         <!-- nav  -->
         <nav class="site-navigation-links">
@@ -64,8 +64,9 @@
     <div class="container">
       <div class="questions">
         <div class="q-headline">
-          <h1>Latest Questions</h1>
+          <h1 id="headline">Latest Questions</h1>
           <a class="sort-button" href="">Sort By Popular</a>
+          <div class="clear"></div>
         </div>
         <div class="list-wrapper">
           <div id="question-mini-list"></div>

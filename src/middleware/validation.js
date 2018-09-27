@@ -78,7 +78,8 @@ class Validation {
       || !/.*\S.*./.test(body) || /\.+/.test(body)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Your question description must be a valid string of minimum lenght 20'
+        message: 'Your question description must be a '
+        + 'valid string of minimum lenght 20'
       });
     }
 

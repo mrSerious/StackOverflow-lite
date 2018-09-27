@@ -24,7 +24,7 @@ fetch(url, {
       .innerHTML = `Asked ${myJson.data.questionCount} questions`;
     document.getElementById('answer_count')
       .innerHTML = `Answered ${myJson.data.answerCount} questions`;
-    const questions = myJson.data.userQuestions[0];
+    const questions = myJson.data.userQuestions;
     for (let i = 0; i < questions.length; i += 1) {
       const questionList = document.getElementById('question-mini-list');
       const questionSummary = document.createElement('div');

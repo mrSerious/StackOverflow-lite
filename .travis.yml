@@ -5,22 +5,22 @@ env:
 language: node_js
 node_js:
   - '8'
-# dist: trusty
-# before_install: cd src
 services:
   - postgresql
-before_script:
+cache:
+  directories:
+    - node_modules
+install:
   - npm install
+before_script:
   - psql -c 'CREATE DATABASE "so-lite-test";' -U postgres
   - npm i nyc --save-dev
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - npm test
-after_script:
+  - npm run coveralls
+after_success:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   email: false
-after_success:
-  - npm run coverage

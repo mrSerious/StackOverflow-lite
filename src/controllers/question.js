@@ -14,22 +14,56 @@ class Question {
    * @return {Object} response - response object
    */
   static getAllQuestions(request, response) {
-    db.query(`
-    SELECT q.id, title, users.id as userid, username, q.createdat,
-    COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
-    GROUP BY q.id),0) as answers FROM questions q
-    JOIN users ON users.id = q.user_id ORDER BY createdat DESC
-    `)
-      .then(result => response.json({
-        status: 'Success',
-        message: 'Questions retrieved successfully',
-        data: { questions: result.rows }
-      }))
-      .catch(error => response.status(500).json({
-        status: 'Failure',
-        message: 'Internal server error',
-        error
-      }));
+    const queryString = request.query.q;
+    if (!queryString || queryString === '') {
+      db.query(`
+      SELECT q.id, title, users.id as userid, username, q.createdat,
+      COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
+      GROUP BY q.id),0) as answers FROM questions q
+      JOIN users ON users.id = q.user_id ORDER BY createdat DESC
+      `)
+        .then(result => response.status(200).json({
+          status: 'Success',
+          message: 'Questions retrieved successfully',
+          data: { questions: result.rows }
+        }))
+        .catch(error => response.status(500).json({
+          status: 'Failure',
+          message: 'Internal server error'
+        }));
+    } else {
+      db.query(`SELECT q.id, title, users.id as userid, username, q.createdat,
+      COALESCE((SELECT COUNT(1) FROM answers WHERE answers.question_id = q.id 
+      GROUP BY q.id),0) as answers 
+      FROM questions q JOIN users ON users.id = q.user_id 
+      WHERE q.title LIKE '%${queryString}%' 
+      OR q.title LIKE '%${queryString.toLowerCase()}%'
+      ORDER BY createdat DESC 
+      `)
+        .then((result) => {
+          const matches = result.rowCount;
+          if (result.rowCount < 1) {
+            response.status(200).json({
+              status: 'Success',
+              message: 'Your search returned no matches',
+              data: {
+                questions: result.rows,
+                matches
+              }
+            });
+          } else {
+            response.status(200).json({
+              status: 'Success',
+              message: 'Your search was successful',
+              data: { questions: result.rows }
+            });
+          }
+        })
+        .catch(error => response.status(500).json({
+          status: 'Failure',
+          message: 'Internal server error'
+        }));
+    }
   }
 
   /**

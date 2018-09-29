@@ -26,35 +26,38 @@
         <!-- navbrand -->
         <div class="brand">
           <a href="index.html">
-            <b><p id="logo"> SO </p></b>
+            <b>
+              <p id="logo"> SO </p>
+            </b>
           </a>
         </div>
         <form class="site-navigation-search">
-          <input type="search" placeholder="Search for..." value="" name="s" title="Search for:">
-        </form>
-        <!-- nav  -->
-        <nav class="site-navigation-links">
-          <div class="nav-mobile">
-            <a id="nav-toggle" href="#!">
-              <span></span>
-            </a>
-          </div>
-          <ul class="nav-list">
-            <li>
-              <a href="index.html">Questions</a>
-            </li>
-            <li>
-              <a href="new.html">Ask Question</a>
-            </li>
-            <li>
-              <a href="login.html">Sign In</a>
-            </li>
-            <li>
-              <a href="signup.html">Sign Up</a>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.nav -->
+          <form method="GET" class="site-navigation-search">
+            <input type="search" placeholder="Search for..." id="search" name="q" title="search">
+          </form>
+          <!-- nav  -->
+          <nav class="site-navigation-links">
+            <div class="nav-mobile">
+              <a id="nav-toggle" href="#!">
+                <span></span>
+              </a>
+            </div>
+            <ul class="nav-list">
+              <li>
+                <a href="index.html">Questions</a>
+              </li>
+              <li>
+                <a href="new.html">Ask Question</a>
+              </li>
+              <li>
+                <a href="login.html">Sign In</a>
+              </li>
+              <li>
+                <a href="signup.html">Sign Up</a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.nav -->
       </div>
     </section>
 
@@ -109,6 +112,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/front-end/new_question.js"></script>
+  <script src="js/search.js"></script>
 </body>
 
 </html>

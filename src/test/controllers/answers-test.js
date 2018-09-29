@@ -183,6 +183,21 @@ describe('ANSWERS CONTROLLER', () => {
         });
     });
 
+    it('Should only let question owner accept an answer', (done) => {
+      chai.request(server)
+        .put('/api/v1/questions/1/answers/1')
+        .set('x-access-token', userToken)
+        .send({ isaccepted: true })
+        .end((error, response) => {
+          response.type.should.equal('application/json');
+          response.status.should.equal(403);
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('You are not allowed to perform the requested operation');
+          done();
+        });
+    });
+
     it('Should let authorized user update an answer', (done) => {
       chai.request(server)
         .put('/api/v1/questions/4/answers/4')

@@ -450,6 +450,10 @@ button:hover {
   margin: 0 0 10px 0;
 }
 
+#no_matches {
+  display: none;
+}
+
 .sort-button {
   color: #fff;
   background-color: #616161;
@@ -581,22 +585,20 @@ button:hover {
 
 #delete-question {
   background-color: #ffffff;
-  border: 1px solid #ff000069;
+  border: 1px solid #35353528;
   border-radius: 50px;
-  color: #2525258a;
+  color: inherit;
   float: right;
-  font-size: .8rem;
-  font-weight: 400;
   margin: 0 .5rem;
   padding: .2rem 1.5rem;
-  transition: background-color .3s ease-in-out, color .3s ease-in-out;
-  -webkit-transition: background-color .3s ease-in-out, color .3s ease-in-out;
+  transition: background-color .3s ease, color .3s ease;
+  -webkit-transition: background-color .3s ease, color .3s ease;
 }
 
 #delete-question:hover {
-  background-color: #ff0000;
+  border: 1px solid #ff0000b4;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  color: #ffffff;
+  color: #ff0000b4;
 }
 
 .answers-list {

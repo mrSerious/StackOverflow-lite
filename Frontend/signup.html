@@ -30,8 +30,8 @@
           </a>
         </div>
 
-        <form class="site-navigation-search">
-          <input type="search" placeholder="Search for..." value="" name="s" title="Search for:">
+        <form method="GET" class="site-navigation-search">
+          <input type="search" placeholder="Search for..." id="search" name="q" title="search">
         </form>
 
         <!-- nav  -->
@@ -59,10 +59,10 @@
         <!-- /.nav -->
       </div>
       <div class="error-alert" id="error-alert">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-          <p id="error_paragraph" class="no-margin no-padding"></p>
-          <div class="clear"></div>
-        </div>
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p id="error_paragraph" class="no-margin no-padding"></p>
+        <div class="clear"></div>
+      </div>
     </section>
 
     <div class="container">
@@ -123,6 +123,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/front-end/signup.js"></script>
+  <script src="js/search.js"></script>
 </body>
 
 </html>

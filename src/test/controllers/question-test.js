@@ -159,14 +159,14 @@ describe('QUESTIONS CONTROLLER', () => {
   });
 
   describe('SEARCH /api/v1/questions?q=<queryString>', () => {
-    it('Should respond with 404 if result is empty', (done) => {
+    it('Should inform if search returned no reults', (done) => {
       chai.request(server)
         .get('/api/v1/questions')
         .query({ q: 'foo' })
         .end((error, response) => {
-          response.status.should.equal(404);
+          response.status.should.equal(200);
           response.type.should.equal('application/json');
-          response.body.status.should.eql('Failure');
+          response.body.status.should.eql('Success');
           response.body.message.should.eql('Your search returned no matches');
           done();
         });

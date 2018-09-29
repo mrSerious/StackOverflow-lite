@@ -11,7 +11,6 @@
   <!-- Fonts  -->
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,900|Orbitron" rel="stylesheet">
 
-
   <!-- Styles -->
   <link type="text/css" rel="stylesheet" href="./css/normalize.min.css" />
   <link type="text/css" rel="stylesheet" href="./css/main.css">
@@ -27,11 +26,13 @@
         <!-- navbrand -->
         <div class="brand">
           <a href="index.html">
-            <b><p id="logo"> SO </p></b>
+            <b>
+              <p id="logo"> SO </p>
+            </b>
           </a>
         </div>
-        <form class="site-navigation-search">
-          <input type="search" placeholder="Search for..." value="" name="s" title="Search for:">
+        <form method="GET" class="site-navigation-search">
+          <input type="search" placeholder="Search for..." id="search" name="q" title="search">
         </form>
         <!-- nav  -->
         <nav class="site-navigation-links">
@@ -60,79 +61,79 @@
     </section>
 
     <div class="container">
-        <div class="user-profile-container">
-            <div class="row">
-              <div class="one column">
-                <div class="user-profile-card">
-                  <div class="row">
-                    <div class="two-thirds column">
-                      <div class="user-header">
-                        <div class="row">
-                          <div class="one-third column">
-                            <div class="avatar">
-                              <img class="user-profile-image" src="./img/user.png">
-                            </div>
-                          </div>
-                          <div class="two-thirds column">
-                            <div class="user-name">
-                              <div>
-                                <h2 id="full_name" class="big-profile-heading no-margin">Alex</h2>
-                                <h3 id="user_name" class="no-margin">jigSaw</h3>
-                              </div>
-                            </div>
-                          </div>
+      <div class="user-profile-container">
+        <div class="row">
+          <div class="one column">
+            <div class="user-profile-card">
+              <div class="row">
+                <div class="two-thirds column">
+                  <div class="user-header">
+                    <div class="row">
+                      <div class="one-third column">
+                        <div class="avatar">
+                          <img class="user-profile-image" src="./img/user.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="one-third column">
-                      <div class="user-meta-wrapper">
-                        <div class="user-metadata">
-                          <p>Joined July 2018</p>
-                          <p id="question_count"></p>
-                          <p id="answer_count"></p>
+                      <div class="two-thirds column">
+                        <div class="user-name">
+                          <div>
+                            <h2 id="full_name" class="big-profile-heading no-margin">Alex</h2>
+                            <h3 id="user_name" class="no-margin">jigSaw</h3>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-    
-              <div class="one column no-margin">
-                <div class="user-content-container">
-                  <ul class="nav nav-tabs no-padding no-margin">
-                    <li>
-                      <a class="tablinks" id="defaultOpen" onclick="openTab(event, 'user-questions')" href="#">your
-                        questions</a></li>
-                    <li>
-                      <a class="tablinks" onclick="openTab(event, 'user-answers'); answersTab()" href="#">your answers</a></li>
-                  </ul>
-                </div>
-              </div>
-    
-              <div class="one column">
-                <div class="user-content">
-                  <div id="user-questions" class="tabcontent">
-                    <h2>Recent Questions</h2>
-                    <a class="sort-button" href="">Sort By Popular</a>
-                    <div class="user-questions-view">
-                      <div class="list-wrapper">
-                        <div id="question-mini-list"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="user-answers" class="tabcontent">
-                    <h2>Recent Answers</h2>
-                    <a class="sort-button" href="">Sort By Popular</a>
-                    <div class="user-answers-view">
-                      <div class="list-wrapper">
-                        <div id="answer-mini-list"></div>
-                      </div>
+                <div class="one-third column">
+                  <div class="user-meta-wrapper">
+                    <div class="user-metadata">
+                      <p>Joined July 2018</p>
+                      <p id="question_count"></p>
+                      <p id="answer_count"></p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="one column no-margin">
+            <div class="user-content-container">
+              <ul class="nav nav-tabs no-padding no-margin">
+                <li>
+                  <a class="tablinks" id="defaultOpen" onclick="openTab(event, 'user-questions')" href="#">your
+                    questions</a></li>
+                <li>
+                  <a class="tablinks" onclick="openTab(event, 'user-answers'); answersTab()" href="#">your answers</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="one column">
+            <div class="user-content">
+              <div id="user-questions" class="tabcontent">
+                <h2>Recent Questions</h2>
+                <a class="sort-button" href="">Sort By Popular</a>
+                <div class="user-questions-view">
+                  <div class="list-wrapper">
+                    <div id="question-mini-list"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="user-answers" class="tabcontent">
+                <h2>Recent Answers</h2>
+                <a class="sort-button" href="">Sort By Popular</a>
+                <div class="user-answers-view">
+                  <div class="list-wrapper">
+                    <div id="answer-mini-list"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- /.container -->
   </div>
@@ -149,6 +150,7 @@
   <script src="js/openTab.js"></script>
   <script src="js/front-end/profile.js"></script>
   <script src="js/front-end/user_answers.js"></script>
+  <script src="js/search.js"></script>
 </body>
 
 </html>

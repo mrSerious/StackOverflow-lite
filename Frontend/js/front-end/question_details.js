@@ -24,7 +24,6 @@ const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
   const url = `
   https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
-
   fetch(url)
     .then((response) => {
       if (!response.ok) {

@@ -1,8 +1,15 @@
-const searchBox = document.getElementById('search');
-
+const emptySearchMsg = document.getElementById('no_matches');
 let queryString;
-if (searchBox !== null) {
-  queryString = window.location.search;
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('q');
+if (myParam !== null) {
+  if (myParam.length !== 0) {
+    queryString = window.location.search;
+  }
+}
+if (localStorage.getItem('query-string')) {
+  queryString = localStorage.getItem('query-string');
+  window.localStorage.removeItem('query-string');
 }
 
 let url;
@@ -25,6 +32,10 @@ fetch(url)
   })
   .then((myJson) => {
     const array = myJson.data.questions;
+    if (myJson.data.matches === 0) {
+      emptySearchMsg.innerHTML = myJson.message;
+      emptySearchMsg.style.display = 'block';
+    }
 
     for (let i = 0; i < array.length; i += 1) {
       const newcontent = document.createElement('div');

@@ -137,6 +137,58 @@ class Answer {
         message: 'Internal server error'
       }));
   }
+
+  /**
+   * @param {Object} request - request object
+   * @param {Object} response - response object
+   * @param {Function} next - go to the next
+   *
+   * @returns {Object} response - response object
+   */
+  static upvoteComment(request, response, next) {
+    const { answerId } = request.params;
+    const { questionId } = request.params;
+    const upvoteCount = request.body.count;
+
+    db.query(`SELECT * FROM questions where id = ${questionId}`)
+      .then((result) => {
+        if (result.rows < 1) {
+          response.status(404).json({
+            status: 'Failure',
+            message: 'Cannot find that question'
+          });
+        } else {
+          db.query(`SELECT * FROM answers where id = ${answerId}`)
+            .then((result1) => {
+              if (result1.rows < 1) {
+                response.status(404).json({
+                  status: 'Failure',
+                  message: 'Cannot find that answer'
+                });
+              } else {
+                db.query(`UPDATE answers SET upvote = ${upvoteCount + 1} 
+                WHERE id = ${answerId}`)
+                  .then(() => response.status(200).json({
+                    status: 'Success',
+                    message: 'Upvote was successful'
+                  }))
+                  .catch(error => response.status(500).json({
+                    status: 'Failure',
+                    message: 'Internal server error'
+                  }));
+              }
+            })
+            .catch(error => response.status(500).json({
+              status: 'Failure',
+              message: 'Internal server error'
+            }));
+        }
+      })
+      .catch(error => response.status(500).json({
+        status: 'Failure',
+        message: 'Internal server error'
+      }));
+  }
 }
 
 export default Answer;

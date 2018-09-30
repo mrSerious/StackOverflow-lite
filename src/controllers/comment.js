@@ -1,3 +1,4 @@
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "^error" }] */
 import db from '../models/db';
 
 /**

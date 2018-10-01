@@ -18,7 +18,8 @@ if (queryString) {
   https://stack-overflow-lite-app.herokuapp.com/api/v1/questions${queryString}`;
   document.getElementById('headline').innerHTML = 'Search Results';
 } else {
-  url = 'https://stack-overflow-lite-app.herokuapp.com/api/v1/questions';
+  // url = 'https://stack-overflow-lite-app.herokuapp.com/api/v1/questions';
+  url = 'http://localhost:3000/api/v1/questions';
 }
 
 const questionList = document.getElementById('question-mini-list');

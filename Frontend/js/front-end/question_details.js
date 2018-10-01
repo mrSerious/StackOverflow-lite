@@ -23,7 +23,9 @@ const saveIds = (event) => {
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
   const url = `
-  https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
+  http://localhost:3000/api/v1/questions/${id}`;
+  // const url = `
+  // https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
   fetch(url)
     .then((response) => {
       if (!response.ok) {
@@ -65,7 +67,7 @@ const getSingleQuestion = () => {
         upVote.appendChild(upArrow);
         const upCount = document.createElement('span');
         upCount.className = 'new-upvote-count';
-        upCount.innerHTML = 0;
+        upCount.innerHTML = question.answers[i].upvote;
         upVote.appendChild(upCount);
         voteContainer.appendChild(upVote);
 

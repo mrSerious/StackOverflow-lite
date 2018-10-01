@@ -644,9 +644,9 @@ button:hover {
   border: 0;
   color: inherit;
   float: left;
-  font-size: 1.5rem;
-  margin: 21px 5px 0 0;
-  padding: 0.376rem;
+  font-size: 1rem;
+  margin: 21px 10px 0 0;
+  padding: 0.2rem 0.1rem;
   color: #919191 !important;
 }
 
@@ -1070,9 +1070,9 @@ button:hover {
     border: 0;
     color: inherit;
     float: left;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     margin: 21px 16px 0 0;
-    width: 60px;
+    width: 2rem;
     color: #919191 !important;
   }
 

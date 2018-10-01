@@ -55,6 +55,6 @@ router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/comments',
 
 // POST comment upvote
 router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/upvote',
-  answer.upvoteComment);
+  authorization.check, answer.upvoteComment);
 
 export default router;

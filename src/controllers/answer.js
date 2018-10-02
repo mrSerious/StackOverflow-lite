@@ -148,7 +148,7 @@ class Answer {
   static upvoteComment(request, response, next) {
     const { answerId } = request.params;
     const { questionId } = request.params;
-    const upvoteCount = request.body.count;
+    const upvoteCount = parseInt(request.body.count, 10);
 
     db.query(`SELECT * FROM questions where id = ${questionId}`)
       .then((result) => {

@@ -23,9 +23,7 @@ const saveIds = (event) => {
 const getSingleQuestion = () => {
   const id = parseInt(localStorage.getItem('data-id'), 10);
   const url = `
-  http://localhost:3000/api/v1/questions/${id}`;
-  // const url = `
-  // https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
+  https://stack-overflow-lite-app.herokuapp.com/api/v1/questions/${id}`;
   fetch(url)
     .then((response) => {
       if (!response.ok) {
@@ -58,13 +56,18 @@ const getSingleQuestion = () => {
         voteContainer.className = 'answer-vote-container';
 
         // upvote button
-        const upVote = document.createElement('button');
-        upVote.name = 'button';
-        upVote.type = 'button';
+        const upVote = document.createElement('div');
         upVote.className = 'upvote-button';
+        const upVoteLink = document.createElement('a');
+        upVoteLink.className = 'upvote_link';
+        upVoteLink.href = '#';
         const upArrow = document.createElement('i');
-        upArrow.className = 'fa fa-arrow-up';
-        upVote.appendChild(upArrow);
+        upArrow.className = 'fa fa-chevron-up';
+        upArrow.classList.add('upvote');
+        upArrow.setAttribute('answer-id', question.answers[i].id);
+        upArrow.setAttribute('upvote-count', question.answers[i].upvote);
+        upVoteLink.appendChild(upArrow);
+        upVote.appendChild(upVoteLink);
         const upCount = document.createElement('span');
         upCount.className = 'new-upvote-count';
         upCount.innerHTML = question.answers[i].upvote;
@@ -72,13 +75,15 @@ const getSingleQuestion = () => {
         voteContainer.appendChild(upVote);
 
         // upvote button
-        const downVote = document.createElement('button');
-        downVote.name = 'button';
-        downVote.type = 'button';
+        const downVote = document.createElement('div');
         downVote.className = 'downvote-button';
+        const downVoteLink = document.createElement('a');
+        downVoteLink.className = 'downvote-link';
+        downVoteLink.href = '#';
         const downArrow = document.createElement('i');
-        downArrow.className = 'fa fa-arrow-down';
-        downVote.appendChild(downArrow);
+        downArrow.className = 'fa fa-chevron-down';
+        downVoteLink.appendChild(downArrow);
+        downVote.appendChild(downVoteLink);
         const downCount = document.createElement('span');
         downCount.className = 'new-upvote-count';
         downCount.innerHTML = 0;

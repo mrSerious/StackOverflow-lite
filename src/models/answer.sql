@@ -6,6 +6,7 @@ CREATE TABLE answers(
   question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   isaccepted BOOLEAN DEFAULT false,
+  upvote INTEGER DEFAULT 0,
 	createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
 	updatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );

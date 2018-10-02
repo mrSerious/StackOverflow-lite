@@ -56,27 +56,34 @@ const getSingleQuestion = () => {
         voteContainer.className = 'answer-vote-container';
 
         // upvote button
-        const upVote = document.createElement('button');
-        upVote.name = 'button';
-        upVote.type = 'button';
+        const upVote = document.createElement('div');
         upVote.className = 'upvote-button';
+        const upVoteLink = document.createElement('a');
+        upVoteLink.className = 'upvote_link';
+        upVoteLink.href = '#';
         const upArrow = document.createElement('i');
-        upArrow.className = 'fa fa-arrow-up';
-        upVote.appendChild(upArrow);
+        upArrow.className = 'fa fa-chevron-up';
+        upArrow.classList.add('upvote');
+        upArrow.setAttribute('answer-id', question.answers[i].id);
+        upArrow.setAttribute('upvote-count', question.answers[i].upvote);
+        upVoteLink.appendChild(upArrow);
+        upVote.appendChild(upVoteLink);
         const upCount = document.createElement('span');
         upCount.className = 'new-upvote-count';
-        upCount.innerHTML = 0;
+        upCount.innerHTML = question.answers[i].upvote;
         upVote.appendChild(upCount);
         voteContainer.appendChild(upVote);
 
         // upvote button
-        const downVote = document.createElement('button');
-        downVote.name = 'button';
-        downVote.type = 'button';
+        const downVote = document.createElement('div');
         downVote.className = 'downvote-button';
+        const downVoteLink = document.createElement('a');
+        downVoteLink.className = 'downvote-link';
+        downVoteLink.href = '#';
         const downArrow = document.createElement('i');
-        downArrow.className = 'fa fa-arrow-down';
-        downVote.appendChild(downArrow);
+        downArrow.className = 'fa fa-chevron-down';
+        downVoteLink.appendChild(downArrow);
+        downVote.appendChild(downVoteLink);
         const downCount = document.createElement('span');
         downCount.className = 'new-upvote-count';
         downCount.innerHTML = 0;

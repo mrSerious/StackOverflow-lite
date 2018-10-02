@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "next" }] */
+/* eslint no-unused-vars: ["error", { "argsIgnorePattern": "error" }] */
 import db from '../models/db';
 
 /**
@@ -90,7 +90,7 @@ class Question {
 
           db.query(`
           SELECT answers.id, answer_body, answers.question_id, isaccepted, 
-          answers.createdat, users.id as user_id, username
+          upvote, answers.createdat, users.id as user_id, username
           FROM answers JOIN users ON answers.user_id = users.id
           WHERE answers.question_id = ${id} ORDER BY answers.id DESC`)
             .then((answersResult) => {
@@ -176,18 +176,10 @@ class Question {
         if (selectQueryResult.rowCount > 0) {
           if (userId === selectQueryResult.rows[0].user_id) {
             db.query('DELETE FROM questions where id = $1', [id])
-              .then((deleteQueryResult) => {
-                if (deleteQueryResult.rowCount === 1) {
-                  return response.status(200).json({
-                    status: 'Success',
-                    message: 'Question deleted successfully'
-                  });
-                }
-                return response.status(500).json({
-                  status: 'Failure',
-                  message: 'Something went wrong. Contact your administrator'
-                });
-              })
+              .then(() => response.status(200).json({
+                status: 'Success',
+                message: 'Question deleted successfully'
+              }))
               .catch(error => response.status(500).json({
                 status: 'Failure',
                 message: 'Internal server error'

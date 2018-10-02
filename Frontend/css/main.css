@@ -596,9 +596,9 @@ button:hover {
 }
 
 #delete-question:hover {
-  border: 1px solid #ff0000b4;
+  border: 1px solid #ff00004f;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  color: #ff0000b4;
+  color: #ff0000;
 }
 
 .answers-list {
@@ -642,16 +642,16 @@ button:hover {
 .downvote-button {
   background-color: transparent;
   border: 0;
-  color: inherit;
   float: left;
-  font-size: 1.5rem;
-  margin: 21px 5px 0 0;
-  padding: 0.376rem;
-  color: #919191 !important;
+  font-size: 1rem;
+  margin: 21px 10px 0 0;
+  padding: 0.5rem 0.3rem;
+  text-align: center;
 }
 
 .upvote-button>*,
 .downvote-button>* {
+  color: #919191;
   display: block;
 }
 
@@ -1070,9 +1070,9 @@ button:hover {
     border: 0;
     color: inherit;
     float: left;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     margin: 21px 16px 0 0;
-    width: 60px;
+    width: 2rem;
     color: #919191 !important;
   }
 

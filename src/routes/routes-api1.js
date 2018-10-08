@@ -57,4 +57,8 @@ router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/comments',
 router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/upvote',
   authorization.check, answer.upvoteComment);
 
+// POST comment downvote
+router.post('/questions/:questionId([0-9]+)/answers/:answerId([0-9]+)/downvote',
+  authorization.check, answer.downvoteComment);
+
 export default router;

@@ -112,6 +112,65 @@ describe('ANSWERS CONTROLLER', () => {
     });
   });
 
+  describe('POST /api/v1/questions/:questionId/answers'
+  + '/:answerId/downvote', () => {
+    it('Should not downvote answer if user is not authenticated', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions/3/answers/2/downvote')
+        .send({ count: 1 })
+        .end((error, response) => {
+          response.type.should.eql('application/json');
+          response.status.should.eql(401);
+          response.body.status.should.eql('Failure');
+          response.body.message.should
+            .eql('You need to login to perform this operation');
+          done();
+        });
+    });
+
+    it('Should not downvote answer if question does not exist', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions/3000/answers/2/downvote')
+        .set('x-access-token', userToken)
+        .send({ count: 1 })
+        .end((error, response) => {
+          response.type.should.eql('application/json');
+          response.status.should.eql(404);
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Cannot find that question');
+          done();
+        });
+    });
+
+    it('Should not downvote answer if answer does not exist', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions/3/answers/2000/downvote')
+        .set('x-access-token', userToken)
+        .send({ count: 1 })
+        .end((error, response) => {
+          response.type.should.eql('application/json');
+          response.status.should.eql(404);
+          response.body.status.should.eql('Failure');
+          response.body.message.should.eql('Cannot find that answer');
+          done();
+        });
+    });
+
+    it('Should let authenticated user downvote answer', (done) => {
+      chai.request(server)
+        .post('/api/v1/questions/3/answers/2/downvote')
+        .set('x-access-token', userToken)
+        .send({ count: 1 })
+        .end((error, response) => {
+          response.type.should.eql('application/json');
+          response.status.should.eql(200);
+          response.body.status.should.eql('Success');
+          response.body.message.should.eql('Downvote was successful');
+          done();
+        });
+    });
+  });
+
   describe('POST /api/v1/questions/:questionId/answers', () => {
     it('Should not let unathenticated user add an answer', (done) => {
       chai.request(server)

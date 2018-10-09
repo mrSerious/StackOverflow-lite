@@ -43,7 +43,7 @@ class Validation {
     }
 
     if (content) {
-      if (content.length < 5 || typeof content !== 'string'
+      if (content.length < 1|| typeof content !== 'string'
       || !/.*\S.*./.test(content)) {
         return response.status(400).json({
           status: 'Failure',
@@ -66,20 +66,18 @@ class Validation {
   static postQuestion(request, response, next) {
     const { title, body } = request.body;
 
-    if (!title || title.length < 20 || typeof title !== 'string'
+    if (!title || title.length < 1 || typeof title !== 'string'
       || !/.*\S.*./.test(title) || /\.+/.test(title)) {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Your question must be a valid string of minimum lenght 20'
+        message: 'Question title must be a valid string of minimum lenght 20'
       });
     }
 
-    if (!body || body.length < 20 || typeof body !== 'string'
-      || !/.*\S.*./.test(body) || /\.+/.test(body)) {
+    if (!body || body.length < 1 || typeof body !== 'string') {
       return response.status(400).json({
         status: 'Failure',
-        message: 'Your question description must be a '
-        + 'valid string of minimum lenght 20'
+        message: 'Your question must be a valid string of minimum lenght 20'
       });
     }
 
@@ -206,7 +204,7 @@ class Validation {
   static postComment(request, response, next) {
     const { comment } = request.body;
 
-    if (!comment || comment.lengh < 20 || typeof comment !== 'string') {
+    if (!comment || comment.lengh < 1 || typeof comment !== 'string') {
       return response.status(400).json({
         status: 'Failure',
         message: 'Your comment must be a valid string of minimum lenght 5'

@@ -90,7 +90,7 @@ class Question {
 
           db.query(`
           SELECT answers.id, answer_body, answers.question_id, isaccepted, 
-          upvote, answers.createdat, users.id as user_id, username
+          upvote, downvote, answers.createdat, users.id as user_id, username
           FROM answers JOIN users ON answers.user_id = users.id
           WHERE answers.question_id = ${id} ORDER BY answers.id DESC`)
             .then((answersResult) => {

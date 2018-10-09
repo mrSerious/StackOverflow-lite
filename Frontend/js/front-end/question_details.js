@@ -78,15 +78,18 @@ const getSingleQuestion = () => {
         const downVote = document.createElement('div');
         downVote.className = 'downvote-button';
         const downVoteLink = document.createElement('a');
-        downVoteLink.className = 'downvote-link';
+        downVoteLink.className = 'downvote_link';
         downVoteLink.href = '#';
         const downArrow = document.createElement('i');
         downArrow.className = 'fa fa-chevron-down';
+        downArrow.classList.add('downvote');
+        downArrow.setAttribute('answer-id', question.answers[i].id);
+        downArrow.setAttribute('downvote-count', question.answers[i].downvote);
         downVoteLink.appendChild(downArrow);
         downVote.appendChild(downVoteLink);
         const downCount = document.createElement('span');
-        downCount.className = 'new-upvote-count';
-        downCount.innerHTML = 0;
+        downCount.className = 'new-downvote-count';
+        downCount.innerHTML = question.answers[i].downvote;
         downVote.appendChild(downCount);
         voteContainer.appendChild(downVote);
 

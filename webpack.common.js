@@ -9,9 +9,9 @@ const webpack = require('webpack');
 require('dotenv').config();
 
 module.exports = {
-  entry: './Client/index.js',
+  entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/client'),
     filename: 'bundle.js',
     publicPath: '/',
   },
@@ -99,9 +99,10 @@ module.exports = {
       ),
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
       filename: 'index.html',
-      inject: 'body'
+      inject: 'body',
+      favicon: './public/favicon.ico'
     }),
     new CompressionPlugin(),
     new OptimizeCssAssetsPlugin({

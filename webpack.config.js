@@ -1,6 +1,5 @@
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
-const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
@@ -41,9 +40,10 @@ module.exports = merge(common, {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'src', 'index.html'),
     port: 8080,
-    historyApiFallback: true,
-    hot: true
-  },
+    open: true,
+    proxy: {
+      '/api/v1/': 'http://localhost:3000'
+    }
+  }
 });

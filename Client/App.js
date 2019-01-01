@@ -1,7 +1,10 @@
 import React, { Fragment, Component } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { persistor, store } from './store/store';
+import routes from './routes';
+import NotFound from './components/notFound/NotFound';
 
 /**
  * @class App
@@ -29,9 +32,23 @@ class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <Fragment>
-            <h1>Welcome To React!</h1>
-          </Fragment>
+          <Router>
+            <Fragment>
+              <Switch>
+                {
+                    routes.map(route => (
+                      <Route
+                        exact={route.exact}
+                        path={route.path}
+                        key={route.path}
+                        component={route.component}
+                      />
+                    ))
+                  }
+                <Route component={NotFound} />
+              </Switch>
+            </Fragment>
+          </Router>
         </PersistGate>
       </Provider>
     );
